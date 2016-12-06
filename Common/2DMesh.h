@@ -141,7 +141,7 @@ enum eFields // физические сущности
 	int_d  = static_cast<size_t>(0x02000), // интенсивность деформаций
 	int_ds = static_cast<size_t>(0x04000), // интенсивность скорости деформаций
 	int_s  = static_cast<size_t>(0x08000), // интенсивность напряжений
-	int_ss = static_cast<size_t>(0x10000), // интенсивность скорости напряжений
+	int_ss = static_cast<size_t>(0x10000), // резерв
 
 	hyd_p  = static_cast<size_t>(0x20000), // накопленное гидростатическое давление
 	smo_d  = static_cast<size_t>(0x40000), // сглаженные средние деформации	

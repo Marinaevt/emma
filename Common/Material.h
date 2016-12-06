@@ -115,7 +115,7 @@ public:
 	bool IsLoaded()const { return m_nType != 0; }
 	void GetDrxParameters(double e, double t, double T, double ee, double dt, double D0, double &Xd, double &Z, double &D);
 	void GetSrxParameters(double e, double ee, double T, double Tdef, double Z, double D0, double Xd, double t, double td, double &Xm, double &dXs, double &D, double &e0);
-
+	double GetGrainSize(double dGrainSize, double dStrainRate, double dTimeStep);
 protected:
 	CString m_strFName;	//путь до файла
 	int m_nType;
@@ -124,6 +124,7 @@ protected:
 
 	double m_A;
 	double m_m1, m_m2, m_m3, m_m4;
+	double m_m5, m_m6;
 
 	DBL m_dK;
 	DBL m_dMaxMju;
@@ -146,6 +147,8 @@ protected:
 	
 	double Si_t5(double e, double v, double T) const;
 	
+	double Si_t6(double e, double v, double T, double dGrainSize) const; //Albakkri
+
 	int Load_t1(CStorage &File);
 	int Load_t2(CStorage &File);
 
@@ -153,6 +156,9 @@ protected:
 	int Load_t4(CStorage &File);
 	
 	int Load_t5(CStorage &File);
+
+	int Load_t6(CStorage &File);
+
 	int LoadThermo(CStorage &File);
     void DeleteArrays();
 

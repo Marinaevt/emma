@@ -441,6 +441,37 @@ double CMaterial::Si_t5(double e_, double v_, double t_)  const
 }
 
 ///////////////////////////////////////////////////////////
+double CMaterial::Si_t6(double e_, double v_, double t_, double dGrainSize)  const
+{
+	//m_A = K;
+	//m_m1 = m
+	//m_m2 = p1
+	//m_m3 = alpha1
+	//m_m4 = alpha2
+	//m_m5 = fa0
+	//m_m6 = psi
+
+	if (m_nType != 6) {
+		CDlgShowError cError(ID_ERROR_MATERIAL_TYPE5_WRONG);
+		return 0.0;
+	}
+
+	DBL sigma;	//Результирующее напряжение
+	DBL  K = m_A, //Переименовываем для понятности
+		m = m_m1,
+		p1 = m_m2,
+		alpha1 = m_m3,
+		alpha2 = m_m4,
+		fa0 = m_m5,
+		psi = m_m6;
+	//sigma = sig_s*(sig_0 + k*pow(v_,m))/(sig_s+k*pow(v_,m)) + h*e_;	//Уравнение состояния (АМг-6, Иван)
+	sigma = K*pow(v_, m)*pow(dGrainSize, p1)*(1 - fa0*exp(psi*e_));
+	return sigma;
+}
+
+///////////////////////////////////////////////////////////
+
+
 double CMaterial::Si(double e_, double v_, double t_, double Xd, double X0) const
 {
 	e_ = max(1.0E-6, e_);
@@ -452,6 +483,7 @@ double CMaterial::Si(double e_, double v_, double t_, double Xd, double X0) cons
 	case 3: return Si_t3(e_, v_, t_, Xd, X0); break;	//3 - A*arcsinh(B*Z^N), see C-Mn.spf
 	case 4: return Si_t4(e_, v_, t_, Xd, X0); break;	//4 - A*Z^n
 	case 5: return Si_t5(e_, v_, t_); break;
+	case 6: return Si_t6(e_, v_, t_, Xd); break; //Albakri
 	default: CDlgShowError cError(ID_ERROR_MATERIAL_TYPE_WRONG); return 0;
 	}
 }
@@ -633,7 +665,20 @@ int CMaterial::Load_t5(CStorage &File) {
 
 	return 0;
 }
+///////////////////////////////////////////////////////////
+int CMaterial::Load_t6(CStorage &File) {
+	const int wrong_file = 2;
 
+	if (!ReadValue(File, "<K>", &m_A))	return wrong_file;
+	if (!ReadValue(File, "<m>", &m_m1))	return wrong_file;
+	if (!ReadValue(File, "<p1>", &m_m2))	return wrong_file;
+	if (!ReadValue(File, "<alpha1>", &m_m3))	return wrong_file;
+	if (!ReadValue(File, "<alpha2>", &m_m4))	return wrong_file;
+	if (!ReadValue(File, "<fa0>", &m_m5))	return wrong_file;
+	if (!ReadValue(File, "<psi>", &m_m6))	return wrong_file;
+
+	return 0;
+}
 // Загружаем файл материала, возвращаем 0 -> успешно
 int CMaterial::Load(const CString &strFile) {
 	CStorage File;
@@ -658,6 +703,7 @@ int CMaterial::Load(const CString &strFile) {
 	case 3: ret = Load_t3(File); break;		//3 - A*arcsinh(B*Z^N), see C-Mn.spf
 	case 4: ret = Load_t4(File); break;		//4 - A*Z^n
 	case 5: ret = Load_t5(File); break;		//5 - (e^h)*sig_s*(sig_0 + k*(ee^m))/(sig_s+k*(ee^m))
+	case 6: ret = Load_t6(File); break;		//6 - Albakri
 	default: ret = -1;
 	}
 	if (ret == 0) {
@@ -850,6 +896,11 @@ void CMaterial::GetSrxParameters(double e, double ee, double T, double Tdef, dou
 		}
 		D = sqrt(D*D + Delta);
 	}
+}
+//////////////////////////////////////////////////////////////////////
+double CMaterial::GetGrainSize(double dGrainSize, double dStrainRate, double dTimeStep) {
+	if (m_nType != 6)return dGrainSize;
+	return dGrainSize + dTimeStep*dStrainRate*m_m3*exp(-m_m4*dStrainRate);
 }
 
 //////////////////////////////////////////////////////////////////////

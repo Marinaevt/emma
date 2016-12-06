@@ -92,12 +92,15 @@ bool C2DPlaneFEM::InitMaterial(const CString& path) {
 	}
 
 	//Инициализация полей для расчётов
-	DBL mu = mater.Mu(0, g_MuInf.m_dee, g_MuInf.m_dTemperature);
+	//DBL mu = mater.Mu(0, g_MuInf.m_dee, g_MuInf.m_dTemperature);
+	DBL mu = mater.Mu(0, g_MuInf.m_dee, g_MuInf.m_dTemperature, 1);// Albakri only (grain size=1)
 	for (size_t i = 0; i < mesh3->m_elements().size(); i++) {
 		mesh3->GetEField(i, eFields::mju) = mu;
 		mesh3->GetEField(i, eFields::int_d) = 0.0;
 		mesh3->GetEField(i, eFields::avg_d) = 0.0;
 		mesh3->GetEField(i, eFields::smo_d) = 0.0;
+
+		mesh3->GetEField(i, eFields::int_ss) = 1.0; // Albakri only (grain size)
 	}
 	return true;
 }
@@ -292,7 +295,8 @@ void C2DPlaneFEM::InitStep()
 	size_t nElemSize = mesh3->m_elements().size();
 	for (size_t i = 0; i < nElemSize; i++) {
 		//m->GetEField(i, eFields::mju) = m_mat.Material().Mu(m->GetEField(i, eFields::int_d), m->GetEField(i, eFields::int_ds), TEMPERATURE);// Расходится((
-		mesh3->GetEField(i, eFields::mju) = m_mat.Material().Mu(mesh3->GetEField(i, eFields::int_d), mesh3->GetEField(i, eFields::int_ds), g_MuInf.m_dTemperature);
+		//mesh3->GetEField(i, eFields::mju) = m_mat.Material().Mu(mesh3->GetEField(i, eFields::int_d), mesh3->GetEField(i, eFields::int_ds), g_MuInf.m_dTemperature);
+		mesh3->GetEField(i, eFields::mju) = m_mat.Material().Mu(mesh3->GetEField(i, eFields::int_d), mesh3->GetEField(i, eFields::int_ds), g_MuInf.m_dTemperature, mesh3->GetEField(i, eFields::int_ss)); // Albakri only
 		//m->GetEField(i, eFields::smo_d) = 0;
 		if (!m_FirstVolSumStart) {
 			m_FirstVolSum += mesh3->GetEField(i, eFields::sqr) * 2 * M_PI*mesh3->GetEField(i, eFields::cm_x);
@@ -370,7 +374,9 @@ void C2DPlaneFEM::CalcFEM(DBL dt)
 		size_t elem_size = mesh3->m_elements().size();
 		for (size_t i = 0; i < elem_size; i++) {
 			//Было m->GetEField(i, eFields::int_ds) -> g_MuInf.dee
-			mesh3->GetEField(i, eFields::mju) = m_mat.Material().Mu(mesh3->GetEField(i, eFields::int_d), mesh3->GetEField(i, eFields::int_ds), g_MuInf.m_dTemperature);
+			mesh3->GetEField(i, eFields::mju) = m_mat.Material().Mu(mesh3->GetEField(i, eFields::int_d), mesh3->GetEField(i, eFields::int_ds), g_MuInf.m_dTemperature, mesh3->GetEField(i, eFields::int_ss)); // Albakri only
+																																																			  //mesh3->GetEField(i, eFields::mju) = m_mat.Material().Mu(mesh3->GetEField(i, eFields::int_d), mesh3->GetEField(i, eFields::int_ds), g_MuInf.m_dTemperature);
+			mesh3->GetEField(i, eFields::int_ss) = m_mat.Material().GetGrainSize(mesh3->GetEField(i, eFields::int_ss), mesh3->GetEField(i, eFields::int_ds), dt); //  Albakri only
 		}
 
 		g_nK = k;
