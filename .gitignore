@@ -61,3 +61,6 @@ Docs/
 *.exe
 *.out
 *.app
+
+*.emma_task
+*.emma
