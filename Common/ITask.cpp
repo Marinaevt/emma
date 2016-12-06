@@ -151,19 +151,21 @@ void ITask::RunCalc()
 
 #ifndef __LOCAL
 	ALOGGER.AddLog(m_filepath() + CString("Log_SA.txt"), CString(_T("SA")), false);
+	ALOGGER.AddLog(m_filepath() + CString("Log_SA1.txt"), CString(_T("SA1")), false);
 	ALOGGER.AddLog(m_filepath() + CString("Log_YD.txt"), CString(_T("YD")), false);
 
 	ALOGGER.AddLog(m_filepath() + CString("Log_Elements.txt"), CString(_T("Elements")), false);
 	ALOGGER.AddLog(m_filepath() + CString("Log_Nodes.txt"), CString(_T("Nodes")), false);
 #else
 	ALOGGER.AddLog(CString("Log_SA.txt"), CString(_T("SA")), false);
+	ALOGGER.AddLog(m_filepath() + CString("Log_SA1.txt"), CString(_T("SA1")), false);
 	ALOGGER.AddLog(CString("Log_YD.txt"), CString(_T("YD")), false);
 
 	ALOGGER.AddLog(CString("Log_Elements.txt"), CString(_T("Elements")), false);
 	ALOGGER.AddLog(CString("Log_Nodes.txt"), CString(_T("Nodes")), false);
 #endif
 
-	//ALOGI("SA", CString(_T("time, dt, H, s, e_min, e_max, ee_min, ee_max, s_min, s_max,   P=")) + AllToString(g_Step.P));
+	ALOGI("SA", CString(_T("time, dt, H, s, e_min, e_max, ee_min, ee_max, s_min, s_max,   P=")) + AllToString(g_Step.P));
 	ALOGI("YD", CString(_T("time, dt, force, avg_sigma, sqr, press, max_y, max_x, err, nK, dV, Sqr")));
 	
 	ALOGI("Elements", CString(_T("dt, cm_x, cm_y, avg_d, avg_ds, mju, smo_d, smo_ds, int_d, int_ds, sf_a, sf_b, sf_c")));

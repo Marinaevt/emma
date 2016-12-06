@@ -765,7 +765,7 @@ void CMesh::SetMeshType(UNINT id) {
 
 void CMesh::WriteToLog() const
 {
-	/*DLOG(CString(_T("CMesh")), log_info);
+	DLOG(CString(_T("CMesh")), log_info);
 	DLOG(CString(_T("Point count: "))+AllToString(m_nPointsNum)+CString(_T(", Element count: "))+AllToString(m_nElNum), log_info);
 	CString tmp;
 
@@ -776,5 +776,5 @@ void CMesh::WriteToLog() const
 		}
 		DLOG(tmp, log_info);
 		tmp="";
-	}*/
+	}
 }

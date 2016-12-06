@@ -223,31 +223,31 @@ void C2DPlaneFEM::Calc(DBL dt)
 	FieldsToNodes(dt);
 	//CalcForce(dt);
 
-	//WriteEFieldsToLog();
+	WriteEFieldsToLog();
 
 
 
 
-	/*
+	
 	C2DMesh3* m = dynamic_cast<C2DMesh3 *>(m_mesh_adapt());
 
 	double minY=0, maxY=0;
 	ptrdiff_t iMin=0, iMax=0;
 	bool bFirst = true;
 
-	for(ptrdiff_t i = 0; i < m->GetBorderSize(); i++){
-	Math::C2DPoint p = m->GetBorderNode(i);
-	if(p.x < 0.01){
-	if(bFirst || p.y < minY){
-	minY = p.y;
-	iMin = i;
-	}
-	if(bFirst || p.y > maxY){
-	maxY = p.y;
-	iMax = i;
-	}
-	bFirst = false;
-	}
+	for (ptrdiff_t i = 0; i < m->GetBorderSize(); i++) {
+		Math::C2DPoint p = m->GetBorderNode(i);
+		if (p.x < 0.01) {
+			if (bFirst || p.y < minY) {
+				minY = p.y;
+				iMin = i;
+			}
+			if (bFirst || p.y > maxY) {
+				maxY = p.y;
+				iMax = i;
+			}
+			bFirst = false;
+		}
 	}
 	//double e_min = m->GetNField(m->m_bordernodes[iMin], int_d);
 	double e_cp = m->GetNField(m->m_bordernodes[iMax], avg_d);
@@ -256,8 +256,9 @@ void C2DPlaneFEM::Calc(DBL dt)
 	double dMju = m->GetNField(m->m_bordernodes[iMax], mju);
 	double ee_max = m->GetNField(m->m_bordernodes[iMax], int_ds);
 	//double s_min = m->GetNField(m->m_bordernodes[iMin], int_s);
-	double matMju = m_mat.Material().Mu(e_max, ee_max, 420);
-	double s_max = m->GetNField(m->m_bordernodes[iMax], int_s);
+	double d_max = m->GetNField(m->m_bordernodes[iMax], int_ss);
+	double matMju = m_mat.Material().Mu(e_max, ee_max, 420, d_max);
+	double s_max = m_mat.Material().Si(e_max, ee_max, 420, d_max);
 
 	ALOGI("SA", AllToString(GetParent()->GetElapsedTime()) + _T(", ") +
 	AllToString(dt) +   _T(", ") +
@@ -273,9 +274,10 @@ void C2DPlaneFEM::Calc(DBL dt)
 	//AllToString(s_min) + _T(", ") +
 	AllToString(s_max) + _T(", ") +
 	AllToString(g_dError) + _T(", ") +
-	AllToString(g_nK) + _T(", ")
+	AllToString(g_nK) + _T(", ") +
+	AllToString(d_max) + _T(", ")
 	);
-	//*/
+	
 }
 
 void C2DPlaneFEM::InitStep()
@@ -376,7 +378,6 @@ void C2DPlaneFEM::CalcFEM(DBL dt)
 			//Было m->GetEField(i, eFields::int_ds) -> g_MuInf.dee
 			mesh3->GetEField(i, eFields::mju) = m_mat.Material().Mu(mesh3->GetEField(i, eFields::int_d), mesh3->GetEField(i, eFields::int_ds), g_MuInf.m_dTemperature, mesh3->GetEField(i, eFields::int_ss)); // Albakri only
 																																																			  //mesh3->GetEField(i, eFields::mju) = m_mat.Material().Mu(mesh3->GetEField(i, eFields::int_d), mesh3->GetEField(i, eFields::int_ds), g_MuInf.m_dTemperature);
-			mesh3->GetEField(i, eFields::int_ss) = m_mat.Material().GetGrainSize(mesh3->GetEField(i, eFields::int_ss), mesh3->GetEField(i, eFields::int_ds), dt); //  Albakri only
 		}
 
 		g_nK = k;
@@ -687,6 +688,8 @@ void C2DPlaneFEM::FieldsToNodes(DBL dt) {
 		d_sigma_x = d_sigma_y = d_sigma_xy = 0.0;
 		nEl_count = 0;
 
+		DBL d_ss = 0; // Albakri only (SA)
+
 		DBL dIntS = 0.0;
 		DBL dMju = 0.0;
 
@@ -702,6 +705,8 @@ void C2DPlaneFEM::FieldsToNodes(DBL dt) {
 
 				d_avg_d += mesh3->GetEField(j, eFields::avg_d) * d_V_el;
 				d_avg_ds += mesh3->GetEField(j, eFields::avg_ds) * d_V_el;
+				
+				d_ss += mesh3->GetEField(j, eFields::int_ss) * d_V_el; // Albakri only (SA)
 
 				d_mju = mesh3->GetEField(j, eFields::mju);
 
@@ -734,6 +739,7 @@ void C2DPlaneFEM::FieldsToNodes(DBL dt) {
 		mesh3->GetNField(i, eFields::int_s) = dIntS / d_V_node;
 		mesh3->GetNField(i, eFields::mju) = dMju / d_V_node;
 
+		mesh3->GetNField(i, eFields::int_ss)  = d_ss/ d_V_node; // Albakri only (SA)
 	}
 
 	/*
@@ -919,6 +925,9 @@ void C2DPlaneFEM::Move(DBL dt)
 		//Вариант m->GetEField(ei, eFields::int_ds) -> g_MuInf.dee
 		mesh3->GetEField(ei, eFields::int_d) += mesh3->GetEField(ei, eFields::int_ds) * dt; // накопленная интенсивность деформаций
 																							//m->GetEField(ei, eFields::int_d) = fabs(m_CurrentSqrSum-m_FirstSqrSum)/m_FirstSqrSum;
+		
+		mesh3->GetEField(ei, eFields::int_ss) = m_mat.Material().GetGrainSize(mesh3->GetEField(ei, eFields::int_ss), mesh3->GetEField(ei, eFields::int_ds), dt); //  Albakri only
+		//ALOGI("SA1", AllToString(ei) + _T(" ") +AllToString(mesh3->GetEField(ei, eFields::int_ss)));
 	}
 
 	/*
