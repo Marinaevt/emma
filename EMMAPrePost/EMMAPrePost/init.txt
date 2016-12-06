@@ -1,0 +1,10 @@
+<P>	1
+<t0>	0.01
+<MaxDt>	1
+<N>	100
+<MaxT>	10000
+<MinDt> 0.1
+<K>	10000
+<MaxMju> 1.0E+7
+<N_mju>  100
+<MaxErr> 0.01

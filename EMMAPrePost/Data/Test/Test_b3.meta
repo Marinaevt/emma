@@ -1,0 +1,14 @@
+parameter r (25);
+
+point p1 (0, 0);
+point p4 (50, 0);
+point p5 (50, 30);
+point p6 (0, 30);
+
+arc a2 (p1, p4, r);
+line l4 (p4,p5);
+line l5 (p5,p6);
+line l6 (p6, p1);
+
+
+contour c1 (a2, l4, l5, l6);

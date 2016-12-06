@@ -1,0 +1,132 @@
+<TYPE>  3
+
+T - temperature [K]
+e - strain [-]
+ee- strain rate [1/s]
+S - stress [MPa]
+t - time [s]
+
+
+***************************************************
+STESS/STRAIN + DRX
+***************************************************
+
+S  = (1-X)*Srv*(1-exp(-a_drv*e))^n_drv + X*Srx
+
+<R>	8.31
+<a_drv>	0.019
+<n_drv>	1. 
+
+X  = 1-exp(-a_drx*max(0, (e-e0)/e0)^n_drx)
+
+<a_drx>	0.0505
+<n_drx>	0.26
+
+Srv= A_rv*arcsinh(B_rv*[ee*exp(Q_rv/(R*T))]^m_rv)
+
+<A_rv>	45.7224
+<B_rv>	1.53E-08
+<Q_rv>	217895
+<m_rv>	1.253
+
+Srx= A_rx*arcsinh(B_rx*[ee*exp(Q_rx/(R*T))]^m_rx)
+
+<A_rx>	5.56
+<B_rx>	2.15E-9
+<Q_rx>	251139
+<m_rx>	1.419
+
+e0 = A_e*D0^m_ed*[ee*exp(Q_e/(R*T))]^m_ee
+
+<A_e>	3.31E-5
+<m_ed>	0.0
+<Q_e>	262000
+<m_ee>	0.25
+
+Dd = A_drx*[ee*exp(Q_dd/(R*T))]^m_drx
+
+<A_drx>	1.6E4
+<m_drx>	-0.23
+<Q_dd>	312000
+
+***************************************************
+STATIC RECRYSTALLYZATION
+***************************************************
+
+Xs = 1 - exp(-0.693*(t/ts50))^n_srx
+
+<n_srx>	1.7
+
+ts50 = A_s*D0^p1*e^p2*ee^p3*exp(Q_srx/(R*T))
+
+<A_s>	5.1E-21
+<p1>	2
+<p2>	-4
+<p3>	-0.0
+<Q_srx>	330000
+
+Ds = C0 + C1*D0^q1*e^q2*ee^q3*exp(-Q_ds/(R*T))
+
+<C0>	6.2
+<C1>	55.7
+<q1>	0.15
+<q2>	-0.65
+<q3>	0.0
+<Q_ds>	38500
+
+
+***************************************************
+METADYNAMIC RECRYSTALLYZATION
+***************************************************
+
+Xm = 1 - exp(-0.693*(t/tm50))^n_mrx
+
+<n_mrx>	1.3
+
+tm50 = A_m*[ee*exp(Q_mz/(R*T))]^p_m*exp(Q_mrx/(R*T))
+
+<A_m>	1.12
+<Q_mz>	312000
+<p_m>	-0.8
+<Q_mrx>	230000
+
+Dm = C_m*[ee*exp(Q_mz/(R*T))]^m_mrx
+
+<C_m>	2.6E4
+<m_mrx>	-0.23
+
+***************************************************
+GRAIN GROWTH
+***************************************************
+D = (D(0)^2 + t*10^(A1-B1/T))^0.5       | for t<t_gg1
+D = (D(t_gg1)^2 + t*10^(A2-B2/T))^0.5   | for t>=t_gg1
+
+<t_gg1>	20
+<A1>	6.6
+<B1>	6200
+<A2>	8.1
+<B2>	9000
+
+***************************************************
+HEAT TRANSFER
+***************************************************
+
+Specific heat [J/(kg*K)]	(C)
+<C>	
+0	100
+1300	100
+
+Mass dencity[kg/m3]		(Ro)
+<MD>	
+0	5000
+1300	5000
+
+Conductivity[W/(m*K)]		(Lambda)
+<Lambda>	
+0	10
+1300	10
+
+Emissivity	
+<E>	
+0	0
+800	0

@@ -1,0 +1,52 @@
+point p1 (0, 0);
+point p2 (5, 0);
+point p3 (5, 15);
+point p4 (8, 19);
+
+/* резьба */
+point p5 (8, 20);
+point p6 (10, 21);
+point p7 (8, 22);
+point p8 (10, 23);
+point p9 (8, 24);
+point p10 (10, 25);
+point p11 (8, 26);
+point p12 (10, 27);
+point p13 (8, 28);
+point p14 (10, 29);
+point p15 (8, 30);
+point p16 (10, 31);
+point p17 (8, 32);
+point p18 (10, 33);
+point p19 (8, 34);
+
+/* верхушка */
+point p20 (8, 35);
+point p21 (7, 36);
+point p22 (0, 36);
+
+/* строим по часовой */
+line l1 (p1, p22);
+line l2 (p22, p21);
+line l3 (p21, p20);
+line l4 (p20, p19);
+line l5 (p19, p18);
+line l6 (p18, p17);
+line l7 (p17, p16);
+line l8 (p16, p15);
+line l9 (p15, p14);
+line l10 (p14, p13);
+line l11 (p13, p12);
+line l12 (p12, p11);
+line l13 (p11, p10);
+line l14 (p10, p9);
+line l15 (p9, p8);
+line l16 (p8, p7);
+line l17 (p7, p6);
+line l18 (p6, p5);
+line l19 (p5, p4);
+line l20 (p4, p3);
+line l21 (p3, p2);
+line l22 (p2, p1);
+
+contour c1 (l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12, l13, l14, l15, l16, l17, l18, l19, l20, l21, l22);

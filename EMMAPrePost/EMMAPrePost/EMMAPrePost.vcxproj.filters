@@ -1,0 +1,1388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="HTML Help Topics">
+      <UniqueIdentifier>{0570a8c9-39e8-43a9-9b02-8e27ff54a084}</UniqueIdentifier>
+      <Extensions>htm;html</Extensions>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ImportExport">
+      <UniqueIdentifier>{bc77d5c9-8f82-48e6-8180-76568fdaff14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImportExport\DXF">
+      <UniqueIdentifier>{39d370ce-0df2-488d-b710-e0f4fff6c0f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImportExport\Parametric">
+      <UniqueIdentifier>{43cc59ce-c1f8-43fc-9cb8-f089086058e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImportExport\Parametric\xtl">
+      <UniqueIdentifier>{29929e8d-d3f1-4565-bd43-c9992ef82a87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Forming">
+      <UniqueIdentifier>{93d55407-b16f-4357-9121-23512b7e650a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Common">
+      <UniqueIdentifier>{c86b379c-b119-4d33-a782-d56e2b64b4d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ParametricPreview">
+      <UniqueIdentifier>{c446b7dd-8471-42cf-b24d-45c30892515c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common">
+      <UniqueIdentifier>{c1689464-ab27-4a25-813e-e8a75faec91d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dragging">
+      <UniqueIdentifier>{808a0aee-5db3-4fec-95e8-e97d7f70c982}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Rolling">
+      <UniqueIdentifier>{57266e7e-1e58-4c3c-bd16-cb45e11e0727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logger">
+      <UniqueIdentifier>{31997089-6c3f-45e6-b0f4-8ddf6c9d3d72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mesher">
+      <UniqueIdentifier>{3a1be258-9163-4291-b8a8-076c99cb7b0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometry">
+      <UniqueIdentifier>{ae355ed0-321f-4658-94bf-ed591347ce18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HTML Help Files">
+      <UniqueIdentifier>{90e736a2-a0e5-4b53-b5a7-a8b99b23c733}</UniqueIdentifier>
+      <Extensions>hhp;hhc;hhk;gif;jpg</Extensions>
+    </Filter>
+    <Filter Include="Resource Files\resCursor">
+      <UniqueIdentifier>{b33c9fd2-d7fc-4f2a-b101-2fe76565fb41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\resExplorerTree">
+      <UniqueIdentifier>{b2b695a4-be91-44d2-bf13-0013a05ada5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\resRibbon">
+      <UniqueIdentifier>{b78888cb-5196-437a-be37-38a049bf7f24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Balloon">
+      <UniqueIdentifier>{16abae46-7a8b-4a10-bd11-139ddf87af56}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BasicView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CalcStage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CalcStage2DView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChildFrm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgAddSubDoc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgNewTask.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EMMADoc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EMMADockablePane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EMMAPrePost.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplorerPane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Gen2DDoc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Gen3DDoc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GL2DView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GL3DView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GLBasicView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="I2DSketch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialDoc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialsList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PrePostStartup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RegisteredMessages.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Results.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewDescriptor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\AllTypes.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\CustomArray.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Factory.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\FolderWork.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Function.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\I2DInteractiveObject.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\InteractiveObject.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\IOInterface.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Material.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\SimpleManager.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Singleton.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\SLAE.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Strings.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\DXF\CContour.h">
+      <Filter>ImportExport\DXF</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\DXF\CCurve.h">
+      <Filter>ImportExport\DXF</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\DXF\CGraph.h">
+      <Filter>ImportExport\DXF</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\DXF\Constants.h">
+      <Filter>ImportExport\DXF</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\DXF\CPoint.h">
+      <Filter>ImportExport\DXF</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\DXF\CReader.h">
+      <Filter>ImportExport\DXF</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\DXF\CToken.h">
+      <Filter>ImportExport\DXF</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\Arithmetic.h">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\BinaryArithmetic.h">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\BinaryOperators.h">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\Compare.h">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\Contour.h">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\Curves.h">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\DoubleDispatcher.h">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\Element.h">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\Expression.h">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\Functions.h">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\Multimethods.h">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\Operands.h">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\Operators.h">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\Outline.h">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\Parameter.h">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\Point.h">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\Reader.h">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\SingleDispatcher.h">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\SpecialElements.h">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\SpecialExpressions.h">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\UnaryArithmetic.h">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\UnaryOperators.h">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\Unit.h">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\xtl\xtl_double_dispatcher.h">
+      <Filter>ImportExport\Parametric\xtl</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\xtl\xtl_factory.h">
+      <Filter>ImportExport\Parametric\xtl</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\xtl\xtl_functional.h">
+      <Filter>ImportExport\Parametric\xtl</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\xtl\xtl_log.h">
+      <Filter>ImportExport\Parametric\xtl</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\xtl\xtl_memory.h">
+      <Filter>ImportExport\Parametric\xtl</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\xtl\xtl_single_dispatcher.h">
+      <Filter>ImportExport\Parametric\xtl</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\xtl\xtl_stack.h">
+      <Filter>ImportExport\Parametric\xtl</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\xtl\xtl_string.h">
+      <Filter>ImportExport\Parametric\xtl</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\Parametric\xtl\xtl_token.h">
+      <Filter>ImportExport\Parametric\xtl</Filter>
+    </ClInclude>
+    <ClInclude Include="GL3DSurface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\ITask.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgNewScale.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGLControl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGLDevice.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EMMARightPane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\BandMatrix.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Startup.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="ImportExport\DXF\Utility.h">
+      <Filter>ImportExport\DXF</Filter>
+    </ClInclude>
+    <ClInclude Include="ParametricPreview\GLModelPreview.h">
+      <Filter>ParametricPreview</Filter>
+    </ClInclude>
+    <ClInclude Include="ParametricPreview\DlgParametricPreview.h">
+      <Filter>ParametricPreview</Filter>
+    </ClInclude>
+    <ClInclude Include="Forming\2DFormingDoc.h">
+      <Filter>Forming</Filter>
+    </ClInclude>
+    <ClInclude Include="Forming\2DFormingOperation.h">
+      <Filter>Forming</Filter>
+    </ClInclude>
+    <ClInclude Include="Gen2DOperation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\3DPoint.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\2DBCAtom.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\2DMesh.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\2DMotion.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\2DOutline.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\2DPlaneFEM.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\2DPoint.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\2DPressure.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\2DRigid.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\2DSymmetry.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\2DTask.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\3DBCAtom.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\3DPlaneFEM.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="2DBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="2DBuilderPane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="2DCalcStage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="2DCalcStagePane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="2DMesher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="2DMesherPane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="2DResults.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="2DSketch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="2DSketchPane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="2DSpecimen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="2DTool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="2DToolPane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="2DTrajectory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="2DTrajectoryPane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3DElement4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3DMesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3DMesher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\ColorScale.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Color.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\SimpleMath.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\GLFont.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\IOFiles.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Dragging\2DDraggingDoc.h">
+      <Filter>Dragging</Filter>
+    </ClInclude>
+    <ClInclude Include="Dragging\2DDraggingOperation.h">
+      <Filter>Dragging</Filter>
+    </ClInclude>
+    <ClInclude Include="Rolling\RollingDoc.h">
+      <Filter>Rolling</Filter>
+    </ClInclude>
+    <ClInclude Include="Rolling\RRollingOperation.h">
+      <Filter>Rolling</Filter>
+    </ClInclude>
+    <ClInclude Include="Rolling\TRollingOperation.h">
+      <Filter>Rolling</Filter>
+    </ClInclude>
+    <ClInclude Include="Rolling\Grooves.h">
+      <Filter>Rolling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\I3DInteractiveObject.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Logger\AdvancedLogger.h">
+      <Filter>Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Logger\Logger.h">
+      <Filter>Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\GLParam.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\2DSide.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\2DPolygonBuilder.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\2DScale.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\2DScaleVisualizer.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="3DCalcStage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="3DCalcStagePane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CalcStage3DView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Mesher\RibLine.h">
+      <Filter>Mesher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Mesher\Clot.h">
+      <Filter>Mesher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Mesher\Concentration.h">
+      <Filter>Mesher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Mesher\Globals.h">
+      <Filter>Mesher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Mesher\LineStrip.h">
+      <Filter>Mesher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Mesher\Mesh.h">
+      <Filter>Mesher</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\DlgShowError.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialPane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\ResourceCommon.h">
+      <Filter>Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Child2DView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Child3DView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Balloon\C2DBalloonDoc.h">
+      <Filter>Balloon</Filter>
+    </ClInclude>
+    <ClInclude Include="Balloon\C2DBalloonOperation.h">
+      <Filter>Balloon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Geometry\GeometryPrimitives.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Geometry\GeometryUtils.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Geometry\Mesher.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Geometry\Polynomial.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Geometry\Utils.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Geometry\includes.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Geometry\MeshOptimizer.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Geometry\P51 root finder.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Common\Geometry\FEMlibrary.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\2D_view.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\EMMAPrePost.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="hlp\EMMAPrePost.hhc">
+      <Filter>HTML Help Files</Filter>
+    </None>
+    <None Include="hlp\EMMAPrePost.hhk">
+      <Filter>HTML Help Files</Filter>
+    </None>
+    <None Include="hlp\afx_hidd_color.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\afx_hidd_fileopen.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\afx_hidd_filesave.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\afx_hidd_find.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\afx_hidd_font.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\afx_hidd_newtypedlg.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\afx_hidd_replace.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\afx_hidp_default.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\afx_hidw_dockbar_top.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\afx_hidw_status_bar.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\afx_hidw_toolbar.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_app_about.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_app_exit.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_context_help.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_edit_clear.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_edit_clear_all.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_edit_copy.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_edit_cut.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_edit_find.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_edit_paste.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_edit_redo.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_edit_repeat.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_edit_replace.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_edit_undo.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_file_close.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_file_mru_file1.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_file_new.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_file_open.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_file_save.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_file_save_as.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_file_send_mail.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_help_index.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_help_using.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_ht_caption.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_ht_nowhere.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_next_pane.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_prev_pane.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_sc_close.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_sc_maximize.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_sc_minimize.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_sc_move.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_sc_nextwindow.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_sc_prevwindow.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_sc_restore.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_sc_size.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_sc_tasklist.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_view_ruler.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_view_status_bar.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_view_toolbar.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_window_all.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_window_arrange.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_window_cascade.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_window_new.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_window_split.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_window_tile.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_window_tile_horz.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hid_window_tile_vert.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\hidr_doc1type.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\main_index.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\menu_edit.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\menu_file.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\menu_help.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\menu_view.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\menu_window.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="hlp\scrollbars.htm">
+      <Filter>HTML Help Topics</Filter>
+    </None>
+    <None Include="ReadMe.txt" />
+    <None Include="res\3D_view.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\Toolbar.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\toolbar_builder.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\toolbar_tool.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\toolbar_traject.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\Toolbar256.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\toolbar_mesher.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\toolbar_sketch.bmp">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\resCursor\cursor001.cur">
+      <Filter>Resource Files\resCursor</Filter>
+    </None>
+    <None Include="res\resCursor\cursor002.cur">
+      <Filter>Resource Files\resCursor</Filter>
+    </None>
+    <None Include="res\resCursor\cursor003.cur">
+      <Filter>Resource Files\resCursor</Filter>
+    </None>
+    <None Include="res\resCursor\cursor008.cur">
+      <Filter>Resource Files\resCursor</Filter>
+    </None>
+    <None Include="res\resCursor\cursor021.cur">
+      <Filter>Resource Files\resCursor</Filter>
+    </None>
+    <None Include="res\resCursor\cursor022.cur">
+      <Filter>Resource Files\resCursor</Filter>
+    </None>
+    <None Include="res\resRibbon\ribbon1.mfcribbon-ms">
+      <Filter>Resource Files\resRibbon</Filter>
+    </None>
+    <None Include="res\resCursor\cursorFly.cur">
+      <Filter>Resource Files\resCursor</Filter>
+    </None>
+    <None Include="res\resCursor\cursorRotate_Free.cur">
+      <Filter>Resource Files\resCursor</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BasicView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CalcStage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CalcStage2DView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChildFrm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgAddSubDoc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgNewTask.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EMMADoc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EMMADockablePane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EMMAPrePost.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ExplorerPane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Gen2DDoc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Gen3DDoc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GL2DView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GL3DView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GLBasicView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="I2DSketch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialDoc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialsList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PrePostStartup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Results.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewDescriptor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\CustomArray.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\FolderWork.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Function.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\IOInterface.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Material.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\SLAE.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Strings.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportExport\DXF\CContour.cpp">
+      <Filter>ImportExport\DXF</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportExport\DXF\CCurve.cpp">
+      <Filter>ImportExport\DXF</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportExport\DXF\CGraph.cpp">
+      <Filter>ImportExport\DXF</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportExport\DXF\CPoint.cpp">
+      <Filter>ImportExport\DXF</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportExport\DXF\CReader.cpp">
+      <Filter>ImportExport\DXF</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportExport\DXF\CToken.cpp">
+      <Filter>ImportExport\DXF</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportExport\Parametric\BinaryOperators.cpp">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportExport\Parametric\Contour.cpp">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportExport\Parametric\Curves.cpp">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportExport\Parametric\DoubleDispatcher.cpp">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportExport\Parametric\Element.cpp">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportExport\Parametric\Multimethods.cpp">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportExport\Parametric\Operands.cpp">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportExport\Parametric\Outline.cpp">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportExport\Parametric\Parameter.cpp">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportExport\Parametric\Point.cpp">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportExport\Parametric\Reader.cpp">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportExport\Parametric\SingleDispatcher.cpp">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportExport\Parametric\SpecialElements.cpp">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportExport\Parametric\SpecialExpressions.cpp">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportExport\Parametric\UnaryOperators.cpp">
+      <Filter>ImportExport\Parametric</Filter>
+    </ClCompile>
+    <ClCompile Include="ImportExport\Parametric\xtl\xtl_log.cpp">
+      <Filter>ImportExport\Parametric\xtl</Filter>
+    </ClCompile>
+    <ClCompile Include="GL3DSurface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\ITask.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\SimpleMath.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgNewScale.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGLControl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGLDevice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\SimpleMath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EMMARightPane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\BandMatrix.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Startup.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="ParametricPreview\DlgParametricPreview.cpp">
+      <Filter>ParametricPreview</Filter>
+    </ClCompile>
+    <ClCompile Include="ParametricPreview\GLModelPreview.cpp">
+      <Filter>ParametricPreview</Filter>
+    </ClCompile>
+    <ClCompile Include="Forming\2DFormingDoc.cpp">
+      <Filter>Forming</Filter>
+    </ClCompile>
+    <ClCompile Include="Forming\2DFormingOperation.cpp">
+      <Filter>Forming</Filter>
+    </ClCompile>
+    <ClCompile Include="Gen2DOperation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\2DBCAtom.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\2DMesh.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\2DMotion.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\2DOutline.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\2DPlaneFEM.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\2DPoint.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\2DPressure.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\2DRigid.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\2DSymmetry.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\2DTask.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\3DBCAtom.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\3DPoint.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="2DBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="2DBuilderPane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="2DCalcStage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="2DCalcStagePane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="2DMesher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="2DMesherPane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="2DResults.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="2DSketch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="2DSketchPane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="2DSpecimen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="2DTool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="2DToolPane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="2DTrajectory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="2DTrajectoryPane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3DElement4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3DMesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3DMesher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\ColorScale.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Color.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\GLFont.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\IOFiles.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Dragging\2DDraggingDoc.cpp">
+      <Filter>Dragging</Filter>
+    </ClCompile>
+    <ClCompile Include="Dragging\2DDraggingOperation.cpp">
+      <Filter>Dragging</Filter>
+    </ClCompile>
+    <ClCompile Include="Rolling\RollingDoc.cpp">
+      <Filter>Rolling</Filter>
+    </ClCompile>
+    <ClCompile Include="Rolling\RRollingOperation.cpp">
+      <Filter>Rolling</Filter>
+    </ClCompile>
+    <ClCompile Include="Rolling\TRollingOperation.cpp">
+      <Filter>Rolling</Filter>
+    </ClCompile>
+    <ClCompile Include="Rolling\Grooves.cpp">
+      <Filter>Rolling</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\GLParam.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\2DSide.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\2DPolygonBuilder.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\2DScale.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\2DScaleVisualizer.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="3DCalcStage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3DCalcStagePane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CalcStage3DView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Logger\AdvancedLogger.cpp">
+      <Filter>Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Logger\Logger.cpp">
+      <Filter>Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Mesher\Clot.cpp">
+      <Filter>Mesher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Mesher\Concentration.cpp">
+      <Filter>Mesher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Mesher\Globals.cpp">
+      <Filter>Mesher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Mesher\LineStrip.cpp">
+      <Filter>Mesher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Mesher\Mesh.cpp">
+      <Filter>Mesher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Mesher\RibLine.cpp">
+      <Filter>Mesher</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\DlgShowError.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\3DPlaneFEM.cpp">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialPane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Child2DView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Child3DView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Balloon\C2DBalloonDoc.cpp">
+      <Filter>Balloon</Filter>
+    </ClCompile>
+    <ClCompile Include="Balloon\C2DBalloonOperation.cpp">
+      <Filter>Balloon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Geometry\GeometryPrimitives.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Geometry\GeometryUtils.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Geometry\Mesher.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Geometry\MeshOptimizer.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Geometry\Polynomial.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Geometry\robust_predicates.c">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Geometry\P51 root finder.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="hlp\EMMAPrePost.hhp">
+      <Filter>HTML Help Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\toolbar_calcstage.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\toolbar_explorer.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\toolbar_calcstage3d.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_bottomroller.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_builder.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_calibers.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_dragging.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_forming.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_gen2D.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_gen3D.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_icons_dragging.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_icons_forming.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_icons_gen2D.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_icons_gen3D.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_icons_rolling.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_materialdoc.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_materials.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_mesh.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_operation_2D.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_podkat.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_result.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_resultdoc.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_sketch.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_specimen.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_tool.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_toproller.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resExplorerTree\tree_trajectory.bmp">
+      <Filter>Resource Files\resExplorerTree</Filter>
+    </Image>
+    <Image Include="res\resRibbon\main.bmp">
+      <Filter>Resource Files\resRibbon</Filter>
+    </Image>
+    <Image Include="res\resRibbon\main_large.bmp">
+      <Filter>Resource Files\resRibbon</Filter>
+    </Image>
+    <Image Include="res\resRibbon\main_small.bmp">
+      <Filter>Resource Files\resRibbon</Filter>
+    </Image>
+    <Image Include="res\resRibbon\menu_large.bmp">
+      <Filter>Resource Files\resRibbon</Filter>
+    </Image>
+    <Image Include="res\resRibbon\menu_small.bmp">
+      <Filter>Resource Files\resRibbon</Filter>
+    </Image>
+    <Image Include="res\resRibbon\view_large.bmp">
+      <Filter>Resource Files\resRibbon</Filter>
+    </Image>
+    <Image Include="res\resRibbon\view_small.bmp">
+      <Filter>Resource Files\resRibbon</Filter>
+    </Image>
+    <Image Include="res\resRibbon\mesh_large.bmp">
+      <Filter>Resource Files\resRibbon</Filter>
+    </Image>
+    <Image Include="res\resRibbon\mesh_small.bmp">
+      <Filter>Resource Files\resRibbon</Filter>
+    </Image>
+    <Image Include="res\resRibbon\project_large.bmp">
+      <Filter>Resource Files\resRibbon</Filter>
+    </Image>
+    <Image Include="res\resRibbon\project_small.bmp">
+      <Filter>Resource Files\resRibbon</Filter>
+    </Image>
+    <Image Include="res\resRibbon\sketch_large.bmp">
+      <Filter>Resource Files\resRibbon</Filter>
+    </Image>
+    <Image Include="res\resRibbon\sketch_small.bmp">
+      <Filter>Resource Files\resRibbon</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="EMMAPrePost.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="..\..\Common\ResourceCommon.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

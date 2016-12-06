@@ -1,0 +1,959 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Template|Win32">
+      <Configuration>Template</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Template|x64">
+      <Configuration>Template</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D937863B-13CB-4A73-94A7-4033A7F6192C}</ProjectGuid>
+    <RootNamespace>EMMAPrePost</RootNamespace>
+    <Keyword>MFCProj</Keyword>
+    <EnableCodeInspectionOnBuild>true</EnableCodeInspectionOnBuild>
+    <EnableCodeAnalysisOnBuild>false</EnableCodeAnalysisOnBuild>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Template|x64'" Label="Configuration">
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Template|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Template|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Template|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Template|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Template|x64'" />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <EnablePREfast>false</EnablePREfast>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <UACExecutionLevel>AsInvoker</UACExecutionLevel>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
+      <EnablePREfast>false</EnablePREfast>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <UACExecutionLevel>AsInvoker</UACExecutionLevel>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Template|Win32'">
+    <Link>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <ClCompile>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Template|x64'">
+    <Link>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <ClCompile>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Common\2DBCAtom.h" />
+    <ClInclude Include="..\..\Common\2DMesh.h" />
+    <ClInclude Include="..\..\Common\2DMotion.h" />
+    <ClInclude Include="..\..\Common\2DOutline.h" />
+    <ClInclude Include="..\..\Common\2DPlaneFEM.h" />
+    <ClInclude Include="..\..\Common\2DPoint.h" />
+    <ClInclude Include="..\..\Common\2DPolygonBuilder.h" />
+    <ClInclude Include="..\..\Common\2DPressure.h" />
+    <ClInclude Include="..\..\Common\2DRigid.h" />
+    <ClInclude Include="..\..\Common\2DScale.h" />
+    <ClInclude Include="..\..\Common\2DScaleVisualizer.h" />
+    <ClInclude Include="..\..\Common\2DSide.h" />
+    <ClInclude Include="..\..\Common\2DSymmetry.h" />
+    <ClInclude Include="..\..\Common\2DTask.h" />
+    <ClInclude Include="..\..\Common\3DBCAtom.h" />
+    <ClInclude Include="..\..\Common\3DPlaneFEM.h" />
+    <ClInclude Include="..\..\Common\3DPoint.h" />
+    <ClInclude Include="..\..\Common\BandMatrix.h" />
+    <ClInclude Include="..\..\Common\Color.h" />
+    <ClInclude Include="..\..\Common\ColorScale.h" />
+    <ClInclude Include="..\..\Common\DlgShowError.h" />
+    <ClInclude Include="..\..\Common\Geometry\FEMlibrary.h" />
+    <ClInclude Include="..\..\Common\Geometry\GeometryPrimitives.h" />
+    <ClInclude Include="..\..\Common\Geometry\GeometryUtils.h" />
+    <ClInclude Include="..\..\Common\Geometry\Mesher.h" />
+    <ClInclude Include="..\..\Common\Geometry\MeshOptimizer.h" />
+    <ClInclude Include="..\..\Common\Geometry\P51 root finder.h" />
+    <ClInclude Include="..\..\Common\Geometry\Polynomial.h" />
+    <ClInclude Include="..\..\Common\Geometry\includes.h" />
+    <ClInclude Include="..\..\Common\Geometry\Utils.h" />
+    <ClInclude Include="..\..\Common\GLFont.h" />
+    <ClInclude Include="..\..\Common\GLParam.h" />
+    <ClInclude Include="..\..\Common\I3DInteractiveObject.h" />
+    <ClInclude Include="..\..\Common\IOFiles.h" />
+    <ClInclude Include="..\..\Common\ITask.h" />
+    <ClInclude Include="..\..\Common\Logger\AdvancedLogger.h" />
+    <ClInclude Include="..\..\Common\Logger\Logger.h" />
+    <ClInclude Include="..\..\Common\Mesher\Clot.h" />
+    <ClInclude Include="..\..\Common\Mesher\Concentration.h" />
+    <ClInclude Include="..\..\Common\Mesher\Globals.h" />
+    <ClInclude Include="..\..\Common\Mesher\LineStrip.h" />
+    <ClInclude Include="..\..\Common\Mesher\Mesh.h" />
+    <ClInclude Include="..\..\Common\Mesher\RibLine.h" />
+    <ClInclude Include="..\..\Common\ResourceCommon.h" />
+    <ClInclude Include="..\..\Common\SimpleMath.h" />
+    <ClInclude Include="..\..\Common\Startup.h" />
+    <ClInclude Include="2DBuilder.h" />
+    <ClInclude Include="2DBuilderPane.h" />
+    <ClInclude Include="2DCalcStage.h" />
+    <ClInclude Include="2DCalcStagePane.h" />
+    <ClInclude Include="2DMesher.h" />
+    <ClInclude Include="2DMesherPane.h" />
+    <ClInclude Include="2DResults.h" />
+    <ClInclude Include="2DSketch.h" />
+    <ClInclude Include="2DSketchPane.h" />
+    <ClInclude Include="2DSpecimen.h" />
+    <ClInclude Include="2DTool.h" />
+    <ClInclude Include="2DToolPane.h" />
+    <ClInclude Include="2DTrajectory.h" />
+    <ClInclude Include="2DTrajectoryPane.h" />
+    <ClInclude Include="3DCalcStage.h" />
+    <ClInclude Include="3DCalcStagePane.h" />
+    <ClInclude Include="3DElement4.h" />
+    <ClInclude Include="3DMesh.h" />
+    <ClInclude Include="3DMesher.h" />
+    <ClInclude Include="Balloon\C2DBalloonDoc.h" />
+    <ClInclude Include="Balloon\C2DBalloonOperation.h" />
+    <ClInclude Include="BasicView.h" />
+    <ClInclude Include="CalcStage.h" />
+    <ClInclude Include="CalcStage2DView.h" />
+    <ClInclude Include="CalcStage3DView.h" />
+    <ClInclude Include="Child2DView.h" />
+    <ClInclude Include="Child3DView.h" />
+    <ClInclude Include="ChildFrm.h" />
+    <ClInclude Include="DlgNewScale.h" />
+    <ClInclude Include="DlgAddSubDoc.h" />
+    <ClInclude Include="DlgNewTask.h" />
+    <ClInclude Include="Dragging\2DDraggingDoc.h" />
+    <ClInclude Include="Dragging\2DDraggingOperation.h" />
+    <ClInclude Include="EMMADoc.h" />
+    <ClInclude Include="EMMADockablePane.h" />
+    <ClInclude Include="EMMAPrePost.h" />
+    <ClInclude Include="EMMARightPane.h" />
+    <ClInclude Include="ExplorerPane.h" />
+    <ClInclude Include="Forming\2DFormingDoc.h" />
+    <ClInclude Include="Forming\2DFormingOperation.h" />
+    <ClInclude Include="Gen2DDoc.h" />
+    <ClInclude Include="Gen2DOperation.h" />
+    <ClInclude Include="Gen3DDoc.h" />
+    <ClInclude Include="GL2DView.h" />
+    <ClInclude Include="GL3DSurface.h" />
+    <ClInclude Include="GL3DView.h" />
+    <ClInclude Include="GLBasicView.h" />
+    <ClInclude Include="I2DSketch.h" />
+    <ClInclude Include="ImportExport\DXF\Utility.h" />
+    <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="MaterialDoc.h" />
+    <ClInclude Include="MaterialPane.h" />
+    <ClInclude Include="MaterialsList.h" />
+    <ClInclude Include="MaterialView.h" />
+    <ClInclude Include="OpenGLControl.h" />
+    <ClInclude Include="OpenGLDevice.h" />
+    <ClInclude Include="ParametricPreview\DlgParametricPreview.h" />
+    <ClInclude Include="ParametricPreview\GLModelPreview.h" />
+    <ClInclude Include="PrePostStartup.h" />
+    <ClInclude Include="RegisteredMessages.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Results.h" />
+    <ClInclude Include="Rolling\Grooves.h" />
+    <ClInclude Include="Rolling\RollingDoc.h" />
+    <ClInclude Include="Rolling\RRollingOperation.h" />
+    <ClInclude Include="Rolling\TRollingOperation.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="ViewDescriptor.h" />
+    <ClInclude Include="..\..\Common\AllTypes.h" />
+    <ClInclude Include="..\..\Common\CustomArray.h" />
+    <ClInclude Include="..\..\Common\Factory.h" />
+    <ClInclude Include="..\..\Common\FolderWork.h" />
+    <ClInclude Include="..\..\Common\Function.h" />
+    <ClInclude Include="..\..\Common\I2DInteractiveObject.h" />
+    <ClInclude Include="..\..\Common\InteractiveObject.h" />
+    <ClInclude Include="..\..\Common\IOInterface.h" />
+    <ClInclude Include="..\..\Common\Material.h" />
+    <ClInclude Include="..\..\Common\SimpleManager.h" />
+    <ClInclude Include="..\..\Common\Singleton.h" />
+    <ClInclude Include="..\..\Common\SLAE.h" />
+    <ClInclude Include="..\..\Common\Strings.h" />
+    <ClInclude Include="ImportExport\DXF\CContour.h" />
+    <ClInclude Include="ImportExport\DXF\CCurve.h" />
+    <ClInclude Include="ImportExport\DXF\CGraph.h" />
+    <ClInclude Include="ImportExport\DXF\Constants.h" />
+    <ClInclude Include="ImportExport\DXF\CPoint.h" />
+    <ClInclude Include="ImportExport\DXF\CReader.h" />
+    <ClInclude Include="ImportExport\DXF\CToken.h" />
+    <ClInclude Include="ImportExport\Parametric\Arithmetic.h" />
+    <ClInclude Include="ImportExport\Parametric\BinaryArithmetic.h" />
+    <ClInclude Include="ImportExport\Parametric\BinaryOperators.h" />
+    <ClInclude Include="ImportExport\Parametric\Compare.h" />
+    <ClInclude Include="ImportExport\Parametric\Contour.h" />
+    <ClInclude Include="ImportExport\Parametric\Curves.h" />
+    <ClInclude Include="ImportExport\Parametric\DoubleDispatcher.h" />
+    <ClInclude Include="ImportExport\Parametric\Element.h" />
+    <ClInclude Include="ImportExport\Parametric\Expression.h" />
+    <ClInclude Include="ImportExport\Parametric\Functions.h" />
+    <ClInclude Include="ImportExport\Parametric\Multimethods.h" />
+    <ClInclude Include="ImportExport\Parametric\Operands.h" />
+    <ClInclude Include="ImportExport\Parametric\Operators.h" />
+    <ClInclude Include="ImportExport\Parametric\Outline.h" />
+    <ClInclude Include="ImportExport\Parametric\Parameter.h" />
+    <ClInclude Include="ImportExport\Parametric\Point.h" />
+    <ClInclude Include="ImportExport\Parametric\Reader.h" />
+    <ClInclude Include="ImportExport\Parametric\SingleDispatcher.h" />
+    <ClInclude Include="ImportExport\Parametric\SpecialElements.h" />
+    <ClInclude Include="ImportExport\Parametric\SpecialExpressions.h" />
+    <ClInclude Include="ImportExport\Parametric\UnaryArithmetic.h" />
+    <ClInclude Include="ImportExport\Parametric\UnaryOperators.h" />
+    <ClInclude Include="ImportExport\Parametric\Unit.h" />
+    <ClInclude Include="ImportExport\Parametric\xtl\xtl_double_dispatcher.h" />
+    <ClInclude Include="ImportExport\Parametric\xtl\xtl_factory.h" />
+    <ClInclude Include="ImportExport\Parametric\xtl\xtl_functional.h" />
+    <ClInclude Include="ImportExport\Parametric\xtl\xtl_log.h" />
+    <ClInclude Include="ImportExport\Parametric\xtl\xtl_memory.h" />
+    <ClInclude Include="ImportExport\Parametric\xtl\xtl_single_dispatcher.h" />
+    <ClInclude Include="ImportExport\Parametric\xtl\xtl_stack.h" />
+    <ClInclude Include="ImportExport\Parametric\xtl\xtl_string.h" />
+    <ClInclude Include="ImportExport\Parametric\xtl\xtl_token.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\2D_view.bmp" />
+    <None Include="res\3D_view.bmp" />
+    <None Include="res\EMMAPrePost.ico" />
+    <None Include="res\resCursor\cursor001.cur" />
+    <None Include="res\resCursor\cursor002.cur" />
+    <None Include="res\resCursor\cursor003.cur" />
+    <None Include="res\resCursor\cursor008.cur" />
+    <None Include="res\resCursor\cursor021.cur" />
+    <None Include="res\resCursor\cursor022.cur" />
+    <None Include="res\resCursor\cursorFly.cur" />
+    <None Include="res\resCursor\cursorRotate_Free.cur" />
+    <None Include="res\resRibbon\ribbon1.mfcribbon-ms" />
+    <None Include="res\Toolbar.bmp" />
+    <None Include="res\Toolbar256.bmp" />
+    <None Include="res\toolbar_builder.bmp" />
+    <None Include="res\toolbar_mesher.bmp" />
+    <None Include="res\toolbar_sketch.bmp" />
+    <None Include="res\toolbar_tool.bmp" />
+    <None Include="res\toolbar_traject.bmp" />
+    <None Include="hlp\EMMAPrePost.hhc" />
+    <None Include="hlp\EMMAPrePost.hhk" />
+    <CustomBuild Include="hlp\EMMAPrePost.hhp">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Making help file...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Making help file...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">start /wait hhc "hlp\EMMAPrePost.hhp"
+if not exist "hlp\EMMAPrePost.chm" goto :HelpError
+copy "hlp\EMMAPrePost.chm" "$(OutDir)EMMAPrePost.chm"
+goto :HelpDone
+:HelpError
+echo hlp\EMMAPrePost.hhp(1) : error:Problem encountered creating help file
+echo.
+:HelpDone
+echo.
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">start /wait hhc "hlp\EMMAPrePost.hhp"
+if not exist "hlp\EMMAPrePost.chm" goto :HelpError
+copy "hlp\EMMAPrePost.chm" "$(OutDir)EMMAPrePost.chm"
+goto :HelpDone
+:HelpError
+echo hlp\EMMAPrePost.hhp(1) : error:Problem encountered creating help file
+echo.
+:HelpDone
+echo.
+</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">hlp\HTMLDefines.h;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">hlp\HTMLDefines.h;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)$(ProjectName).chm;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)$(ProjectName).chm;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Making help file...</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Making help file...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">start /wait hhc "hlp\EMMAPrePost.hhp"
+if not exist "hlp\EMMAPrePost.chm" goto :HelpError
+copy "hlp\EMMAPrePost.chm" "$(OutDir)EMMAPrePost.chm"
+goto :HelpDone
+:HelpError
+echo hlp\EMMAPrePost.hhp(1) : error:Problem encountered creating help file
+echo.
+:HelpDone
+echo.
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">start /wait hhc "hlp\EMMAPrePost.hhp"
+if not exist "hlp\EMMAPrePost.chm" goto :HelpError
+copy "hlp\EMMAPrePost.chm" "$(OutDir)EMMAPrePost.chm"
+goto :HelpDone
+:HelpError
+echo hlp\EMMAPrePost.hhp(1) : error:Problem encountered creating help file
+echo.
+:HelpDone
+echo.
+</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">hlp\HTMLDefines.h;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">hlp\HTMLDefines.h;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)$(ProjectName).chm;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutDir)$(ProjectName).chm;%(Outputs)</Outputs>
+    </CustomBuild>
+    <None Include="hlp\afx_hidd_color.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\afx_hidd_fileopen.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\afx_hidd_filesave.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\afx_hidd_find.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\afx_hidd_font.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\afx_hidd_newtypedlg.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\afx_hidd_replace.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\afx_hidp_default.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\afx_hidw_dockbar_top.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\afx_hidw_status_bar.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\afx_hidw_toolbar.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_app_about.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_app_exit.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_context_help.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_edit_clear.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_edit_clear_all.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_edit_copy.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_edit_cut.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_edit_find.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_edit_paste.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_edit_redo.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_edit_repeat.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_edit_replace.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_edit_undo.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_file_close.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_file_mru_file1.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_file_new.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_file_open.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_file_save.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_file_save_as.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_file_send_mail.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_help_index.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_help_using.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_ht_caption.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_ht_nowhere.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_next_pane.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_prev_pane.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_sc_close.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_sc_maximize.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_sc_minimize.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_sc_move.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_sc_nextwindow.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_sc_prevwindow.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_sc_restore.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_sc_size.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_sc_tasklist.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_view_ruler.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_view_status_bar.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_view_toolbar.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_window_all.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_window_arrange.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_window_cascade.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_window_new.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_window_split.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_window_tile.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_window_tile_horz.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hid_window_tile_vert.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\hidr_doc1type.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\main_index.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\menu_edit.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\menu_file.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\menu_help.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\menu_view.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\menu_window.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="hlp\scrollbars.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\Common\ResourceCommon.rc" />
+    <ResourceCompile Include="EMMAPrePost.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Common\2DBCAtom.cpp" />
+    <ClCompile Include="..\..\Common\2DMesh.cpp" />
+    <ClCompile Include="..\..\Common\2DMotion.cpp" />
+    <ClCompile Include="..\..\Common\2DOutline.cpp" />
+    <ClCompile Include="..\..\Common\2DPlaneFEM.cpp" />
+    <ClCompile Include="..\..\Common\2DPoint.cpp" />
+    <ClCompile Include="..\..\Common\2DPolygonBuilder.cpp" />
+    <ClCompile Include="..\..\Common\2DPressure.cpp" />
+    <ClCompile Include="..\..\Common\2DRigid.cpp" />
+    <ClCompile Include="..\..\Common\2DScale.cpp" />
+    <ClCompile Include="..\..\Common\2DScaleVisualizer.cpp" />
+    <ClCompile Include="..\..\Common\2DSide.cpp" />
+    <ClCompile Include="..\..\Common\2DSymmetry.cpp" />
+    <ClCompile Include="..\..\Common\2DTask.cpp" />
+    <ClCompile Include="..\..\Common\3DBCAtom.cpp" />
+    <ClCompile Include="..\..\Common\3DPlaneFEM.cpp" />
+    <ClCompile Include="..\..\Common\3DPoint.cpp" />
+    <ClCompile Include="..\..\Common\BandMatrix.cpp" />
+    <ClCompile Include="..\..\Common\Color.cpp" />
+    <ClCompile Include="..\..\Common\ColorScale.cpp" />
+    <ClCompile Include="..\..\Common\DlgShowError.cpp" />
+    <ClCompile Include="..\..\Common\Geometry\GeometryPrimitives.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Geometry\GeometryUtils.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Geometry\Mesher.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Geometry\MeshOptimizer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Geometry\P51 root finder.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Geometry\Polynomial.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\Geometry\robust_predicates.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\Common\GLFont.cpp" />
+    <ClCompile Include="..\..\Common\GLParam.cpp" />
+    <ClCompile Include="..\..\Common\IOFiles.cpp" />
+    <ClCompile Include="..\..\Common\ITask.cpp" />
+    <ClCompile Include="..\..\Common\Logger\AdvancedLogger.cpp" />
+    <ClCompile Include="..\..\Common\Logger\Logger.cpp" />
+    <ClCompile Include="..\..\Common\Mesher\Clot.cpp" />
+    <ClCompile Include="..\..\Common\Mesher\Concentration.cpp" />
+    <ClCompile Include="..\..\Common\Mesher\Globals.cpp" />
+    <ClCompile Include="..\..\Common\Mesher\LineStrip.cpp" />
+    <ClCompile Include="..\..\Common\Mesher\Mesh.cpp" />
+    <ClCompile Include="..\..\Common\Mesher\RibLine.cpp" />
+    <ClCompile Include="..\..\Common\SimpleMath.cpp" />
+    <ClCompile Include="..\..\Common\Startup.cpp" />
+    <ClCompile Include="2DBuilder.cpp" />
+    <ClCompile Include="2DBuilderPane.cpp" />
+    <ClCompile Include="2DCalcStage.cpp" />
+    <ClCompile Include="2DCalcStagePane.cpp" />
+    <ClCompile Include="2DMesher.cpp" />
+    <ClCompile Include="2DMesherPane.cpp" />
+    <ClCompile Include="2DResults.cpp" />
+    <ClCompile Include="2DSketch.cpp" />
+    <ClCompile Include="2DSketchPane.cpp" />
+    <ClCompile Include="2DSpecimen.cpp" />
+    <ClCompile Include="2DTool.cpp" />
+    <ClCompile Include="2DToolPane.cpp" />
+    <ClCompile Include="2DTrajectory.cpp" />
+    <ClCompile Include="2DTrajectoryPane.cpp" />
+    <ClCompile Include="3DCalcStage.cpp" />
+    <ClCompile Include="3DCalcStagePane.cpp" />
+    <ClCompile Include="3DElement4.cpp" />
+    <ClCompile Include="3DMesh.cpp" />
+    <ClCompile Include="3DMesher.cpp" />
+    <ClCompile Include="Balloon\C2DBalloonDoc.cpp" />
+    <ClCompile Include="Balloon\C2DBalloonOperation.cpp" />
+    <ClCompile Include="BasicView.cpp" />
+    <ClCompile Include="CalcStage.cpp" />
+    <ClCompile Include="CalcStage2DView.cpp" />
+    <ClCompile Include="CalcStage3DView.cpp" />
+    <ClCompile Include="Child2DView.cpp" />
+    <ClCompile Include="Child3DView.cpp" />
+    <ClCompile Include="ChildFrm.cpp" />
+    <ClCompile Include="DlgNewScale.cpp" />
+    <ClCompile Include="DlgAddSubDoc.cpp" />
+    <ClCompile Include="DlgNewTask.cpp" />
+    <ClCompile Include="Dragging\2DDraggingDoc.cpp" />
+    <ClCompile Include="Dragging\2DDraggingOperation.cpp" />
+    <ClCompile Include="EMMADoc.cpp" />
+    <ClCompile Include="EMMADockablePane.cpp" />
+    <ClCompile Include="EMMAPrePost.cpp" />
+    <ClCompile Include="EMMARightPane.cpp" />
+    <ClCompile Include="ExplorerPane.cpp" />
+    <ClCompile Include="Forming\2DFormingDoc.cpp" />
+    <ClCompile Include="Forming\2DFormingOperation.cpp" />
+    <ClCompile Include="Gen2DDoc.cpp" />
+    <ClCompile Include="Gen2DOperation.cpp" />
+    <ClCompile Include="Gen3DDoc.cpp" />
+    <ClCompile Include="GL2DView.cpp" />
+    <ClCompile Include="GL3DSurface.cpp" />
+    <ClCompile Include="GL3DView.cpp" />
+    <ClCompile Include="GLBasicView.cpp" />
+    <ClCompile Include="I2DSketch.cpp" />
+    <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="MaterialDoc.cpp" />
+    <ClCompile Include="MaterialPane.cpp" />
+    <ClCompile Include="MaterialsList.cpp" />
+    <ClCompile Include="MaterialView.cpp" />
+    <ClCompile Include="OpenGLControl.cpp" />
+    <ClCompile Include="OpenGLDevice.cpp" />
+    <ClCompile Include="ParametricPreview\DlgParametricPreview.cpp" />
+    <ClCompile Include="ParametricPreview\GLModelPreview.cpp" />
+    <ClCompile Include="PrePostStartup.cpp" />
+    <ClCompile Include="Results.cpp" />
+    <ClCompile Include="Rolling\Grooves.cpp" />
+    <ClCompile Include="Rolling\RollingDoc.cpp" />
+    <ClCompile Include="Rolling\RRollingOperation.cpp" />
+    <ClCompile Include="Rolling\TRollingOperation.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="ViewDescriptor.cpp" />
+    <ClCompile Include="..\..\Common\CustomArray.cpp" />
+    <ClCompile Include="..\..\Common\FolderWork.cpp" />
+    <ClCompile Include="..\..\Common\Function.cpp" />
+    <ClCompile Include="..\..\Common\IOInterface.cpp" />
+    <ClCompile Include="..\..\Common\Material.cpp" />
+    <ClCompile Include="..\..\Common\SLAE.cpp" />
+    <ClCompile Include="..\..\Common\Strings.cpp" />
+    <ClCompile Include="ImportExport\DXF\CContour.cpp" />
+    <ClCompile Include="ImportExport\DXF\CCurve.cpp" />
+    <ClCompile Include="ImportExport\DXF\CGraph.cpp" />
+    <ClCompile Include="ImportExport\DXF\CPoint.cpp" />
+    <ClCompile Include="ImportExport\DXF\CReader.cpp" />
+    <ClCompile Include="ImportExport\DXF\CToken.cpp" />
+    <ClCompile Include="ImportExport\Parametric\BinaryOperators.cpp" />
+    <ClCompile Include="ImportExport\Parametric\Contour.cpp" />
+    <ClCompile Include="ImportExport\Parametric\Curves.cpp" />
+    <ClCompile Include="ImportExport\Parametric\DoubleDispatcher.cpp" />
+    <ClCompile Include="ImportExport\Parametric\Element.cpp" />
+    <ClCompile Include="ImportExport\Parametric\Multimethods.cpp" />
+    <ClCompile Include="ImportExport\Parametric\Operands.cpp" />
+    <ClCompile Include="ImportExport\Parametric\Outline.cpp" />
+    <ClCompile Include="ImportExport\Parametric\Parameter.cpp" />
+    <ClCompile Include="ImportExport\Parametric\Point.cpp" />
+    <ClCompile Include="ImportExport\Parametric\Reader.cpp" />
+    <ClCompile Include="ImportExport\Parametric\SingleDispatcher.cpp" />
+    <ClCompile Include="ImportExport\Parametric\SpecialElements.cpp" />
+    <ClCompile Include="ImportExport\Parametric\SpecialExpressions.cpp" />
+    <ClCompile Include="ImportExport\Parametric\UnaryOperators.cpp" />
+    <ClCompile Include="ImportExport\Parametric\xtl\xtl_log.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\resExplorerTree\tree_bottomroller.bmp" />
+    <Image Include="res\resExplorerTree\tree_builder.bmp" />
+    <Image Include="res\resExplorerTree\tree_calibers.bmp" />
+    <Image Include="res\resExplorerTree\tree_dragging.bmp" />
+    <Image Include="res\resExplorerTree\tree_forming.bmp" />
+    <Image Include="res\resExplorerTree\tree_gen2D.bmp" />
+    <Image Include="res\resExplorerTree\tree_gen3D.bmp" />
+    <Image Include="res\resExplorerTree\tree_icons_dragging.bmp" />
+    <Image Include="res\resExplorerTree\tree_icons_forming.bmp" />
+    <Image Include="res\resExplorerTree\tree_icons_gen2D.bmp" />
+    <Image Include="res\resExplorerTree\tree_icons_gen3D.bmp" />
+    <Image Include="res\resExplorerTree\tree_icons_rolling.bmp" />
+    <Image Include="res\resExplorerTree\tree_materialdoc.bmp" />
+    <Image Include="res\resExplorerTree\tree_materials.bmp" />
+    <Image Include="res\resExplorerTree\tree_mesh.bmp" />
+    <Image Include="res\resExplorerTree\tree_operation_2D.bmp" />
+    <Image Include="res\resExplorerTree\tree_podkat.bmp" />
+    <Image Include="res\resExplorerTree\tree_result.bmp" />
+    <Image Include="res\resExplorerTree\tree_resultdoc.bmp" />
+    <Image Include="res\resExplorerTree\tree_sketch.bmp" />
+    <Image Include="res\resExplorerTree\tree_specimen.bmp" />
+    <Image Include="res\resExplorerTree\tree_tool.bmp" />
+    <Image Include="res\resExplorerTree\tree_toproller.bmp" />
+    <Image Include="res\resExplorerTree\tree_trajectory.bmp" />
+    <Image Include="res\resRibbon\main.bmp" />
+    <Image Include="res\resRibbon\main_large.bmp" />
+    <Image Include="res\resRibbon\main_small.bmp" />
+    <Image Include="res\resRibbon\menu_large.bmp" />
+    <Image Include="res\resRibbon\menu_small.bmp" />
+    <Image Include="res\resRibbon\mesh_large.bmp" />
+    <Image Include="res\resRibbon\mesh_small.bmp" />
+    <Image Include="res\resRibbon\project_large.bmp" />
+    <Image Include="res\resRibbon\project_small.bmp" />
+    <Image Include="res\resRibbon\sketch_large.bmp" />
+    <Image Include="res\resRibbon\sketch_small.bmp" />
+    <Image Include="res\resRibbon\view_large.bmp" />
+    <Image Include="res\resRibbon\view_small.bmp" />
+    <Image Include="res\toolbar_calcstage.bmp" />
+    <Image Include="res\toolbar_calcstage3d.bmp" />
+    <Image Include="res\toolbar_explorer.bmp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(PROGRAMFILES)\MSBuild\FxCop Integrator\FxCopIntegrator.targets" Condition="Exists('$(PROGRAMFILES)\MSBuild\FxCop Integrator\FxCopIntegrator.targets')" />
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="EMMAPrePost.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="AfterBuild">
+    <Exec Condition="'$(BuildingInsideVisualStudio)' == 'true' And '$(EnableCodeAnalysisOnBuild)' == 'true' And Exists('$(TargetPath)') And Exists('$(APPDATA)\FxCop Integrator\CodeAnalysis.exe')" Command="&quot;$(APPDATA)\FxCop Integrator\CodeAnalysis.exe&quot; /f:&quot;$(TargetPath)&quot; /s:&quot;$(SolutionDir)\&quot; /p:&quot;$(ProjectDir)\&quot; " />
+  </Target>
+</Project>

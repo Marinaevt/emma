@@ -1,0 +1,1 @@
+[I][2016-09-23 13:54:49] dt, cm_x, cm_y, avg_d, avg_ds, mju, smo_d, smo_ds, int_d, int_ds, sf_a, sf_b, sf_c

@@ -1,0 +1,63 @@
+parameter r (5);
+
+point p1 (0, 0);
+point p2 (0, 5);
+point p3 (-5, 10);
+point p4 (0, 10);
+point p5 (0, 15);
+
+point p6 (-5, 20);
+point p7 (0, 25);
+point p8 (0, 30);
+point p9 (-5, 35);
+point p10 (0, 35);
+
+point p11 (0, 40);
+point p12 (-5, 45);
+point p13 (5, 50);
+point p14 (15, 45);
+point p15 (10, 40);
+
+point p16 (10, 35);
+point p17 (15, 35);
+point p18 (10, 30);
+point p19 (10, 25);
+point p20 (15, 20);
+
+point p21 (10, 15);
+point p22 (10, 10);
+point p23 (15, 10);
+point p24 (10, 5);
+point p25 (10, 0);
+
+line l1 (p1,p2);
+arc l2 (p3, p2, r);
+line l3 (p3,p4);
+line l4 (p4,p5);
+arc l5 (p6, p5, r);
+line l6 (p6,p7);
+
+line l7 (p7,p8);
+arc l8 (p8, p9, r);
+line l9 (p9,p10);
+line l10 (p10,p11);
+arc l11 (p11, p12, r);
+line l12 (p12,p13);
+
+line l13 (p13,p14);
+arc l14 (p14, p15, r);
+line l15 (p15,p16);
+line l16 (p16,p17);
+arc l17 (p17, p18, r);
+line l18 (p18,p19);
+
+line l19 (p19,p20);
+arc l20 (p21, p20, r);
+line l21 (p21,p22);
+line l22 (p22,p23);
+arc l23 (p24, p23, r);
+line l24 (p24,p25);
+
+line l25 (p25,p1);
+
+contour c1 (l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12, l13, l14, l15, l16, l17, l18, l19, l20, l21, l22, l23, l24, l25);

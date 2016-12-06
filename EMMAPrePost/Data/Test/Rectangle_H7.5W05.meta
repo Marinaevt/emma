@@ -1,0 +1,12 @@
+point p0 (0, 7.5); 
+point p1 (0, 0); 
+point p2 (5, 7.5); 
+point p3 (5, 0); 
+
+line L0 (p1, p0); 
+line L1 (p0, p2); 
+line L2 (p2, p3); 
+line L3 (p3, p1); 
+
+contour Loop0(L0, L1, L2, L3); 
+

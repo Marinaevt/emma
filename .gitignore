@@ -1,0 +1,63 @@
+.svn/
+
+#EmmaPrepost
+EMMAPrePost/.vs/
+EMMAPrePost/Debug/
+EMMAPrePost/EMMAPrePost/Debug/
+EMMAPrePost/EMMAPrePost/hlp/
+EMMAPrePost/EMMAPrePost/Release/
+EMMAPrePost/EMMAPrePost/x64/
+EMMAPrePost/ipch/
+EMMAPrePost/Release/
+EMMAPrePost/x64/
+
+#EmmaServer
+EMMASrv/.vs/
+EMMASrv/Debug/
+EMMASrv/EMMASrv/Debug/
+EMMASrv/EMMASrv/Release/
+EMMASrv/EMMASrv/x64/
+EMMASrv/ipch/
+EMMASrv/Release/
+EMMASrv/x64/
+
+#Service info
+Logs/
+Docs/
+*.smproj
+*.db
+*.sdf
+*.suo
+*.aps
+*.opendb
+*.db
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app

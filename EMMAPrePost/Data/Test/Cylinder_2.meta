@@ -1,0 +1,33 @@
+point p1 (0, 0);
+point p2 (4, 0);
+point p3 (4, 5);
+point p4 (10, 10);
+point p5 (10, 25);
+
+point p6 (13, 27);
+point p7 (10, 29);
+point p8 (13, 31);
+point p9 (10, 33);
+point p10 (13, 35);
+point p11 (10, 37);
+point p12 (10, 39);
+point p13 (9, 40);
+point p14 (0, 40);
+
+/* строим по часовой */
+line l1 (p1, p14);
+line l2 (p14, p13);
+line l3 (p13, p12);
+line l4 (p12, p11);
+line l5 (p11, p10);
+line l6 (p10, p9);
+line l7 (p9, p8);
+line l8 (p8, p7);
+line l9 (p7, p6);
+line l10 (p6, p5);
+line l11 (p5, p4);
+line l12 (p4, p3);
+line l13 (p3, p2);
+line l14 (p2, p1);
+
+contour c1 (l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12, l13, l14);

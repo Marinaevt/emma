@@ -1,0 +1,36 @@
+point p1 (0, 0);
+point p2 (0, 1);
+
+/* зубчики */
+point p3 (2, 2);
+point p4 (0, 3);
+point p5 (2, 4);
+point p6 (0, 5);
+point p7 (2, 6);
+point p8 (0, 7);
+point p9 (2, 8);
+point p10 (0, 9);
+point p11 (2, 10);
+point p12 (0, 11);
+
+point p13 (0, 12);
+point p14 (5, 12);
+point p15 (5, 0);
+
+line l1 (p1, p2);
+line l2 (p2, p3);
+line l3 (p3, p4);
+line l4 (p4, p5);
+line l5 (p5, p6);
+line l6 (p6, p7);
+line l7 (p7, p8);
+line l8 (p8, p9);
+line l9 (p9, p10);
+line l10 (p10, p11);
+line l11 (p11, p12);
+line l12 (p12, p13);
+line l13 (p13, p14);
+line l14 (p14, p15);
+line l15 (p15, p1);
+
+contour c1 (l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12, l13, l14, l15);

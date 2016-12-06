@@ -1,0 +1,17 @@
+parameter r(5);
+parameter h(6);
+parameter w(8);
+
+point p1 (0, r);
+point p2 (0, h);
+point p3 (w, h);
+point p4 (w, 0);
+point p5 (r, 0);
+
+line l1 (p1, p2);
+line l2 (p2, p3);
+line l3 (p3, p4);
+line l4 (p4, p5);
+arc a5 (p1, p5, r);
+
+contour c1 (l1, l2, l3, l4, a5);

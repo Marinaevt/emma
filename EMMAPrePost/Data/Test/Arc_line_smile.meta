@@ -1,0 +1,23 @@
+parameter r1 (7);
+
+point p1 (0, 0);
+point p2 (10, 0);
+
+arc a1 (p1, p2, r1);
+line a2 (p1, p2);
+
+point p3 (0, 10);
+point p4 (10, 10);
+
+arc a3 (p4, p3, r1);
+line a4 (p4, p3);
+
+point p5 (0, 20);
+point p6 (10, 20);
+
+arc a5 (p5, p6, r1);
+line a6 (p6, p5);
+
+contour c1 (a1,a2);
+contour c2 (a3,a4);
+contour c2 (a5,a6);

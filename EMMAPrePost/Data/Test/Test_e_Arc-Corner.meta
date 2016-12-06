@@ -1,0 +1,31 @@
+parameter h (50);
+parameter w (20);
+parameter h1 (20); /* высота выступа */
+parameter w1 (10); /* ширина выступа */
+parameter r (5);
+
+point p1 (w - w1, 0);
+point p2 (w - w1, h - h1);
+point p3 (0, h - h1);
+point p4 (0, h - r - h1 / 2);
+point p5 (r, h - h1 /2);
+point p6 (0, h + r - h1 / 2);
+point p7 (0, h);
+point p8 (w, h);
+point p9 (w, (h + h1) / 2 + r);
+point p10 (w, (h + h1) / 2 - r);
+point p11 (w, 0);
+
+line l1 (p1, p2);
+line l2 (p2, p3);
+line l3 (p3, p4);
+line l4 (p4, p5);
+line l5 (p5, p6);
+line l6 (p6, p7);
+line l7 (p7, p8);
+line l8 (p8, p9);
+arc a2 (p9, p10, r);
+line l9 (p10, p11);
+line l10 (p11, p1);
+
+contour c1 (l1, l2, l3, l4, l5, l6, l7, l8, a2, l9, l10);

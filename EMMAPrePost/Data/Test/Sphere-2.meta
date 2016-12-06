@@ -1,0 +1,15 @@
+parameter r0 (-10);
+parameter r1 (-11);
+
+point p1 (0, r0);
+point p2 (0, r1);
+point p3 (r1, 0);
+point p4 (r0, 0);
+
+
+line l1 (p1,p2);
+arc  l2 (p2, p3, r1);
+line l3 (p3,p4);
+arc  l4 (p4, p1, r0);
+
+contour c1 (l1, l2, l3, l4);

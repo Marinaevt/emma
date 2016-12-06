@@ -1,0 +1,1 @@
+[I][2016-09-23 13:54:49] dt, x, y, avg_d, avg_ds, int_d, int_ds, sigma_x, sigma_y, int_s

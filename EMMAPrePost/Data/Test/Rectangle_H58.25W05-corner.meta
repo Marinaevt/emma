@@ -1,0 +1,13 @@
+point p1 (0, 0);
+point p2 (0, 58.25);
+point p3 (5, 58.25);
+point p4 (5, 1);
+point p5 (4, 0);
+
+line l1 (p1, p2);
+line l2 (p2, p3);
+line l3 (p3, p4);
+line l4 (p4, p5);
+line l5 (p5, p1);
+
+contour c1 (l1, l2, l3, l4, l5);

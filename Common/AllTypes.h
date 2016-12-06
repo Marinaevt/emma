@@ -1,0 +1,179 @@
+﻿#pragma once
+
+#include "afx.h"
+//#include "cstringt.h"
+
+/* 
+	// Таблица размерности типов для разных x64 процессоров
+	// сокращения от 'int, long, pointers - 64-bit', 'long, pointers - 64-bit' и 'long long, pointer - 64-bit'
+Type           ILP64   LP64   LLP64
+char              8      8       8
+short            16     16      16
+int              64     32      32
+long             64     64      32
+long long        64     64      64
+pointer          64     64      64
+*/
+
+#define TYPEID unsigned short int	//для малочисленных типов
+#define UNINT unsigned int			//укороченная платформонезависимая запись (вместо UINT в MFC)
+#define DBL double					//укороченная платформонезависимая запись
+#define UNLONG unsigned long		//укороченная платформонезависимая запись (вместо DWORD в MFC)
+#define UNSHORT unsigned short int	//НЕ для типов, укороченная платформонезависимая запись (вместо WORD в MFC)
+
+enum eInteractiveObjectTypes
+{
+	T2DPLANEFEM = 1000,
+	T2DRIGID    = 2000,
+	T2DSYMMETRY = 3000,
+	T2DPRESSURE = 4000,
+	T3DPLANEFEM = 5000
+};
+
+enum eTaskTypes
+{
+	T2DTASK = 100
+};
+
+const CString TASKFILEID = _T("EMMATASK");
+
+const size_t TASKFILEVER = 1;
+
+enum eIOTypes
+{
+	CIODOUBLE = 8,
+	CIOINT    = 9,
+	CIODOUBLEARRAY = 10,
+	CIOINTARRAY = 11,
+	CIOSTRING = 12,
+	CIOSTRINGARRAY = 13,
+	CIOINTPTRARRAY = 14,
+	CIOTASKPTRARRAY = 15,
+	CIOCUSTOMDOUBLEARRAY = 16,
+	CIOBOOL = 17,
+	CIOBOOLARRAY = 18, 
+	CIOBANDDBLMATRIX = 19,
+	CIOUNINT = 20,
+	CIO2DLINE = 21, 
+
+	CIOSIZE_T = 22,
+	CIOSIZE_TARRAY = 23,
+
+	C2DOUTLINE = 800,
+	CIO2DNODESARRAY = 801,
+	CIO2DCURVESARRAY = 802,
+	CIO2DCONTOUR = 803,
+	CIO2DPOINT = 804,
+
+	C2DMOTION = 810,
+	CIO2DMOTIONPARAMSARRAY = 811,
+	CIO2DMOTIONVELARRAY = 812,
+
+	CIO2DPOINTS = 820,
+	C2DEL3ARRAY = 821,
+	C2DEL4ARRAY = 822,
+	C2DNODEFLDARRAY = 823,
+	C2DELEMFLDARRAY = 824,
+	C2DSCALECLRRARRAY = 825,
+
+	CIO2DMESH3 = 850,
+	CIO2DMESH4 = 851,
+	CIO2DMESH34 = 852,
+	CIO2DMESH43 = 852,
+	CIO2DBORDER3 = 853,
+	CIO2DBORDER4 = 854,
+	CIO2DBORDER34 = 855,
+	CIO2DBORDER43 = 855,
+
+	CIO2DNODEPTRARRAY  = 860,
+	CIO2DCURVEPTRARRAY = 861,
+	CIO2DCONTPTRARRAY  = 862,
+	CIOEMMADOCPTRARRAY = 863,
+
+	CIOMATERIAL = 870,
+	C3DBCATOMARRAY = 871,
+	C2DBCATOMARRAY = 872,
+
+	CIO3DNODEPTRARRAY = 880,
+	CIO3DELEMENTPTRARRAY = 881,
+	
+	// Globals.h + RibLine.h
+	CIOFINEL = 900,
+	CIOFRONTIER = 901,
+	CIOLINELOOP = 902,
+	CIOCFRONTINF = 903,
+	CIORIBLINE = 904,
+	CIORIBLIST = 905,
+
+	// prepro section 
+
+	CEMMADOC = 10000,
+	C2DSKETCH = 10010,
+	
+	C2DSPECIMEN = 10012,
+	CCALCSTAGE = 10013,
+	C2DCALCSTAGE = 10014,
+	CGEN2DDOC = 10015,
+	CGEN2DOPERATION = 10016,
+	CGEN3DDOC = 10017,
+	CGROOVES = 10018,
+	CROLLINGDOC	= 10019,
+	CR_ROLLING_OPERATION = 10020,
+	CT_ROLLING_OPERATION = 10021,
+	C2DTOOL = 10022,
+	C2DTRAJECTORY = 10023,
+	
+	C3DMESHER = 10025,
+	C2D_FORMING_OPERATION = 10026,
+	C2D_FORMING_DOC = 10027,
+
+	C2D_BALLOON_DOC = 10036,
+	C2D_BALLOON_OPERATION = 10037,
+
+	C2DMESHER = 10011,
+	С2DMESH = 10028,
+	C3DMESH = 10029,
+	
+	CMATERIALDOC = 10024,
+	CMATERIAL = 10030,
+	CMATERIALSLIST = 10031,
+	CGL3DSURFACE = 10032, //для MaterialDoc
+
+	C2D_DRAGGING_DOC = 10033,	//Волочение и его операция
+	C2D_DRAGGING_OPERATION = 10034,
+	
+	C3DCALCSTAGE = 10035,	//3D вид результатов
+
+	CRESULTS = 10100,
+	C2DRESULTS = 10101,
+	C2DBUILDER = 10102,
+	C2DSCALE = 10103,
+
+	EIOENDTYPE
+
+};
+
+enum eFuncTypes
+{
+	C2DCONSTANTFUNC = 900,
+	C2DPIECECONSTANTFUNC = 901,
+	C2DPIECELINEARFUNC = 902
+};
+
+enum e2DNodeTypes
+{
+	C2DNODE = 1100
+};
+
+enum e2DCurveTypes
+{
+	C2DCURVE = 1150,
+	C2DLINESEG = C2DCURVE,
+	C2DCIRCARC = 1151
+};
+
+enum e2DContourTypes
+{
+	C2DCONTOUR = 1200
+};
+
