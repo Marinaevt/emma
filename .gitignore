@@ -63,4 +63,5 @@ Docs/
 *.app
 
 
-.emma_task
+*.emma_task
+*.emma
