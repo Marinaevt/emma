@@ -8,12 +8,9 @@ C2DBuilderPane::~C2DBuilderPane(void)
 
 BEGIN_MESSAGE_MAP(C2DBuilderPane, CEMMARightPane)
 	ON_WM_CREATE()
-	ON_WM_SIZE()
-
-	ON_REGISTERED_MESSAGE(AFX_WM_PROPERTY_CHANGED,C2DBuilderPane::OnPropertyChanged)
+	//SIZE, PAINT, ERASEBKGND are in EMMARightPane
 	
 	////TOOLBAR
-
 	ON_COMMAND(ID_BUILD_SAVE, &C2DBuilderPane::OnSave)
 	ON_UPDATE_COMMAND_UI(ID_BUILD_SAVE, &C2DBuilderPane::OnUpdateSave)
 

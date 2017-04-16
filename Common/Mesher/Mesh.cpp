@@ -307,13 +307,14 @@ bool CMesh::GenerateMeshMSW(double dRibLen, C2DOutline* Outline)
 		if (!result.success)
 			return false;
 
-		auto np = result.points.size();
+		size_t np = result.points.size();
 		std::vector<int> pointIndexes(np, -1);
-		for (int i = 0; i < np; ++i)
+		for (size_t i = 0; i < np; ++i) {
 			pointIndexes[i] = AddPoint(CPoint2D(result.points[i].X, result.points[i].Y), FRONTINF{ -1, static_cast<int>(contourInd), -1 });
+		}
 
-		auto nt = result.triangleIndexes.size() / 3;
-		for (int i = 0; i < nt; ++i){
+		size_t nt = result.triangleIndexes.size() / 3;
+		for (size_t i = 0; i < nt; ++i){
 			CFinEl FinEl;
 			int i0 = pointIndexes[result.triangleIndexes[i * 3    ]];
 			int i1 = pointIndexes[result.triangleIndexes[i * 3 + 1]];

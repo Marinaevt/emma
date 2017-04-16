@@ -14,11 +14,16 @@
 IMPLEMENT_DYNCREATE(CChildFrame, CMDIChildWndEx)
 
 BEGIN_MESSAGE_MAP(CChildFrame, CMDIChildWndEx)
+	
 	ON_WM_SETFOCUS()
 	ON_WM_CREATE()
 	ON_WM_MDIACTIVATE()
 	ON_WM_CLOSE()
+
+	ON_WM_PAINT()
+	ON_WM_SIZE()
 	ON_WM_ERASEBKGND()
+
 END_MESSAGE_MAP()
 
 // CChildFrame construction/destruction
@@ -101,6 +106,7 @@ void CChildFrame::OnMDIActivate(int bActivate, CWnd* pActivateWnd, CWnd* pDeacti
 		pFrame->SendMessage(WMR_CHILDACTIVATE, WPARAM(this));
 	}
 	else if (pActivateWnd == nullptr) {
+		pFrame->SendMessage(WM_ERASEBKGND);
 		pFrame->SendMessage(WMR_CHILDACTIVATE);
 	}
 	m_pView->SendMessage(WMR_ACTIVATE, pActivateWnd == this);
@@ -127,10 +133,40 @@ bool CChildFrame::IsPaneVisible(UNINT nID){
 	if (!pDoc) {
 		return false;
 	}
-	return pDoc->IsPaneVisible(nID);
+	
+	bool bPaneVisible = pDoc->IsPaneVisible(nID);	//всегда должны знать, что возвращает функция
+	return bPaneVisible;
 }
 
 int CChildFrame::OnEraseBkgnd(CDC* pDC)
 {
-	return CMDIChildWndEx::OnEraseBkgnd(pDC);
+	return 1;
+}
+
+void CChildFrame::OnPaint()
+{
+	/*
+	CPaintDC dc(this); // device context for painting
+					   //Перекраска фона в белый цвет при изменении размера
+	CRect rectClient;
+	GetClientRect(&rectClient);
+
+	CBrush bg;
+	bg.CreateStockObject(WHITE_BRUSH);
+	dc.FillRect(&rectClient, &bg);
+	*/
+	CPaintDC dc(this); // device context for painting
+
+	CRect rectTree;
+	GetClientRect(rectTree);
+
+	dc.Draw3dRect(rectTree, ::GetSysColor(COLOR_3DSHADOW), ::GetSysColor(COLOR_3DSHADOW));
+}
+
+//////////////////////////////////////////////////////////////////////////////////////
+void CChildFrame::OnSize(UNINT nType, int cx, int cy)
+{
+	CMDIChildWndEx::OnSize(nType, cx, cy);
+	//AdjustLayout();
+	Invalidate();
 }

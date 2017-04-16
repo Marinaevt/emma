@@ -60,7 +60,7 @@ void CMaterialView::SetDocument(CEMMADoc *pDoc) {
 	CMaterialView_Parent::SetDocument(pDoc);
 
 	FillEditArea(pDoc);
-	Invalidate(0);
+	Invalidate();
 }
 
 void CMaterialView::FillEditArea(CEMMADoc *pDoc) {

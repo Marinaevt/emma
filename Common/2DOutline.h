@@ -83,6 +83,125 @@ public:
 	C2DNode* GetStartNode() const;
 	C2DNode* GetEndNode() const;
 
+	Math::C2DPoint GetNormal()
+	{
+		Math::C2DPoint P0 = GetStartNode()->GetPoint();
+		Math::C2DPoint P1 = GetEndNode()->GetPoint();
+		Math::C2DPoint n = Math::C2DPoint((P1.y - P0.y) / (sqrt((P1.x - P0.x)*(P1.x - P0.x) + (P1.y - P0.y)*(P1.y - P0.y))),
+			(P0.x - P1.x))
+			//*0.5;
+			/ (sqrt((P1.x - P0.x)*(P1.x - P0.x) + (P1.y - P0.y)*(P1.y - P0.y))); //*0.5 получаем P1-P0 и поворачиваем на 90 градусов cw
+	
+		return n;
+		
+	}
+
+	Math::C2DPoint GetTangent() {
+		Math::C2DPoint P0 = GetStartNode()->GetPoint();
+		Math::C2DPoint P1 = GetEndNode()->GetPoint();
+		Math::C2DPoint tau = Math::C2DPoint((P0.x - P1.x) / (sqrt((P1.x - P0.x)*(P1.x - P0.x) + (P1.y - P0.y)*(P1.y - P0.y))),
+			(P1.y - P0.y) / (sqrt((P1.x - P0.x)*(P1.x - P0.x) + (P1.y - P0.y)*(P1.y - P0.y)))
+			);
+		// *0.5;
+
+		return tau;
+	
+	}
+	
+
+	DBL Lenght(Math::C2DPoint point) {
+		
+		double	Len = 0;
+		Math::C2DPoint p0 = GetStartNode()->GetPoint(),
+			           p1 = GetEndNode()->GetPoint();
+		if (p0.x != p1.x || p0.y != p1.y) {
+			if (fabs(p0.x - p1.x) > fabs(p0.y - p1.y)) {
+				if (min(p0.x, p1.x) <= point.x && point.x <= max(p0.x, p1.x)) {
+					Len = point.y - (p0.y + (p1.y - p0.y)*(point.x - p0.x) / (p1.x - p0.x));
+					//Len *= -cos(-Math::ToAngle(point));
+				}
+			}
+			else {
+				if (min(p0.y, p1.y) <= point.y && point.y <= max(p0.y, p1.y)) {
+					Len = point.x - (p0.x + (p1.x - p0.x)*(point.y - p0.y) / (p1.y - p0.y));
+					//Len *= sin(-Math::ToAngle(point));
+				}
+			}
+		}
+		return Len;
+
+	}
+
+	//Получаем расстояние до ближайшей точки 
+	DBL GelPerpendicularLength(Math::C2DPoint point)
+	{
+		Math::C2DPoint p0 = GetStartNode()->GetPoint(),
+			p1 = GetEndNode()->GetPoint();
+	DBL	l = (abs((point.y-p0.y)*(p1.x -p0.x) -(point.x-p0.x)*(p1.y-p0.y))) /
+		(sqrt((p1.x - p0.x) * (p1.x - p0.x) + (p1.y - p0.y) * (p1.y - p0.y)));
+	return l;
+	}
+	// Проверяем положение точки 
+	bool IsPointUnderCurve(Math::C2DPoint point)
+	{
+		Math::C2DPoint p0 = GetStartNode()->GetPoint(),
+			           p1 = GetEndNode()->GetPoint();
+		/*if (abs(p0.x - p1.x) > 0) 
+		{
+			p0.x <= point.x && point.x <= p1.x || p1.x <= point.x && point.x <= p0.x;
+			return true;
+		}
+		else 
+		{
+			p0.y <= point.y && point.y <= p1.y || p0.y <= point.y && point.y <= p1.y;
+			return true;
+		}
+		*/
+			DBL scalarMult = (point.x - p0.x) * (p1.x - p0.x) + (point.y - p0.y) * (p1.y - p0.y);
+			if (scalarMult < 0)
+				return false;
+			else if (scalarMult > sqrt((p1.x - p0.x)*(p1.x - p0.x) + (p1.y - p0.y)*(p1.y - p0.y)))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+
+}
+	bool IsPointOnCurve(Math::C2DPoint point)
+	{
+		Math::C2DPoint p0 = GetStartNode()->GetPoint(),
+			p1 = GetEndNode()->GetPoint();
+
+		DBL scalarMult = (point.x - p0.x) * (p1.x - p0.x) - (point.y - p0.y) * (p1.y - p0.y);
+		if (scalarMult == 0)
+			return true;
+		else if (scalarMult > sqrt((p1.x - p0.x)*(p1.x - p0.x) + (p1.y - p0.y)*(p1.y - p0.y)))
+		{
+			return false;
+		}
+		else
+		{
+			return false;
+		}
+
+	}
+
+
+	//Проверка на положение точки относительно штампа
+	bool IsLeft(Math::C2DPoint point) {
+		Math::C2DPoint p0 = GetStartNode()->GetPoint(),
+			p1 = GetEndNode()->GetPoint();
+		DBL tmp = (point.x - p0.x) * (p1.y - p0.y) - (point.y - p0.y) * (p1.y - p0.y);
+		if (tmp > 0)
+			return true;
+		else
+			return false;
+	}
+
+
 	bool SetNodes(size_t start, size_t end);
 	
 	virtual void SwapNodes()
@@ -337,6 +456,24 @@ public:
 	virtual int  AddNode(C2DNode* pNode);
 	virtual bool DelNode(size_t index);
 	virtual C2DNode* GetNode(size_t index);
+
+	C2DCurve* GetClosestCurve(Math::C2DPoint point)
+	{
+		size_t minIndex = 0;
+		DBL minLength =  EPS; // 
+		for (size_t i = 0; i < GetCurveCount(); i++)
+		{
+
+			DBL tmpLength = abs(GetCurve(i)->GelPerpendicularLength(point));
+			if (tmpLength < minLength) // <
+			{
+				minIndex = i;
+				minLength = tmpLength; //   minLength =tmpLength;
+			}
+		}
+		return GetCurve(minIndex);
+	}
+
 	size_t GetNodeCount() const;
 	void ClearAll();
 	////Roma
@@ -404,7 +541,8 @@ public:
 	// проверяет, находится ли точка p внутри контура c (если он замкнут)
 	// возвращает -2 - если ошибка, -1 - если точка снаружи, 0 - если на контуре, 1 - если внутри
 	int IsInsideContour(const Math::C2DPoint& p, int c);
-
+	//Возвращает -1 если луч, выпущенный из точки y пересекает прямую ab, 0 если лежит на ней и 1 если не пересекает
+	int IsIntersection(const Math::C2DPoint& a, const Math::C2DPoint& b, const Math::C2DPoint& middle);
 	// проверяет, находится ли точка p внутри хотя бы одного из контуров (= любого)
 	int IsInside(const Math::C2DPoint& p);
 

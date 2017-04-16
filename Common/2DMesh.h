@@ -221,6 +221,13 @@ public:
 	{
 		return m_nfields();
 	}
+	/////////////////////////////////
+	// Угол между нормалью из граничной точки и ( горизотом ?)
+	DBL GetAngleS(ptrdiff_t nBoundaryNode, int nSMode) const
+	{
+		return Math::ToAngle(GetNormalS(nBoundaryNode, nSMode));
+
+	}
 
 	virtual bool InitElements(size_t elements, int efields) = 0;
 

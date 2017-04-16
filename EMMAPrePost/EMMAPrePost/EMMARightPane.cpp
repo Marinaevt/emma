@@ -9,8 +9,9 @@ BEGIN_MESSAGE_MAP(CEMMARightPane, CEMMADockablePane)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_PAINT()
-	//Обновление всех видимых панелей
-	//ON_REGISTERED_MESSAGE(AFX_WM_PROPERTY_CHANGED, OnPropertyChanged)
+	ON_WM_ERASEBKGND()
+
+	ON_UPDATE_COMMAND_UI(ID_RIGHTPANE_BUTTON_APPLY, CEMMARightPane::OnEnableButtonApply)
 
 END_MESSAGE_MAP()
 
@@ -20,51 +21,55 @@ void CEMMARightPane::SetColumnNames(void) {
 	CString sParam, sValue;
 	int nNumPar = sParam.LoadString(IDS_PARAM);
 	int nNumVal = sValue.LoadString(IDS_PARAM_VALUE);
-	m_wndPropList.EnableHeaderCtrl( 1 , sParam, sValue);
+	m_wndPropList.EnableHeaderCtrl(1, sParam, sValue);
 }
 
-int CEMMARightPane::OnEraseBkgnd(CDC* pDC) {
-	return CWnd::OnEraseBkgnd(pDC);
+int CEMMARightPane::CreateApplyButton(CRect rectDummy)
+{
+	CString str4button_apply;
+	str4button_apply.LoadStringW(ID_RIGHTPANE_BUTTON_APPLY);
+	if (!m_buttonApply.Create(str4button_apply, WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, rectDummy, this, ID_RIGHTPANE_BUTTON_APPLY)) {
+		CDlgShowError cError(ID_ERROR_2DSKETCHPANE_FAIL_BUTTON); //_T("Failed to create Button \n"));
+		return -1;      // fail to create
+	}
+	//устанавливаем такой же шрифт, как в таблице свойств
+	m_buttonApply.SetFont(m_wndPropList.GetFont());
+	return 0;
+}
+
+void CEMMARightPane::OnEnableButtonApply(CCmdUI * pCmdUI)
+{
+	//Приходится активировать кнопку для нажатий (MFC style)
+	pCmdUI->Enable();
+}
+
+int CEMMARightPane::OnEraseBkgnd(CDC* pDC)
+{
+	int nEraseRightPaneBackground = CWnd::OnEraseBkgnd(pDC);
+	return nEraseRightPaneBackground;
 }
 
 void CEMMARightPane::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
 
-	CRect rect;
-	GetClientRect(&rect);	//Получаем размеры
-							//Перекраска фона в белый цвет при изменении размера
-	CBrush bg;
-	bg.CreateStockObject(WHITE_BRUSH);
-	dc.FillRect(&rect, &bg);
-
-}
-
-void CEMMARightPane::UpdatePane() {
-
-	//Заполняем таблицу параметров из документа
-	m_pDoc->FillPropList(&m_wndPropList);
+	CRect rectTree;
+	GetClientRect(&rectTree);	//получаем область панели
+	dc.Draw3dRect(rectTree, ::GetSysColor(COLOR_3DSHADOW), ::GetSysColor(COLOR_3DSHADOW));	//закрашиваем серым цветом + объём
 
 }
 
 void CEMMARightPane::OnSize(UNINT nType, int cx, int cy)
 {
 	CEMMADockablePane::OnSize(nType, cx, cy);
-	AdjustLayout();
+	AdjustLayout();	//новые размеры элементов
+	Invalidate();	//перерисовка вида с удалением фона
 }
 
-LRESULT CEMMARightPane::OnPropertyChanged(__in WPARAM wparam, __in LPARAM lparam)
+void CEMMARightPane::UpdatePane()
 {
-
-	CMFCPropertyGridProperty * pProperty = (CMFCPropertyGridProperty *)lparam;
-	COleVariant v = pProperty->GetValue();
-	UNLONG id = pProperty->GetData();
-	v.ChangeType(VT_R8);
-
-	m_pDoc->UpdateProp(&v.dblVal, &id);
-	//m_pDoc->UpdatePropList(&m_wndPropList);
-	//UpdatePane();
-	//Заполняем таблицу параметров из документа
+	//Заполняем таблицу свойств из документа
 	m_pDoc->FillPropList(&m_wndPropList);
-	return 0;
+
 }
+

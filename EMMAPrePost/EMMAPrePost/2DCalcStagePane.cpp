@@ -15,15 +15,18 @@ C2DCalcStagePane::~C2DCalcStagePane(void)
 
 BEGIN_MESSAGE_MAP(C2DCalcStagePane, CEMMARightPane)
 	ON_WM_CREATE()
-	ON_WM_SIZE()
-	ON_REGISTERED_MESSAGE(AFX_WM_PROPERTY_CHANGED,C2DCalcStagePane::OnPropertyChanged)
+	//SIZE, PAINT, ERASEBKGND are in EMMARightPane
+
+	//ON_REGISTERED_MESSAGE(AFX_WM_PROPERTY_CHANGED,C2DCalcStagePane::OnPropertyChanged)
+
 	ON_NOTIFY(NM_CUSTOMDRAW, ID_SCALE_OP_SLIDER, &C2DCalcStagePane::OnScaleOpacitySliderMove)
 
-    ON_CBN_SELENDOK(ID_SCALE_CMB, &C2DCalcStagePane::OnScaleCmbChanged)
+	ON_CBN_SELENDOK(ID_SCALE_CMB, &C2DCalcStagePane::OnScaleCmbChanged)
 	ON_CBN_SELENDOK(ID_PARAM_CMB, &C2DCalcStagePane::OnParamCmbChanged)
 
 	ON_COMMAND(ID_NEW_SCALE, &C2DCalcStagePane::OnNewScale)
 	ON_COMMAND(ID_LINES_CHKBX, &C2DCalcStagePane::OnDrawLinesChanged)
+
 END_MESSAGE_MAP()
 
 C2DCalcStage* C2DCalcStagePane::GetStage() {
@@ -33,7 +36,9 @@ C2DCalcStage* C2DCalcStagePane::GetStage() {
 	// Из документа Панели получаем Представление, а из него - текущий документ
 	CBasicView *pView = dynamic_cast<CBasicView*>(m_pDoc->GetView());
 
-	if (!pView) return nullptr;
+	if (!pView) {
+		return nullptr;
+	}
 
 	return dynamic_cast<C2DCalcStage*>(pView->GetDocument());
 }
@@ -45,7 +50,6 @@ CBasicView* C2DCalcStagePane::GetView()
 	return dynamic_cast<CBasicView*>(m_pDoc->GetView());
 }
 
-#pragma region
 
 int C2DCalcStagePane::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
@@ -72,7 +76,7 @@ int C2DCalcStagePane::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 
 	nLoadStr = str4lables.LoadStringW(IDS_SCALE_LABEL_FIELDS);	//какие значения выводим (поля)
-	if (!m_ParamLabel.Create(str4lables, WS_VISIBLE | WS_CHILD | SS_CENTERIMAGE , rectDummy, this))
+	if (!m_ParamLabel.Create(str4lables, WS_VISIBLE | WS_CHILD | SS_CENTERIMAGE, rectDummy, this))
 	{
 		CDlgShowError cError(ID_ERROR_2DCALCSTAGEPANE_FAIL_PARAMLABEL); //_T("Failed to create ParameterLabel \n"));
 		return -1;      // fail to create
@@ -85,7 +89,7 @@ int C2DCalcStagePane::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 
 	nLoadStr = str4lables.LoadStringW(IDS_SCALE_LABEL_OPACITY);	//прозрачность
-	if (!m_ScaleOpacityLabel.Create(str4lables, WS_VISIBLE | WS_CHILD | SS_CENTERIMAGE , rectDummy, this))
+	if (!m_ScaleOpacityLabel.Create(str4lables, WS_VISIBLE | WS_CHILD | SS_CENTERIMAGE, rectDummy, this))
 	{
 		CDlgShowError cError(ID_ERROR_2DCALCSTAGEPANE_FAIL_OPACITYLABEL); //_T("Failed to create ScaleOpacityLabel \n"));
 		return -1;      // fail to create
@@ -97,9 +101,9 @@ int C2DCalcStagePane::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;      // fail to create
 	}
 
-	m_ScaleOpacitySlider.SetPos(60);	
+	m_ScaleOpacitySlider.SetPos(60);
 
-	for (int i = 0; i < 101; i += 20){
+	for (int i = 0; i < 101; i += 20) {
 		m_ScaleOpacitySlider.SetTic(i);
 	}
 
@@ -111,7 +115,7 @@ int C2DCalcStagePane::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 
 	m_DrawLinesCheckBox.SetCheck(BST_CHECKED);
-	
+
 	if (!m_ScaleGrid.Create(WS_VISIBLE | WS_CHILD, rectDummy, this, ID_SCALE_GRID))
 	{
 		CDlgShowError cError(ID_ERROR_2DCALCSTAGEPANE_FAIL_SCALEGRID); //_T("Failed to create ScaleGrid \n"));
@@ -131,14 +135,14 @@ int C2DCalcStagePane::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-void C2DCalcStagePane::AdjustLayout(void){
+void C2DCalcStagePane::AdjustLayout(void) {
 	CEMMADockablePane::AdjustLayout();
 	if (GetSafeHwnd() == nullptr)		return;
 
 	CRect rectClient;
 	GetClientRect(rectClient);	//получаем габариты клиентского окна
 
-	//TODO: <long> is different between LLP64/LP64 compilers
+								//TODO: <long> is different between LLP64/LP64 compilers
 	long scaleLabelTop = rectClient.top;
 	long scaleCmbTop = scaleLabelTop + m_DefaultControlHeight;
 
@@ -148,15 +152,15 @@ void C2DCalcStagePane::AdjustLayout(void){
 	long scaleOpacitySliderTop = scaleOpacityLabelTop + m_DefaultControlHeight;
 	long drawLinesCheckBoxTop = scaleOpacitySliderTop + m_DefaultControlHeight;
 	long scaleGridTop = drawLinesCheckBoxTop + m_DefaultControlHeight;
-	
+
 	m_ScaleLabel.SetWindowPos(nullptr, rectClient.left, scaleLabelTop, rectClient.Width(), m_DefaultControlHeight, SWP_NOACTIVATE | SWP_NOZORDER);
 	m_ScaleCmb.SetWindowPos(nullptr, rectClient.left, scaleCmbTop, rectClient.Width(), m_DefaultControlHeight, SWP_NOACTIVATE | SWP_NOZORDER);
 
 	m_ParamLabel.SetWindowPos(nullptr, rectClient.left, paramLabelTop, rectClient.Width(), m_DefaultControlHeight, SWP_NOACTIVATE | SWP_NOZORDER);
 	m_ParamCmb.SetWindowPos(nullptr, rectClient.left, paramCmbTop, rectClient.Width(), m_DefaultControlHeight, SWP_NOACTIVATE | SWP_NOZORDER);
-	
+
 	m_ScaleOpacityLabel.SetWindowPos(nullptr, rectClient.left, scaleOpacityLabelTop, rectClient.Width(), m_DefaultControlHeight, SWP_NOACTIVATE | SWP_NOZORDER);
-	m_ScaleOpacitySlider.SetWindowPos(nullptr, rectClient.left, scaleOpacitySliderTop, rectClient.Width(), m_DefaultControlHeight, SWP_NOACTIVATE | SWP_NOZORDER);	
+	m_ScaleOpacitySlider.SetWindowPos(nullptr, rectClient.left, scaleOpacitySliderTop, rectClient.Width(), m_DefaultControlHeight, SWP_NOACTIVATE | SWP_NOZORDER);
 	m_DrawLinesCheckBox.SetWindowPos(nullptr, rectClient.left, drawLinesCheckBoxTop, rectClient.Width(), m_DefaultControlHeight, SWP_NOACTIVATE | SWP_NOZORDER);
 
 	CRect scaleGridRect = CRect(rectClient.left, scaleGridTop, rectClient.right, rectClient.bottom);
@@ -173,9 +177,14 @@ void C2DCalcStagePane::InitFields()
 	m_FieldMap[avg_ds] = _T("средние скорости деформации");
 	m_FieldMap[smo_d] = _T("сглаженные деформации");
 	m_FieldMap[smo_ds] = _T("сглаженные скорости деформации");
+	m_FieldMap[str] = _T("напряжение");
+	m_FieldMap[int_s] = _T("интенсивность напряжений");
+	m_FieldMap[sigma_x] = _T("напряжения по Ох");
+	m_FieldMap[sigma_y] = _T("напряжения по Оу");
+	m_FieldMap[sigma_fi] = _T("напряжения по fi");
+	m_FieldMap[def] = _T("деформации");
 }
 
-#pragma endregion Initialization
 
 void C2DCalcStagePane::UpdatePane()
 {
@@ -191,8 +200,8 @@ void C2DCalcStagePane::LoadAllScales()
 	CFileFind fileFound;
 
 	//если только открыли результат
-	if (m_Pane_Path.IsEmpty()) { 
-		LoadPath(); 
+	if (m_Pane_Path.IsEmpty()) {
+		LoadPath();
 	}
 
 	// Выделяем все файлы с расширением .emma_scale
@@ -208,7 +217,7 @@ void C2DCalcStagePane::LoadAllScales()
 
 C2DScale C2DCalcStagePane::LoadScale(CString name)
 {
-	if (name.Find(_T(".emma_scale")) == -1){								// Добавим расширение в имя файла, если
+	if (name.Find(_T(".emma_scale")) == -1) {								// Добавим расширение в имя файла, если
 		name += _T(".emma_scale");											// его нет
 	}
 
@@ -222,24 +231,24 @@ C2DScale C2DCalcStagePane::LoadScale(CString name)
 		scaleFile.Open(fullName, CStorage::modeRead | CStorage::typeBinary);// Если нет, то вернем дефолтную шкалу
 		scale.Load(scaleFile);
 	}
-			
+
 	return scale;
 }
 
-bool C2DCalcStagePane::LoadPath(){
-	
+bool C2DCalcStagePane::LoadPath() {
+
 	//Находим путь до папки с расчётами
-	m_Pane_Path = GetStage()->m_2dstage_path();	
-	int nPosSlash = m_Pane_Path.ReverseFind( '\\' ); 
-	m_Pane_Path.Truncate( nPosSlash+1 );
+	m_Pane_Path = GetStage()->m_2dstage_path();
+	int nPosSlash = m_Pane_Path.ReverseFind('\\');
+	m_Pane_Path.Truncate(nPosSlash + 1);
 	m_Pane_Path += "Scales\\";	//Поддиректория для шкал
 
-	//Пытаемся создать директорию для шкал и проверяем существование
-	if (!CreateDirectory(m_Pane_Path,nullptr) && !PathIsDirectory(m_Pane_Path)){
+								//Пытаемся создать директорию для шкал и проверяем существование
+	if (!CreateDirectory(m_Pane_Path, nullptr) && !PathIsDirectory(m_Pane_Path)) {
 		//Вывод сообщения об ошибке создания директории
 		CString strName;
 		int nNum = strName.LoadString(ID_ERROR_2DCALCSTAGEPANE_NO_NEW_DIR);
-		CDlgShowError Diag_err(strName+m_Pane_Path);	//Показываем окно ошибки
+		CDlgShowError Diag_err(strName + m_Pane_Path);	//Показываем окно ошибки
 		return false;
 	}
 	return true;
@@ -258,13 +267,13 @@ void C2DCalcStagePane::UpdateParamCmb()
 
 	if (!view) {
 		return;
-	}	
+	}
 	parameter = view->GetParameter();
 
 	if (parameter->GetField() == 0) {
 		parameter->SetField(m_FieldMap.begin()->first);
 	}
-	
+
 	m_ParamCmb.SelectString(-1, m_FieldMap[parameter->GetField()]);
 	m_ParamCmb.Invalidate();
 }
@@ -279,7 +288,7 @@ void C2DCalcStagePane::UpdateScaleCmb()
 	int nLoadStr = str_new_scale.LoadString(IDS_NEW_SCALE);
 	m_ScaleCmb.AddString(str_new_scale);
 
-	for (auto it = m_Scales.begin(), end = m_Scales.end(); it != end; ++it){
+	for (auto it = m_Scales.begin(), end = m_Scales.end(); it != end; ++it) {
 		int nResultAdd = m_ScaleCmb.AddString(it->m_Name());
 	}
 
@@ -292,12 +301,12 @@ void C2DCalcStagePane::UpdateScaleCmb()
 		m_SelectedScaleIndex = 0;
 		int nResultSet2 = m_ScaleCmb.SetCurSel(-1);
 	}
-	
+
 	m_ScaleCmb.Invalidate();
 }
 
 void C2DCalcStagePane::UpdateScaleGrid()
-{	
+{
 	m_ScaleGrid.RemoveAll();
 
 	//if (m_SelectedScaleIndex == -1)
@@ -312,10 +321,10 @@ void C2DCalcStagePane::UpdateScaleGrid()
 	for (size_t i = 1; i < count; i++)
 	{
 		C2DColor color = selectedScale.GetColor(selectedScale.GetValue(count - i));
-		CMFCPropertyGridColorProperty *colorProperty = 
-			new CMFCPropertyGridColorProperty(	selectedScale.GetStringValue(count - i),
-												RGB(color.GetR() * 255, color.GetG() * 255, color.GetB() * 255),
-												nullptr);
+		CMFCPropertyGridColorProperty *colorProperty =
+			new CMFCPropertyGridColorProperty(selectedScale.GetStringValue(count - i),
+				RGB(color.GetR() * 255, color.GetG() * 255, color.GetB() * 255),
+				nullptr);
 		//"Other" button
 		CString str_other;
 		int nLoadStr_color = str_other.LoadString(ID_BUTTON_OTHER);
@@ -334,7 +343,7 @@ void C2DCalcStagePane::UpdateCalcStage()
 	CBasicView *view = GetView();
 
 	if (!view || !view->GetParameter()) return;
-	
+
 	auto parameter = view->GetParameter();
 
 	if (parameter->GetScale() != nullptr) {
@@ -355,7 +364,6 @@ void C2DCalcStagePane::UpdateScaleDrawLines()
 	m_Scales[m_SelectedScaleIndex].SetDrawLines(m_DrawLinesCheckBox.GetCheck() == BST_CHECKED);
 }
 
-#pragma region
 
 void C2DCalcStagePane::Callback()
 {
@@ -389,7 +397,7 @@ void C2DCalcStagePane::OnNewScale()
 	if (result == IDOK) {
 		CString scaleName = dlgScale.GetScaleName();
 
-		for (size_t i = 0; i < m_Scales.size(); i++){
+		for (size_t i = 0; i < m_Scales.size(); i++) {
 			if (m_Scales[i].m_Name() == scaleName) {
 				m_SelectedScaleIndex = i;	//TODO: приведение типов
 				int nSet = m_ScaleCmb.SetCurSel(i + 1);
@@ -409,7 +417,7 @@ void C2DCalcStagePane::OnParamCmbChanged()
 
 	if (!view) {
 		return;
-	}	
+	}
 	parameter = view->GetParameter();
 
 	CString selectedField;
@@ -421,14 +429,14 @@ void C2DCalcStagePane::OnParamCmbChanged()
 			break;
 		}
 	}
-	
+
 	UpdateCalcStage();
 }
 
 
 LRESULT C2DCalcStagePane::OnPropertyChanged(__in WPARAM wparam, __in LPARAM lparam)
 {
-	CMFCPropertyGridColorProperty * colorProperty = ( CMFCPropertyGridColorProperty * ) lparam;
+	CMFCPropertyGridColorProperty * colorProperty = (CMFCPropertyGridColorProperty *)lparam;
 	UNLONG colorIndex = colorProperty->GetData();
 	C2DColor color = C2DColor(colorProperty->GetColor());
 	m_Scales[m_SelectedScaleIndex].SetColor(colorIndex, color);
@@ -443,12 +451,12 @@ void C2DCalcStagePane::OnScaleCmbChanged()
 {
 	int curSel = m_ScaleCmb.GetCurSel();
 
-	if (curSel == 0) {		
+	if (curSel == 0) {
 		OnNewScale();
 		return;
 	}
 
-	m_SelectedScaleIndex = curSel - 1;	
+	m_SelectedScaleIndex = curSel - 1;
 
 	UpdateScaleDrawLines();
 	UpdateCalcStage();
@@ -460,12 +468,10 @@ void C2DCalcStagePane::OnScaleOpacitySliderMove(NMHDR *pNMHDR, LRESULT *pResult)
 	UpdateData(true);
 
 	CBasicView *view = GetView();
-	if (view && view->GetParameter()){
+	if (view && view->GetParameter()) {
 		view->GetParameter()->m_ScaleVisualizer.SetTrasparency(m_SliderPos);
 		view->Invalidate();
 	}
 
 	*pResult = 0;
 }
-
-#pragma endregion Events

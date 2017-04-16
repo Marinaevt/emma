@@ -8,7 +8,7 @@ C3DCalcStagePane::~C3DCalcStagePane(void)
 
 BEGIN_MESSAGE_MAP(C3DCalcStagePane, CEMMARightPane)
 	ON_WM_CREATE()
-	ON_WM_SIZE()
+	//SIZE, PAINT, ERASEBKGND are in EMMARightPane
 
 	ON_NOTIFY(NM_CUSTOMDRAW, ID_ANGLE_SLIDER_3D, &C3DCalcStagePane::OnSliderAngle3D)
 	ON_NOTIFY(NM_CUSTOMDRAW, ID_STEP_SLIDER_3D, &C3DCalcStagePane::OnSliderStep3D)

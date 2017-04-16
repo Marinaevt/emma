@@ -112,8 +112,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 
 	ON_COMMAND(ID_NEW_MESHPOINT, &CMainFrame::OnNewMeshPoint)
 	ON_UPDATE_COMMAND_UI(ID_NEW_MESHPOINT, &CMainFrame::OnUpdateMesherDoc)
-	ON_BN_CLICKED(ID_UPDATE_CONTOUR, &CMainFrame::OnShowContours)
-	ON_UPDATE_COMMAND_UI(ID_UPDATE_CONTOUR, &CMainFrame::OnUpdateMesherDoc)
+	//ON_BN_CLICKED(ID_UPDATE_CONTOUR, &CMainFrame::OnShowContours)
+	//ON_UPDATE_COMMAND_UI(ID_UPDATE_CONTOUR, &CMainFrame::OnUpdateMesherDoc)
 
 	//Builder
 	ON_COMMAND(ID_BUILD_SAVE, &CMainFrame::OnBuilderSave)
@@ -128,6 +128,10 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 		
 	ON_WM_MDIACTIVATE()
 	ON_WM_CLOSE()
+	
+	//ON_WM_ERASEBKGND()
+	//ON_WM_PAINT()
+
 END_MESSAGE_MAP()
 
 static UNINT g_indicators[] =
@@ -201,10 +205,13 @@ CMainFrame::~CMainFrame() {
 
 //////////////////////////////////////////////////////////////////////////
 int CMainFrame::LoadFrame(UNINT nIDResource, UNLONG dwDefaultStyle, CWnd* pParentWnd, CCreateContext* pContext) {
-	if (!CMDIFrameWndEx::LoadFrame(nIDResource, dwDefaultStyle, pParentWnd, pContext))return 0;
+	if (!CMDIFrameWndEx::LoadFrame(nIDResource, dwDefaultStyle, pParentWnd, pContext)) {
+		return 0;
+	}
 
 	int nSize = sizeof(g_ToolBarIDs) / sizeof(g_ToolBarIDs[0]);
 	m_ToolBars.resize(nSize);
+
 	for (int i = 0; i<nSize; i++) {
 		m_ToolBars[i] = new CMFCToolBar;
 		if (!m_ToolBars[i]->CreateEx(this, TBSTYLE_FLAT, WS_CHILD | CBRS_TOP | CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC, CRect(1, 1, 1, 1), 1) || !m_ToolBars[i]->LoadToolBar(g_ToolBarIDs[i])) {
@@ -223,10 +230,14 @@ int CMainFrame::LoadFrame(UNINT nIDResource, UNLONG dwDefaultStyle, CWnd* pParen
 	}
 
 	//m_wndMenuBar.EnableDocking(CBRS_ALIGN_ANY);
-	for (int i = 0; i<nSize; i++)m_ToolBars[i]->EnableDocking(CBRS_ALIGN_ANY);
+	for (int i = 0; i < nSize; i++) {
+		m_ToolBars[i]->EnableDocking(CBRS_ALIGN_ANY);
+	}
 	EnableDocking(CBRS_ALIGN_ANY);
 	//DockPane(&m_wndMenuBar);
-	for (int i = 0; i<nSize; i++)DockPane(m_ToolBars[i]);
+	for (int i = 0; i < nSize; i++) {
+		DockPane(m_ToolBars[i]);
+	}
 
 	CreateDockPanes();
 	ShowControlBars();
@@ -371,7 +382,7 @@ void CMainFrame::OnUpdateSetCursorCheck(CCmdUI* pCmdUI, int nType){
 		CWnd *pView = GetCurDoc()->GetView();
 		if (pView) {
 			CGLBasicView *pBasicView = dynamic_cast<CGLBasicView*>(GetCurDoc()->GetView());
-			if (pBasicView->GetCursorType() == nType) {
+			if ((pBasicView != nullptr) && pBasicView->GetCursorType() == nType) {
 				pCmdUI->SetCheck(1);
 			}
 			else {
@@ -493,8 +504,14 @@ void CMainFrame::OnSaveSketchToMeta() {
 
 
 void CMainFrame::OnSetContours() {
-	I2DSketch* pSketch = GetCurDoc() ? dynamic_cast<I2DSketch*> (GetCurDoc()) : nullptr;
-	pSketch->SetContours();
+	I2DSketch* pI2DSketch = GetCurDoc() ? dynamic_cast<I2DSketch*> (GetCurDoc()) : nullptr;
+	if (pI2DSketch) {
+		pI2DSketch->ClearActiveObjects();
+		pI2DSketch->SetContours();
+	}
+	else {
+		CDlgShowError Diag_err(ID_ERROR_2DSPECIMEN_SKETCH_NULL);	//Показываем окно ошибки
+	}
 }
 
 /////////////////
@@ -580,6 +597,7 @@ void CMainFrame::OnNewMesher() {
 	
 }
 
+/*
 void CMainFrame::OnShowContours() {
 
 	CEMMADoc *pCurDoc = GetCurDoc();
@@ -596,6 +614,7 @@ void CMainFrame::OnShowContours() {
 	else
 		CDlgShowError Diag_err(ID_ERROR_2DMESHERPANE_NO_CONTOURS); //_T("Contours not found."));	//Показываем окно ошибки
 }
+*/
 
 void CMainFrame::OnNewMeshPoint() {
 
@@ -802,6 +821,17 @@ void CMainFrame::CloseAllChild() {
 			m_CFList.RemoveAt(m_CFList.GetTailPosition());
 		}
 	}
+
+	/*
+	while (m_CFList.front() != nullptr) {
+	CChildFrame *pFrame = m_CFList.back();
+	if (pFrame) {
+	pFrame->DestroyWindow();
+	m_CFList.erase(m_CFList.end());
+	}
+	}
+	*/
+
 	ShowControlBars();
 }
 
@@ -809,13 +839,20 @@ void CMainFrame::CloseAllChild() {
 void CMainFrame::ShowControlBars() {
 	
 	CChildFrame *pChild = dynamic_cast<CChildFrame *>(GetActiveFrame());
-	bool bNoView = !m_CFList.Find(pChild);
+	if (!pChild) {
+		return;
+	}
+	bool bNoView = !m_CFList.Find(pChild);	//если не нашли окно CChildFrame
 	size_t ToolBarsSize = m_ToolBars.size();
+	
 	for (size_t i = 0; i<ToolBarsSize; i++) {
+		/*	//no more MAIN toolbar (2016.09)
 		if (g_ToolBarIDs[i] == IDR_MAIN_TB) {
 			ShowPane(m_ToolBars[i], 1, 1, 0);
 		}
-		else if (!bNoView) {
+		//*/
+		//else 
+		if (!bNoView) {
 			ShowPane(m_ToolBars[i], pChild->ShowToolBar(g_ToolBarIDs[i]), 1, 0);
 		}
 		else {
@@ -823,19 +860,45 @@ void CMainFrame::ShowControlBars() {
 		}
 	}
 
+	HideAllPanels(); //Hide all panels\dockbars
+
 	size_t DockBarsSize = m_DockBars.size();
 	for (size_t i = 0; i < DockBarsSize; i++) {
 		if (!bNoView) {
 			bool bVisiblePane = pChild->IsPaneVisible(m_DockBars[i]->GetResID());
 			ShowPane(m_DockBars[i], bVisiblePane, 1, 0);
+			//m_DockBars[i]->Invalidate();
 			m_DockBars[i]->SetDocument(pChild->GetDocument());
+			
+			//если панель видна, то обновляем\заполняем её контролы значениями
 			if (bVisiblePane) {
 				m_DockBars[i]->UpdatePane();
+				m_DockBars[i]->Invalidate();
 			}
 		} else {
 			ShowPane(m_DockBars[i], 0, 1, 0);
 			m_DockBars[i]->SetDocument(nullptr);
 		}
+	}
+	
+	if (pChild->m_pView) {
+		pChild->m_pView->Invalidate();
+	}
+	/*
+	if (pChild->GetActiveView()) {
+		pChild->GetActiveView()->Invalidate();
+	} */
+
+	//Invalidate();
+	//RedrawWindow(nullptr, nullptr, RDW_ALLCHILDREN | RDW_INVALIDATE | RDW_UPDATENOW | RDW_FRAME | RDW_ERASE);
+}
+
+void CMainFrame::HideAllPanels() {
+	size_t DockBarsSize = m_DockBars.size();
+	for (size_t i = 0; i < DockBarsSize; i++) {
+		m_DockBars[i]->Invalidate();
+		ShowPane(m_DockBars[i], 0, 1, 0);	//hide all, visibility == 0
+		m_DockBars[i]->Invalidate();
 	}
 }
 
@@ -875,7 +938,9 @@ CMDIChildWnd* CMainFrame::CreateNewChild(CEMMADoc *pDoc) {
 	context.m_pCurrentFrame = this;
 	context.m_pNewViewClass = pDoc->GetViewClass();
 
-	if (context.m_pNewViewClass == 0) return nullptr;
+	if (context.m_pNewViewClass == 0) {
+		return nullptr;
+	}
 
 	CChildFrame* pFrame = new CChildFrame;
 	m_CFList.AddTail(pFrame);
@@ -895,12 +960,15 @@ CMDIChildWnd* CMainFrame::CreateNewChild(CEMMADoc *pDoc) {
 	// redraw the frame and parent
 	pFrame->SetTitle(pDoc->GetName());
 	pFrame->InitialUpdateFrame(nullptr, 1);
+	pFrame->MDIActivate();//Активируем соответствующий фрейм
 	return pFrame;
 }
 
 //////////////////////////////////////////////////////////////////////////
 void CMainFrame::CreateDockPanes() {
-	for (size_t i = 0; i<m_DockBars.size(); i++) {
+
+	size_t nDocksSize = m_DockBars.size();
+	for (size_t i = 0; i<nDocksSize; i++) {
 		CString strName;
 		UNINT uResID = m_DockBars[i]->GetResID();	//для наглядности
 		int bNameValid = strName.LoadString(uResID);
@@ -1046,7 +1114,7 @@ void CMainFrame::OnApplicationLook(UNINT id)
 		m_wndRibbonBar.SetWindows7Look(0);
 	}
 
-	RedrawWindow(nullptr, nullptr, RDW_ALLCHILDREN | RDW_INVALIDATE | RDW_UPDATENOW | RDW_FRAME | RDW_ERASE);
+	//RedrawWindow(nullptr, nullptr, RDW_ALLCHILDREN | RDW_INVALIDATE | RDW_UPDATENOW | RDW_FRAME | RDW_ERASE);
 
 	CString str_AppLook;
 	int nLoadStr = str_AppLook.LoadString(IDS_APP_LOOK);
@@ -1227,10 +1295,15 @@ LRESULT CMainFrame::OnChildFrm(WPARAM wParam, LPARAM lParam) {
 	if (wParam) {
 		CChildFrame *pChild = (CChildFrame *)wParam;
 		hTreeItem = pChild->GetTreeItem();
+		/*if (pChild->GetActiveView()) {
+			pChild->GetActiveView()->Invalidate();
+		}*/
 	}
 	else {
 		//hTreeItem = m_pDoc ? m_pDoc->GetTreeItem() : nullptr;
 		hTreeItem = nullptr;
+		//HideAllPanels();	//hide previous panels
+		//UpdateAllViews();	//
 	}
 	m_wndExplorerPane.SetCurSel(hTreeItem);
 	//Меняем активную категорию
@@ -1248,8 +1321,10 @@ LRESULT CMainFrame::OnChildClose(WPARAM wParam, LPARAM lParam) {
 		CDlgShowError cError(ID_ERROR_MAINFRM_POSITION_NOT_FOUND); //_T("Позиция не найдена m_CFList.Find(pChild)"));
 		return 0;
 	}
-
+	pChild->CloseWindow();
+	//если нашли, то удаляем
 	m_CFList.RemoveAt(pos);
+	UpdateAllViews();
 	return 0;
 }
 
@@ -1435,7 +1510,25 @@ LRESULT CMainFrame::OnUpdatePane(WPARAM wParam, LPARAM lParam) {
 	return 0;
 }
 
+/*
+int CMainFrame::OnEraseBkgnd(CDC* pDC)
+{
+	int nErase = CMDIFrameWndEx::OnEraseBkgnd(pDC);
+	return nErase;
+}
 
+void CMainFrame::OnPaint()
+{
+	CPaintDC dc(this); // device context for painting
+					   //Перекраска фона в белый цвет при изменении размера
+	CRect rectClient;
+	GetClientRect(&rectClient);
+
+	CBrush bg;
+	bg.CreateStockObject(WHITE_BRUSH);
+	dc.FillRect(&rectClient, &bg);
+}
+*/
 ////////////////////////
 
 //////////////////////////////////////////////////////////////////////////

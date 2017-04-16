@@ -8,10 +8,7 @@ C2DMeshPane::~C2DMeshPane(void)
 
 BEGIN_MESSAGE_MAP(C2DMeshPane, CEMMARightPane)
 	ON_WM_CREATE()
-	ON_WM_SIZE()
-
-	////Roma
-	ON_REGISTERED_MESSAGE(AFX_WM_PROPERTY_CHANGED,C2DMeshPane::OnPropertyChanged)
+	//SIZE, PAINT, ERASEBKGND are in EMMARightPane
 	
 	////TOOLBAR
 	ON_COMMAND(ID_CLEAR_MESH, &C2DMeshPane::OnClearMesh)
@@ -23,11 +20,11 @@ BEGIN_MESSAGE_MAP(C2DMeshPane, CEMMARightPane)
 	ON_COMMAND(ID_NEW_MESHPOINT, &C2DMeshPane::OnNewMeshPoint)
 	ON_UPDATE_COMMAND_UI(ID_NEW_MESHPOINT, &C2DMeshPane::OnUpdateNewMeshPoint)
 
-	//ON_COMMAND(ID_IMPORT_SKETCH, &C2DMeshPane::OnImportSketch)
+	ON_COMMAND(ID_IMPORT_SKETCH, &C2DMeshPane::OnImportSketch)
 	//ON_UPDATE_COMMAND_UI(ID_IMPORT_SKETCH, &C2DMeshPane::OnUpdateImportSketch)
 
-	ON_BN_CLICKED(ID_UPDATE_CONTOUR, C2DMeshPane::ShowContours)
-	ON_UPDATE_COMMAND_UI(ID_UPDATE_CONTOUR, C2DMeshPane::OnEnableButton)
+	//Buttons
+	ON_BN_CLICKED(ID_RIGHTPANE_BUTTON_APPLY, C2DMeshPane::ButtonApply)
 
 END_MESSAGE_MAP()
 
@@ -56,16 +53,15 @@ int C2DMeshPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;      // fail to create
 	}
 	
-	CString str4button;
-	str4button.LoadStringW(ID_UPDATE_CONTOUR);	//text on the button
-	if (!m_button_contour.Create(str4button, WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, rectDummy, this, ID_UPDATE_CONTOUR)) {
-		CDlgShowError cError(ID_ERROR_2DMESHERPANE_FAIL_BUTTON); //_T("Failed to create Button \n"));
-		return -1;      // fail to create
+	//creating Apply button for PropertyGrid
+	int nButton = CreateApplyButton(rectDummy);
+	if (nButton == -1) {
+		return -1;	//тут же выходим
 	}
-	//устанавливаем такой же шрифт, как в таблице свойств
-	m_button_contour.SetFont(m_wndPropList.GetFont());
 
+	//! Устанавливаем имена колонок Таблицы
 	SetColumnNames();
+	//! Устанавливаем размеры Тулбара и Таблицы и Кнопок
 	AdjustLayout();
 
 	m_cursor = 0;
@@ -89,7 +85,7 @@ void C2DMeshPane::AdjustLayout(void){
 	int cyPropList = rectClient.top + cyTlb + (rectClient.Height() - cyTlb) / 2 + 10;
 	int nFromLeft = rectClient.left + int(rectClient.Width() / 5.0);
 	int nFromRight = rectClient.Width() - int(rectClient.Width() / 5.0) * 2;	//обязательное умножение, чтобы был отступ справа
-	m_button_contour.SetWindowPos(nullptr, nFromLeft, cyPropList, nFromRight, 20, SWP_NOOWNERZORDER | SWP_SHOWWINDOW);
+	m_buttonApply.SetWindowPos(nullptr, nFromLeft, cyPropList, nFromRight, 20, SWP_NOOWNERZORDER | SWP_SHOWWINDOW);
 }
 
 C2DOutline* C2DMeshPane::GetOutline(){
@@ -109,21 +105,10 @@ void C2DMeshPane::OnClearMesh(){
 
 	CMesh* pMesh = GetMesher()->GetMesh();
 	if (pMesh){
-	
-		/*//Удаляем параметр радиус точки сгущения
-		if (pMesh->m_IsSetPoint){
-			CMFCPropertyGridProperty * pProperty = GetMesher()->m_pGrid->GetProperty(3);
-			if (pProperty) {
-				GetMesher()->m_pGrid->DeleteProperty(pProperty);
-			}
-		}//*/
-
 		pMesh->DeleteMesh();
 		pMesh->DeleteMeshPoint();
 	}
 	m_pDoc->GetView()->Invalidate();
-	//UpdatePane();
-
 }
 
 void C2DMeshPane::OnUpdateClearMesh(CCmdUI *pCmdUI){
@@ -155,15 +140,6 @@ void C2DMeshPane::OnNewMesh(){
 	//UpdatePane();	
 }
 
-void C2DMeshPane::OnEnableButton(CCmdUI *pCmdUI) {
-	//Приходится активировать кнопку для нажатий (MFC style)
-	pCmdUI->Enable();
-}
-
-void C2DMeshPane::ShowContours() {
-	GetMesher()->SetContours();
-}
-
 void C2DMeshPane::OnUpdateNewMesh(CCmdUI *pCmdUI){
 
 }
@@ -188,26 +164,42 @@ void C2DMeshPane::OnUpdateNewMeshPoint(CCmdUI *pCmdUI){
 	else pCmdUI->SetCheck(0); 
 }
 
-/*
-void C2DMeshPane:: OnImportSketch(){
+void C2DMeshPane::OnImportSketch() {
 
-	C2DOutline* pOutline = GetOutline();
-	if (pOutline){
+	CEMMADoc *pCurDoc = m_pDoc;
+	C2DMesher* pMesher = pCurDoc ? dynamic_cast<C2DMesher*>(pCurDoc) : nullptr;
+
+	C2DSketch* parent = dynamic_cast<C2DSketch*>(pCurDoc->GetParent()->SubDoc(0));
+	C2DOutline *pOutline = nullptr;
+	if (parent) {
+		pOutline = parent->GetOutline();
+	}
+
+
+	if (pOutline) {
 		//TODO: проверка должна быть полнее - например, на незамкнутость контура(ов)
-		if (pOutline->GetNodeCount() < 3 || pOutline->GetCurveCount() < 2){
+		if (pOutline->GetNodeCount() < 3 || pOutline->GetCurveCount() < 2) {
 			pOutline = nullptr;
 
 			//вывод сообщения об ошибке
 			CDlgShowError Diag_err(ID_ERROR_2DMESHERPANE_NO_SKETCH);	//Показываем окно ошибки
 			return;
 		}
-		GetMesher()->SetOutline(pOutline);
-		UpdatePane();
+		pMesher->SetOutline(pOutline);
 	}
-}//*/
-
-/*
-void C2DMeshPane::OnUpdateImportSketch(CCmdUI *pCmdUI){
-
+	else {
+		//вывод сообщения об ошибке
+		CDlgShowError Diag_err(ID_ERROR_2DMESHERPANE_NO_SKETCH);	//Показываем окно ошибки
+		return;
+	}
+	//*/
 }
-*/
+
+void C2DMeshPane::OnUpdateImportSketch(CCmdUI * pCmdUI)
+{
+}
+
+void C2DMeshPane::ButtonApply()
+{
+	m_pDoc->UpdatePropList(&m_wndPropList);
+}

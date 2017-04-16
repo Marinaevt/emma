@@ -152,8 +152,9 @@ void C2DScale::AddMark(double value)
 			m_Colors().insert(m_Colors().begin() + i + 1, C2DScaleColor(value, C2DColor::WHITE));
 			return;
 		}
-		else if (fabs(m_Colors[i].GetValue() - value) < EPS)
+		else if (fabs(m_Colors[i].GetValue() - value) < EPS) {
 			return;
+		}
 	}
 }
 
@@ -167,14 +168,10 @@ void C2DScale::SetBounds(double minValue, double maxValue)
 	m_MinValue = minValue;
 	m_MaxValue = maxValue;
 
-	/*
-	if (minValue > maxValue)
-		throw;			// Для отладки. При правильной работе приложения Вы и не увидите эту строчку
-	//*/
-
 	//TODO: разобраться, зачем коллбэки тут
-	if (m_Callbackable != nullptr)
+	if (m_Callbackable != nullptr) {
 		m_Callbackable->Callback();
+	}
 }
 
 DBL C2DScale::GetValue(size_t index) const
@@ -201,7 +198,8 @@ C2DColor C2DScale::GetColor(double value) const
 
 C2DColor C2DScale::GetColor(size_t index) const
 {
-	return m_Colors[index].GetColor();
+	C2DColor tmpColor = m_Colors[index].GetColor();
+	return tmpColor;
 }
 
 void C2DScale::SetColor(size_t index, const C2DColor &color)
@@ -261,10 +259,6 @@ C2DColor C2DScale::CalculateDefaultColor(double value) const
 		r += 1;
 		g += (value-3./N)*N;
 	}
-
-	//double r = value <= 0.5 ? 0 : (value - 0.5) / 0.5;
-	//double g = value <= 0.5 ?  2 * value : -2 * value + 2;
-	//double b = value >= 0.5 ? 0 : 1 - (value / 0.5);
 	
 	return C2DColor(r, g, b);
 }
@@ -289,8 +283,7 @@ void C2DScale::ArrangeColors()
 {
 	if (!m_IsDescrete) return;
 
-	for (size_t i = 0; i < m_Colors().size() - 1; i++)
-	{
+	for (size_t i = 0; i < m_Colors().size() - 1; i++){
 		m_Colors[i].SetSecondValue(m_Colors[i + 1].GetValue());
 	}
 
@@ -299,5 +292,6 @@ void C2DScale::ArrangeColors()
 
 CString C2DScale::GetStringValue(size_t i, bool onlyFirstValue) const
 {
-	return m_Colors[i].GetStringValue(m_MinValue, m_MaxValue, onlyFirstValue);
+	CString str = m_Colors[i].GetStringValue(m_MinValue, m_MaxValue, onlyFirstValue);
+	return str;
 }

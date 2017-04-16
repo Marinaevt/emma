@@ -25,7 +25,8 @@ public:
 	
 	CMFCPropertyGridProperty* AddProp(CStringW name, double eval, size_t pos);
 	void FillPropList(CMFCPropertyGridCtrl *pGrid);	// Заполнение параметров (правая панель)
-	void UpdateProp(double *pEval, UNLONG *pId);		// Обновление параметров (правая панель)
+	//void UpdateProp(double *pEval, UNLONG *pId);		// Обновление параметров (правая панель)
+	void UpdatePropList(CMFCPropertyGridCtrl *pGrid);	//обновляет данные документа (Doc) по новым значениям таблицы
 	
 	virtual void DrawGL(GLParam &parameter);
 	bool GetBoundingBox(CRect2D &rect);

@@ -4,15 +4,20 @@
 #include "2DMotion.h"
 #include "2DBCAtom.h"
 #include "2DPoint.h"
+#include "ITask.h"
 
+#include "2DMesh.h"
+//#include "ITask.cpp"
 
 //! Класс сборки Инструментов и Траекторий
 class C2DRigid : public I2DInteractiveObject
 {
+	
 	GETTYPE (T2DRIGID)
 public:
 	DBL m_time;					// Время прибытия в узел
 	Math::C2DPoint m_oldpos;	// Предыдущая позиция
+	IO::CInterfaceAdapter m_mesh_adapt; // сетка
 
 	C2DOutline m_shape; //< Форма инструмента
 	IO::C2DPoint m_stickpoint; //< Точка привязки формы
@@ -21,6 +26,10 @@ public:
 
 	bool m_IsStuck;			//Есть ли контакт с КЭ сеткой (трение) (init==false)
 	bool m_IsFirstStuck;	//Первичен ли контакт с КЭ сеткой (сцепка/заделка) (init==true)
+
+
+	//void setPositionBorderNode(size_t nNode, );
+
 
 public:
 	C2DRigid();
@@ -44,6 +53,7 @@ public:
 	}
 
 	void ResetTime();
+	void WriteBCToLog();
 
 	//virtual bool Load(CStorage& file);
 	//virtual bool Save(CStorage& file);
@@ -56,9 +66,11 @@ public:
 
 	// 1 - точка point внутри или на границе, -1 - не внутри. closest - ближайшая, len - точность.
 	// не учитывает углы и другие случаи
-	virtual bool IsInside(const Math::C2DPoint& point, Math::C2DPoint& closest, DBL len);	
+
+	//virtual bool IsInside(const Math::C2DPoint& point, Math::C2DPoint& closest, DBL len);	
 	
 	virtual bool GetBC(const C2DMeshInterface *pMesh, size_t nBoundaryNode, C2DBCAtom& bc);
+	//DBL Distance_To_Curve(const C2DMeshInterface * pMesh);
 	virtual bool GetBC(const C2DMeshInterface *pMesh, std::vector<C2DBCAtom> *bc);
 
 	virtual Math::C2DRect GetBoundingBox();

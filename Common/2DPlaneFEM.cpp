@@ -105,28 +105,32 @@ bool C2DPlaneFEM::InitMaterial(const CString& path) {
 void C2DPlaneFEM::InitBC() {
 
 	//LOGGER.Init(CString(_T("..\\..\\Logs\\C2DPlaneFEM.cpp_InitBC.txt")));
+
 	C2DMesh3* mesh3 = dynamic_cast<C2DMesh3*>(m_mesh_adapt());
 
 	/*for (int i = 0; i < m_bc.GetSize(); i++)
 	{
-
-	if (m->m_nodes()[m->m_bordernodes[i]].y <= 0.0001)	//низ
-	{
-	m_bc[i].setSymX();
-	if (m->m_nodes()[m->m_bordernodes[i]].x == 0.0)	//левый нижний узел
-	{
-	m_bc[i].setKinematic(0,0);
+		if (mesh3->m_nodes()[mesh3->m_bordernodes[i]].y <= EPS)	//низ
+		{
+			m_bc[i].setSymX();
+			//m_bc[i].setKinematic(0, 0);
+			if (mesh3->m_nodes()[mesh3->m_bordernodes[i]].x == 0.0)	//левый нижний узел
+			{
+				m_bc[i].setKinematic(0, 0);
+			}
+		}*/
+		/*
+		if (m->m_nodes()[m->m_bordernodes[i]].x <= 0.00001 && m->m_nodes()[m->m_bordernodes[i]].y != 0.0)
+		{
+		m_bc[i].setSymY();
+		}
+		
 	}
-	}
-
-	if (m->m_nodes()[m->m_bordernodes[i]].x <= 0.00001 && m->m_nodes()[m->m_bordernodes[i]].y != 0.0)
-	{
-	m_bc[i].setSymY();
-	}
-
-
-	}*/
+*/
+	
 }
+
+
 
 //! Инициализация в Srv
 bool C2DPlaneFEM::Init()
@@ -161,9 +165,9 @@ bool C2DPlaneFEM::Init()
 	//Инициализация ГУ
 	m_bc.SetSize(mesh3->m_bordernodes().size()); //Задание массива граничных условий
 	InitBC();
-
+	
 	//В лог
-	//m->WriteToLog();
+	//mesh3->WriteToLog();
 	//WriteBCToLog();
 
 	return true;
@@ -218,9 +222,9 @@ void C2DPlaneFEM::Calc(DBL dt)
 	MakeSmoothDef();
 
 	FieldsToNodes(dt);
-	//CalcForce(dt);
+	CalcForce(dt);
 
-	//WriteEFieldsToLog();
+	WriteEFieldsToLog();
 
 
 
@@ -340,6 +344,14 @@ void C2DPlaneFEM::CalcFEM(DBL dt)
 		mesh3->FillSTM(m_slae.m_matr, m_slae.m_rp, m_mat.Material(), dt, 0, mesh3->m_elements().size());
 		//m_slae.WriteToLog();
 
+		//Поворачиваем ЛСК
+		for (size_t i = 0; i < mesh3->m_bordernodes().size(); i++)
+		{
+			m_slae.RotateMatrixLCS((mesh3->m_bordernodes[i]) * 2, m_bc[i].getAngle());
+			m_slae.RotateRPLCS((mesh3->m_bordernodes[i]) * 2, m_bc[i].getAngle());
+
+		}
+
 		// внесение ГУ
 		size_t bordernodes_size = mesh3->m_bordernodes().size();
 		for (size_t i = 0; i < bordernodes_size; i++)
@@ -377,6 +389,13 @@ void C2DPlaneFEM::CalcFEM(DBL dt)
 		if (k > 3) {
 			g_dError = MaxErrorP(prevSol, m_slae.m_sol);
 			if (g_dError < g_ErrInf.m_dErr) break;
+		}
+
+		//Восстановление ЛСК
+		for (size_t i = 0; i < mesh3->m_bordernodes().size(); i++)
+		{
+			m_slae.RotateMatrixLCS((mesh3->m_bordernodes[i]) * 2, -m_bc[i].getAngle());
+			m_slae.RotateRPLCS((mesh3->m_bordernodes[i]) * 2, -m_bc[i].getAngle());
 		}
 		prevSol = m_slae.m_sol; // копируем предыдущее решение
 
@@ -488,7 +507,7 @@ void C2DPlaneFEM::CalcAvgDefSpeed() {
 		C[1] = n0.m_x - n2.m_x; //X[i]-X[k];
 		C[2] = n1.m_x - n0.m_x; //X[j]-X[i];
 
-								//Площадь эл-та
+		//Площадь эл-та
 		DBL sm = abs(n0.m_x * B[0] + n2.m_x * B[2] + n1.m_x * B[1]) * 0.5; //(X[i]*(B[0]) + X[k]*(B[2]) + X[j]*(B[1]))/2;
 		if (fabs(sm) < EPS) {
 			CDlgShowError cError(ID_ERROR_2DPLANEFEM_SQ_TRIANGLE_LESS_EPS); //_T("Площадь треугольника меньше EPS \n"));
@@ -897,15 +916,17 @@ void C2DPlaneFEM::CalcForce(DBL dt) {
 void C2DPlaneFEM::Move(DBL dt)
 {
 	C2DMesh3* mesh3 = dynamic_cast<C2DMesh3*>(m_mesh_adapt());
-
-	//LOGGER.Init(CString("..\\..\\Logs\\C2DPlaneFEM.cpp_Move.txt"));
-	//m->WriteToLog();
-	//WriteBCToLog();
-
+	
+	LOGGER.Init(CString("..\\..\\Logs\\C2DPlaneFEM.cpp_Move.txt"));
+	mesh3->WriteToLog();
+	WriteBCToLog();
+	
+	 C2DRigid *dist;
+	
 	for (size_t i = 0; i < mesh3->m_nodes().size(); i++)
-	{
-		mesh3->m_nodes()[i].m_x += m_slae.m_sol[2 * i] * dt;
-		mesh3->m_nodes()[i].m_y += m_slae.m_sol[2 * i + 1] * dt;
+	{ 
+		mesh3->m_nodes()[i].m_x  += m_slae.m_sol[2 * i] * dt;
+		mesh3->m_nodes()[i].m_y  += m_slae.m_sol[2 * i + 1] * dt;
 	}
 
 	for (size_t ei = 0; ei < mesh3->m_elements().size(); ei++)
@@ -914,7 +935,8 @@ void C2DPlaneFEM::Move(DBL dt)
 		mesh3->GetEField(ei, eFields::int_d) += mesh3->GetEField(ei, eFields::int_ds) * dt; // накопленная интенсивность деформаций
 																							//m->GetEField(ei, eFields::int_d) = fabs(m_CurrentSqrSum-m_FirstSqrSum)/m_FirstSqrSum;
 	}
-
+	
+	
 	/*
 	for(int i=0; i < m->m_bordernodes().GetCount(); i++){
 	if(m_bc[i].getType() == C2DBCAtom::symX || m_bc[i].getType() == C2DBCAtom::symY){
@@ -1001,17 +1023,17 @@ void C2DPlaneFEM::DrawGL(GLParam &parameter)
 	mesh3->DrawGL(p); // Граница
 
 	//! Отображение обычных узлов сетки
-	/*glPointSize(3);
-	for (int i = 0; i < mesh3->m_nodes().GetCount(); i++) {
+	glPointSize(3);
+	for (int i = 0; i < mesh3->m_nodes().size(); i++) {
 		glColor3d(0.5, 0.5, 0.5);
 		glBegin(GL_POINTS);
 		glVertex2d(mesh3->m_nodes()[i].x, mesh3->m_nodes()[i].y);
 		glEnd();
-	}*/
+	}
 
 
 
-	 //Отрисовка граничных условий
+	 //Отрисовка|| Отображение граничных условий
 	 double pixelsize = 1;// валюнтаризм, по идее это должно передаваться в DrawGL()
 	 double max_force=0;
 	 size_t bordernodes_count = mesh3->m_bordernodes().size();
@@ -1027,20 +1049,56 @@ void C2DPlaneFEM::DrawGL(GLParam &parameter)
 	 double kff = 10 * pixelsize;
 	 glPointSize(5);
 	 for (size_t i = 0; i < min(bordernodes_count, mbc_count); i++) {
+		 
 		 Math::C2DPoint& node = mesh3->m_nodes()[mesh3->m_bordernodes()[i]];
+		
+		
+	
+		
+
 		 switch (m_bc[i].getType()) {
+			 // Для свободных узлов - серый
 		 case C2DBCAtom::free:
 			 glColor3d(0.7, 0.7, 0.7);
 			 break;
+			 // В случае симметрии по Y - зеленый
 		 case C2DBCAtom::symY:
-			 glColor3d(0, 1, 0);	//green
+			 glColor3d(0, 1, 0);
 			 break;
+			 // В случае симметрии по X - синий
 		 case C2DBCAtom::symX:
-			 glColor3d(0, 0, 1);	//blue
-			 break;
+
+			/*
+			glColor3d(0, 0, 1);
+			glBegin(GL_LINES);
+			glVertex2d(node.x, node.y);
+			glVertex2d(4*(node.x+cos(m_bc[i].getAngle())), 4*(node.y+sin(m_bc[i].getAngle()))); //угол
+			glEnd();
+
+			glColor3d(1, 0, 0);
+			glBegin(GL_LINES);
+			glVertex2d(node.x, node.y);
+			glVertex2d(4*(node.x + cos(m_bc[i].getQx())), 4*(node.y + sin(m_bc[i].getQx()))); //сила
+			glEnd();
+
+			glColor3d(1, 1, 0);
+			glBegin(GL_LINES);
+			glVertex2d(node.x, node.y);
+			glVertex2d(4*(node.x + cos(m_bc[i].getQy())), 4*(node.y  +sin(m_bc[i].getQy()))); //скорость
+			glEnd();
+			*/
+			 glColor3d(0, 0, 1);
+			 glBegin(GL_LINES);
+			 glVertex2d(node.x, node.y);
+			 glVertex2d(node.x+5*cos(m_bc[i].getAngle()),node.y + 5*sin(m_bc[i].getAngle())); //угол
+			 glEnd();
+
+			break;
+			 // В случае кинематических ГУ - красный
 		 case C2DBCAtom::kinematic:
-			 glColor3d(1, 0, 0);	//red
+			 glColor3d(1, 0, 0);	
 			 break;
+			 // В случае задания нагрузок/ давления 
 		 case C2DBCAtom::load:
 			 glColor3d(0, 0, 0);
 			 glBegin(GL_LINES);
@@ -1057,10 +1115,11 @@ void C2DPlaneFEM::DrawGL(GLParam &parameter)
 		 glEnd();
 	 }//*/
 
-	 /* уже готово, но придётся перестраивать сборки - не залил в svn
+	 // уже готово, но придётся перестраивать сборки - не залил в svn
 	 //Отрисовка горизонтальных рисок
-	 for (int i=0; i < m->m_bordernodes_marks().GetCount(); i++){
-	 Math::C2DPoint& node = m->m_nodes()[m->m_bordernodes_marks()[i]];
+	 /*
+	 for (int i=0; i < mesh3->m_bordernodes_marks().GetCount(); i++){
+	 Math::C2DPoint& node = mesh3->m_nodes()[mesh3->m_bordernodes_marks()[i]];
 	 glColor3d(0.1,0.2,0.5);
 	 glPointSize(3);
 	 glLineWidth(3);
@@ -1068,10 +1127,10 @@ void C2DPlaneFEM::DrawGL(GLParam &parameter)
 	 glVertex2d(node.x, node.y);
 	 glVertex2d(node.x + 3.0, node.y);
 	 glEnd();
-	 } //*/
-
+	 } 
+	 */
 	 //WriteEFieldsToLog();
-
+	
 	glPointSize(1);
 }
 
@@ -1201,223 +1260,6 @@ void C2DPlaneFEM::DrawGL3D(GLParam &parameter)
 
 	}
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	//}
-	/* glCullFace (GL_FRONT);
-	glPolygonMode (GL_BACK, GL_FILL);
-	glDepthFunc (GL_LEQUAL);*/
-
-	//}
-
-
-	//	
-	//for (int i=0; i<m->m_elements().GetCount(); i++){
-	//	
-	//	Math::C2DPoint p0 = m->m_nodes()[m->m_elements()[i].n0],
-	//				p1 = m->m_nodes()[m->m_elements()[i].n1],
-	//				p2 = m->m_nodes()[m->m_elements()[i].n2]; 
-	//
-	//	for(j=arg;60<=j;j-=10){
-	//		if(j==arg || j ==60){
-	//			z= j * M_PI_180;
-	//			glColor3d(0.7,0.7,0.7);
-	//		     glBegin(GL_TRIANGLES);
-	//		      glVertex3f((p0.x)*cos(z), (p0.y),(p0.x)*sin(z));
-	//		        glVertex3f((p1.x)*cos(z), (p1.y),(p1.x)*sin(z));
-	//				  glVertex3f((p2.x)*cos(z), (p2.y),(p2.x)*sin(z));
-	//			  
-	//		     glEnd();
-	//		}
-	//	       
-	//		}
-	//
-	//	
-	//	
-	//	}
-	//	glLineWidth(3);
-	//	INT_PTR bordernodes_count = m->m_bordernodes().GetCount();
-	//	
-	//	for(INT_PTR i=1; i <bordernodes_count; i++){
-	//		Math::C2DPoint& node = m->m_nodes()[m->m_bordernodes()[i]];
-	//			for(j=arg;60<=j;j--){
-	//			//glPolygonMode(GL_FRONT,GL_LINE);
-	//		    //glPolygonMode(GL_BACK,GL_FILL);
-	//
-	//			z= j * M_PI_180;
-	//			k=(j+1)* M_PI_180;
-	//			glColor3d(0.7,0.7,0.7);
-	//			glBegin(GL_QUAD_STRIP);
-	//		    glVertex3d( (m->m_nodes()[m->m_bordernodes()[i]].x),  (m->m_nodes()[m->m_bordernodes()[i]].y),0);
-	//			glVertex3d((m->m_nodes()[m->m_bordernodes()[i-1]].x), (m->m_nodes()[m->m_bordernodes()[i-1]].y),0);
-	//
-	//		    glVertex3d((m->m_nodes()[m->m_bordernodes()[i]].x)*cos(z),(m->m_nodes()[m->m_bordernodes()[i]].y),(m->m_nodes()[m->m_bordernodes()[i]].x)*sin(z));
-	//			glVertex3d((m->m_nodes()[m->m_bordernodes()[i-1]].x)*cos(z), (m->m_nodes()[m->m_bordernodes()[i-1]].y),(m->m_nodes()[m->m_bordernodes()[i-1]].x)*sin(z));
-	//			glEnd();
-	//
-	//			//glBegin(GL_POLYGON);
-	//		   // glVertex3d( (m->m_nodes()[m->m_bordernodes()[i]].x),  (m->m_nodes()[m->m_bordernodes()[i]].y),0);
-	//			
-	//			//glVertex3d((m->m_nodes()[m->m_bordernodes()[i-1]].x)*cos(z), (m->m_nodes()[m->m_bordernodes()[i-1]].y),(m->m_nodes()[m->m_bordernodes()[i-1]].x)*sin(z));
-	//		   // glVertex3d((m->m_nodes()[m->m_bordernodes()[i]].x)*cos(z),(m->m_nodes()[m->m_bordernodes()[i]].y),(m->m_nodes()[m->m_bordernodes()[i]].x)*sin(z));
-	//			
-	//			//glEnd();
-	//		
-	//	}  
-	//	}
-	//	
-	//	
-	//	/*
-	//	for(int i=0; i < m->m_nodes().GetCount(); i++){
-	//		for(j=arg;358<=j;j--){
-	//				z= j * M_PI_180;
-	//		    glColor3d(1.0,0.0,0.0);
-	//		      glBegin(GL_POLYGON);
-	//		        glVertex3d((m->m_nodes()[i].x)*cos(z), (m->m_nodes()[i].y),(m->m_nodes()[i].x)*sin(z));
-	//		      glEnd();
-	//			}
-	//	}*/
-	//
-	//
-	//		//! Отображение обычных узлов сетки
-	//	/*glPointSize(30);
-	//	for(int i=0; i < m->m_nodes().GetCount(); i++){
-	//		glColor3d(0.0,1.0,0.0);
-	//		glBegin(GL_POINTS);
-	//		glVertex2d(m->m_nodes()[i].x, m->m_nodes()[i].y);
-	//		glEnd();
-	//		
-	//	}//*/
-	//
-	//	/*for(int i=0; i < m->m_nodes().GetCount(); i++){
-	//			for(j=arg;359<=j;j--){
-	//				z= j * M_PI_180;
-	//			     glBegin(GL_POLYGON);
-	//				 glColor3d(0.7,0.7,0.7);
-	//			      glVertex3f((m->m_nodes()[i].x)*cos(z), (m->m_nodes()[i].y),(m->m_nodes()[i].x)*sin(z));
-	//				
-	//			     // glVertex3f((m->m_nodes()[i].x)*cos(z), (m_nodes[m_elements[i].n1].m_y),(m_nodes[m_elements[i].n1].m_x)*sin(z));
-	//			     // glVertex3f((m_nodes[m_elements[i].n2].m_x)*cos(z), (m_nodes[m_elements[i].n2].m_y),(m_nodes[m_elements[i].n2].m_x)*sin(z));
-	//				  
-	//			     glEnd();
-	//
-	//		       
-	//			}
-	//	}
-	//	for(int i=0; i < m->m_nodes().GetCount(); i++){
-	//			for(j=arg;359<=j;j--){
-	//				z= j * M_PI_180;
-	//			     glBegin(GL_POLYGON);
-	//				 glColor3d(0.7,0.7,0.7);
-	//			      glVertex3f((m->m_nodes()[i].x)*cos(z), (m->m_nodes()[i].y),(m->m_nodes()[i].x)*sin(z));
-	//				
-	//			     // glVertex3f((m->m_nodes()[i].x)*cos(z), (m_nodes[m_elements[i].n1].m_y),(m_nodes[m_elements[i].n1].m_x)*sin(z));
-	//			     // glVertex3f((m_nodes[m_elements[i].n2].m_x)*cos(z), (m_nodes[m_elements[i].n2].m_y),(m_nodes[m_elements[i].n2].m_x)*sin(z));
-	//				  
-	//			     glEnd();
-	//
-	//		       
-	//			}
-	//	}
-	//	
-	//	//Отрисовка граничных условий
-	//	double pixelsize = 1;// валюнтаризм, по идее это должно передаваться в DrawGL()
-	//	double max_force=0;
-	////	INT_PTR bordernodes_count = m->m_bordernodes().GetCount();
-	//
-	//	
-	//
-	//	for(INT_PTR i=0; i < min(bordernodes_count, m_bc.GetSize()); i++){
-	//		if(m_bc[i].getType() == C2DBCAtom::load){
-	//			double force = sqrt(m_bc[i].getQx()*m_bc[i].getQx() + m_bc[i].getQy()*m_bc[i].getQy());
-	//			if(force>max_force)max_force = force;
-	//		}
-	//	}
-	//
-	//	double kff = 10*pixelsize;
-	//	glPointSize(5);
-	//	for(INT_PTR i=0; i < min(bordernodes_count, m_bc.GetSize()); i++){
-	//		Math::C2DPoint& node = m->m_nodes()[m->m_bordernodes()[i]];
-	//		switch(m_bc[i].getType()){
-	//		case C2DBCAtom::free:
-	//			glColor3d(0.7,0.7,0.7);
-	//			break;
-	//		case C2DBCAtom::symY:
-	//			glColor3d(0,1,0);
-	//			glPointSize(1);
-	//			break;
-	//		case C2DBCAtom::symX:
-	//			glColor3d(0,0,1);
-	//			break;
-	//		case C2DBCAtom::kinematic:
-	//			glColor3d(1,0,0);
-	//			break; 
-	//		case C2DBCAtom::load:
-	//			glColor3d(0,0,0);
-	//			glBegin(GL_LINE_STRIP);
-	//
-	//			glVertex3d(node.x, node.y,node.x);
-	//			glVertex3d(node.x - kff*m_bc[i].getQx(), node.y - kff*m_bc[i].getQy(),node.x - kff*m_bc[i].getQx());
-	//			
-	//			glEnd();
-	//			break; 
-	//		default:
-	//			glColor3d(1,1,1);
-	//			break;
-	//
-	//			/*case C2DBCAtom::load:
-	//			glColor3d(0.7,0.7,0.7);
-	//			glBegin(GL_POLYGON);
-	//
-	//			
-	//			glVertex3f((m->m_nodes()[i].x)*cos(z), (m->m_nodes()[i].y),(m->m_nodes()[i].x)*sin(z));
-	//			glEnd();
-	//			break; */
-	//		}
-	//		// Отрисовываем покрытие каркаса из профилей заготовки
-	//
-	//
-	//
-	//		for(j=arg;90<=j;j--){
-	//			//glPolygonMode(GL_FRONT,GL_LINE);
-	//		   // glPolygonMode(GL_BACK,GL_FILL);
-	//			z= j * M_PI_180;
-	//			k=(j)* M_PI_180;
-	//			
-	//			glBegin(GL_POLYGON);
-	//		    glVertex3d((node.x), node.y,0);
-	//			glVertex3d((node.x+1 )*cos(z), node.y,(node.x+1)*sin(z));
-	//		//	glVertex3d((node.x+1), node.y,0);
-	//		    glVertex3d((node.x)*cos(z), node.y,(node.x)*sin(z));
-	//			
-	//			glEnd();
-	//
-	//		
-	//			/*for(int i=0; i < m->m_nodes().GetCount(); i++){
-	//		    // glColor3d(1.0,0.0,0.0);
-	//		      glBegin(GL_POLYGON);
-	//		        glVertex3d((m->m_nodes()[i].x)*cos(z), (m->m_nodes()[i].y),(m->m_nodes()[i].x)*sin(z));
-	//		      glEnd();
-	//			}
-	//	}     
-	//	} 
-	//	
-	//	// уже готово, но придётся перестраивать сборки - не залил в svn
-	//	//Отрисовка горизонтальных рисок
-	//	for (int i=0; i < m->m_bordernodes_marks().GetCount(); i++){
-	//		Math::C2DPoint& node = m->m_nodes()[m->m_bordernodes_marks()[i]];
-	//		glColor3d(0.1,0.2,0.5);
-	//		glPointSize(3);
-	//		glLineWidth(3);
-	//		glBegin(GL_LINES);
-	//		glVertex2d(node.x, node.y);
-	//		glVertex2d(node.x + 3.0, node.y);
-	//		glEnd();
-	//	} 
-	//	
-	//	WriteEFieldsToLog();
-	//	//glPointSize(1);
-	//}
-	//	
 }
 
 //! Записываем ГУ в лог
@@ -1501,6 +1343,7 @@ void C2DPlaneFEM::WriteEFieldsToLog() {
 	//}
 
 	CString strNfield;
+	CString str_1NField;
 	//DLOG(CString(_T(" x | y | avg_d | int_d | int_ds | int_s | F |")), log_info);
 	//for(int i=0; i<m->m_nodes().GetCount(); i++){
 
@@ -1510,6 +1353,7 @@ void C2DPlaneFEM::WriteEFieldsToLog() {
 
 	strNfield += AllToString(mesh3->m_nodes()[j0].x) + CString(_T(" | "));
 	strNfield += AllToString(mesh3->m_nodes()[j0].y) + CString(_T(" | "));
+
 
 	strNfield += AllToString(mesh3->GetNField(j0, avg_d)) + CString(_T(" | "));
 	strNfield += AllToString(mesh3->GetNField(j0, avg_ds)) + CString(_T(" | "));
@@ -1524,6 +1368,12 @@ void C2DPlaneFEM::WriteEFieldsToLog() {
 
 	//strNfield += AllToString(m->GetNField(i,sf_a))+CString(_T(" | "));
 	ALOGI("Nodes", strNfield);
+
+	//DLOG(CString(_T(" x | y ), log_info);
+	//str_1NField = AllToString(dt) + CString(_T(" | "));
+	//str_1NField += AllToString(mesh3->m_nodes()[j0].x) + CString(_T(" | "));
+	//str_1NField += AllToString(mesh3->m_nodes()[j0].y) + CString(_T(" | "));
+	//ALOGI("DD", str_1NField);
 	//}
 
 	//DLOG(CString(_T("End of EFields")), log_info);

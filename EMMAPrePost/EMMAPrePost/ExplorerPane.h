@@ -61,6 +61,7 @@ protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UNINT nType, int cx, int cy);
 	afx_msg void OnPaint();
+	afx_msg int OnEraseBkgnd(CDC* pDC);
 	
 	afx_msg void OnTvnSelchangedEPTree(NMHDR *pNMHDR, LRESULT *pResult);
 

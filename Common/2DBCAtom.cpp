@@ -6,29 +6,29 @@
 // [2] Qx = Px, Qy = Py
 // [3] Qx = Vx, Qy = Vy
 
-void C2DBCAtom::setSymY(DBL dVelX, DBL dForceY) {
-	a = 0;
+void C2DBCAtom::setSymY(DBL dVelX, DBL dForceY, DBL angle) {
+	a = angle;
 	Qx = dVelX;
 	Qy = dForceY;
 	type = symY;
 }
 
-void C2DBCAtom::setSymX(DBL dVelY, DBL dForceX) {
-	a = 0;
+void C2DBCAtom::setSymX(DBL dVelY, DBL dForceX, DBL angle) {
+	a = angle;
 	Qx = dForceX;
 	Qy = dVelY;
 	type = symX;
 }
 
-void C2DBCAtom::setKinematic(DBL dVx, DBL dVy) {
-	a = 0;
+void C2DBCAtom::setKinematic(DBL dVx, DBL dVy, DBL angle) {
+	a = angle;
 	Qx = dVx;
 	Qy = dVy;
 	type = kinematic;
 }
 
-void C2DBCAtom::setLoad(DBL dPx, DBL dPy) {
-	a = 0;
+void C2DBCAtom::setLoad(DBL dPx, DBL dPy, DBL angle) {
+	a = angle;
 	Qx = dPx;
 	Qy = dPy;
 	type = load;

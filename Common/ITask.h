@@ -110,3 +110,51 @@ public:
 };
 
 //typedef IO::CPtrArray<ITask, CIOTASKPTRARRAY> CIOTaskPtrArray;
+class CStepInfo {
+public:
+	CStepInfo() {
+		t0 = 0.01;
+		N = 100;
+		max_dt = 1;
+		MaxT = 1000;
+		CStorage file;
+
+		if (file.Open(_T("init.txt"), CStorage::modeRead | CStorage::typeBinary)) {
+			ReadValue(file, "<P>", &P);
+			ReadValue(file, "<t0>", &t0);
+			ReadValue(file, "<MaxDt>", &max_dt);
+			double dVal;
+			ReadValue(file, "<N>", &dVal);
+			N = static_cast<int>(dVal);
+			ReadValue(file, "<MinDt>", &MinDt);
+			ReadValue(file, "<MaxT>", &MaxT);
+
+			file.Close();
+		}
+		else {
+			CDlgShowError cError(ID_ERROR_ITASK_INIT_NOT_FOUND); //_T("init.txt not found (ITask)"));
+		}
+	}
+	~CStepInfo() {}
+
+	// необходимо также запретить копирование
+	CStepInfo(CStepInfo const&); // реализация не нужна
+	CStepInfo& operator= (CStepInfo const&);  // и тут
+
+	static CStepInfo& Instance()
+	{
+		// согласно стандарту, этот код ленивый и потокобезопасный
+		static CStepInfo s;
+		return s;
+	}
+
+	int N;//Количество шагов для набора давления;
+	double t0;//продолжительность набора давления;
+	double max_dt;//максимальный шаг;
+	double P;//давление;
+	double MinDt;
+	double MaxT;
+	double dt;
+
+};
+

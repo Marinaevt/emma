@@ -155,7 +155,7 @@ public:
 		auto res = _aliveTriangles.erase(oldTri);
 		assert(res == 1);
 
-		for (auto i = 0; i < _table.size(); ++i)
+		for (size_t i = 0; i < _table.size(); ++i)
 			if (_table[i] == oldTri)
 				_table[i] = existentTri;
 		// мы не применяем физическое удаление, т.к. адреса треугольников используются в качестве ключей хеш-таблиц и внутри очереди с приоритетом
@@ -805,7 +805,7 @@ private:
 			});
 			return pow(abs(meanQuality), 1.0 / star.size());
 		};
-		for (auto i = 0; i < nVertexes; ++i)
+		for (size_t i = 0; i < nVertexes; ++i)
 		{
 			if (isStructurePoint[i]) continue; // пропускаем структурные вершины
 				

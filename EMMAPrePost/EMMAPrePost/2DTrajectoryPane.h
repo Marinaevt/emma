@@ -10,7 +10,7 @@ class C2DTrajectoryPane :	public CEMMARightPane
 	public:
 	C2DTrajectoryPane(size_t nID):CEMMARightPane(nID){
 		m_cursor = 0;
-	}
+	} 
 	virtual ~C2DTrajectoryPane(void);
 
 public:
@@ -45,5 +45,9 @@ public:
 	afx_msg void OnUpdatePlay(CCmdUI *pCmdUI);
 
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+
+	//Button
+	//Применение изменений в таблице свойств
+	afx_msg void ButtonApply();
 
 };

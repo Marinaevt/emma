@@ -1,7 +1,4 @@
-﻿// ExplorerView.cpp : implementation file
-//
-
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "ExplorerPane.h"
 
 
@@ -10,8 +7,8 @@
 IMPLEMENT_DYNAMIC(CExplorerPane, CEMMADockablePane)
 
 CExplorerPane::CExplorerPane(size_t nID) :
-				CEMMADockablePane(nID),
-				m_bDontSendWM(false)
+	CEMMADockablePane(nID),
+	m_bDontSendWM(false)
 {
 	if (!m_imageList.Create(16, 16, ILC_COLOR32, 1, 0)) {
 		CDlgShowError cError(ID_ERROR_EXPLORERPANE_FAIL_IMAGELIST); //_T("Failed to create ImageList to Tree \n"));	// fail to create
@@ -28,6 +25,7 @@ BEGIN_MESSAGE_MAP(CExplorerPane, CDockablePane)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_PAINT()
+	ON_WM_ERASEBKGND()
 
 	ON_NOTIFY(TVN_SELCHANGED, IDC_EP_TREE, &CExplorerPane::OnTvnSelchangedEPTree)
 
@@ -42,6 +40,7 @@ BEGIN_MESSAGE_MAP(CExplorerPane, CDockablePane)
 	//Смотрим результаты
 	ON_COMMAND(ID_EXPLORER_RESULTS, &CExplorerPane::OnLoadResults)
 	ON_UPDATE_COMMAND_UI(ID_EXPLORER_RESULTS, &CExplorerPane::OnUpdateResults)
+
 END_MESSAGE_MAP()
 
 
@@ -50,7 +49,7 @@ int CExplorerPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CDockablePane::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	
+
 	// Создание Тулбара {{
 	m_wndToolBar.Create(this, AFX_DEFAULT_TOOLBAR_STYLE, IDR_EXPLORER_TB);
 	m_wndToolBar.LoadToolBar(IDR_EXPLORER_TB, 0, 0, 1 /* Is locked */);
@@ -68,7 +67,7 @@ int CExplorerPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// Создание дерева {{
 	const UNLONG dwTreeStyle = WS_CHILD | WS_VISIBLE | TVS_HASLINES | TVS_HASBUTTONS | TVS_SHOWSELALWAYS | TVS_FULLROWSELECT;
 
-	if (!m_wndTree.Create(dwTreeStyle, rectDummy, this, IDC_EP_TREE)){
+	if (!m_wndTree.Create(dwTreeStyle, rectDummy, this, IDC_EP_TREE)) {
 		CDlgShowError cError(ID_ERROR_EXPLORERPANE_FAIL_TREE); //_T("Failed to create Explorer Tree \n"));
 		return -1;      // fail to create
 	}
@@ -80,15 +79,10 @@ int CExplorerPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
-void CExplorerPane::OnSize(UNINT nType, int cx, int cy)
-{
-	CDockablePane::OnSize(nType, cx, cy);
-	AdjustLayout();
-}
-
-//////////////////////////////////////////////////////////////////////////////////////
-void CExplorerPane::AdjustLayout(){
-	if (GetSafeHwnd() == nullptr)	return;
+void CExplorerPane::AdjustLayout() {
+	if (GetSafeHwnd() == nullptr) {
+		return;
+	}
 
 	CRect rectClient;
 	GetClientRect(rectClient);
@@ -100,14 +94,26 @@ void CExplorerPane::AdjustLayout(){
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
-CEMMADoc *CExplorerPane::GetCurDoc(){
-	if(!m_wndTree) return nullptr;	//Проверяем демонов наших, перед вызовом их...
+CEMMADoc *CExplorerPane::GetCurDoc() {
+	if (!m_wndTree) {
+		return nullptr;	//Проверяем демонов наших, перед вызовом их...
+	}
+
 	HTREEITEM hItem = m_wndTree.GetSelectedItem();
 	if (!hItem) {
 		//TODO: show error
+		//CDlgShowError cExplorerError(ID_???);
 		return nullptr;
 	}
 	return (CEMMADoc *)m_wndTree.GetItemData(hItem);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////
+void CExplorerPane::OnSize(UNINT nType, int cx, int cy)
+{
+	CDockablePane::OnSize(nType, cx, cy);
+	AdjustLayout();
+	Invalidate();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -119,35 +125,41 @@ void CExplorerPane::OnPaint()
 	m_wndTree.GetWindowRect(rectTree);
 	ScreenToClient(rectTree);
 
-	rectTree.InflateRect(1, 1);
 	dc.Draw3dRect(rectTree, ::GetSysColor(COLOR_3DSHADOW), ::GetSysColor(COLOR_3DSHADOW));
 }
 
-//////////////////////////////////////////////////////////////////////////////////////
-void CExplorerPane::FillTree(){
-	if(!m_wndTree.GetSafeHwnd() || !m_pDoc)return;
+int CExplorerPane::OnEraseBkgnd(CDC * pDC)
+{
+	int nEraseRightPaneBackground = CWnd::OnEraseBkgnd(pDC);
+	return nEraseRightPaneBackground;
+}
 
-	
-	
+//////////////////////////////////////////////////////////////////////////////////////
+void CExplorerPane::FillTree() {
+	if (!m_wndTree.GetSafeHwnd() || !m_pDoc)return;
+
+
+
 	HTREEITEM hHeadItem = m_wndTree.GetNextItem(TVI_ROOT, TVGN_CHILD);
 
 	//Очистка (сверху) ветвей дерева не соответствующих документу 
-	while(hHeadItem!=nullptr && hHeadItem!=m_pDoc->GetTreeItem()){
+	while (hHeadItem != nullptr && hHeadItem != m_pDoc->GetTreeItem()) {
 		m_wndTree.DeleteItem(hHeadItem);
 		hHeadItem = m_wndTree.GetNextItem(TVI_ROOT, TVGN_CHILD);
 	}
-	
-	if(hHeadItem == nullptr){
+
+	if (hHeadItem == nullptr) {
 		//добавление соответствующей документу ветки
 		hHeadItem = m_pDoc->AddToTree(m_wndTree, TVI_ROOT, TVI_FIRST, m_icons_name);
-	}else{
+	}
+	else {
 
 		//модификация соответствующей документу ветки
 		HTREEITEM hTempItem = m_pDoc->ModifyTree(m_wndTree, m_icons_name);
 
 		//Очистка (снизу) ветвей дерева не соответствующих документу 
 		HTREEITEM hNextItem = m_wndTree.GetNextItem(hHeadItem, TVGN_NEXT);
-		while(hNextItem!=nullptr){
+		while (hNextItem != nullptr) {
 			int nDelItem = m_wndTree.DeleteItem(hNextItem);
 			hNextItem = m_wndTree.GetNextItem(hHeadItem, TVGN_NEXT);
 		}
@@ -159,7 +171,7 @@ void CExplorerPane::FillTree(){
 }
 
 /*
-	по имени документа CString находим набор иконок и загружаем их
+по имени документа CString находим набор иконок и загружаем их
 */
 void CExplorerPane::SetIconsToTree(CString str) {
 	CString strTaskName;
@@ -193,7 +205,7 @@ void CExplorerPane::SetIconsToTree(CString str) {
 }
 
 
-void CExplorerPane::SetDocument(CEMMADoc *pDoc){
+void CExplorerPane::SetDocument(CEMMADoc *pDoc) {
 	//устанавливаем документ
 	CEMMADockablePane::SetDocument(pDoc);
 
@@ -206,33 +218,35 @@ void CExplorerPane::SetDocument(CEMMADoc *pDoc){
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-void CExplorerPane::SetCurSel(HTREEITEM hTreeItem){
-	if(!m_wndTree.GetSafeHwnd())return;
+void CExplorerPane::SetCurSel(HTREEITEM hTreeItem) {
+	if (!m_wndTree.GetSafeHwnd()) {
+		return;
+	}
 	m_bDontSendWM = true;
 	m_wndTree.SelectItem(hTreeItem);
 	m_bDontSendWM = false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-void CExplorerPane::OnTvnSelchangedEPTree(NMHDR *pNMHDR, LRESULT *pResult){
-	if(m_bDontSendWM)return;
+void CExplorerPane::OnTvnSelchangedEPTree(NMHDR *pNMHDR, LRESULT *pResult) {
+	if (m_bDontSendWM)return;
 
 	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
 	*pResult = 0;
 
 	CWnd* pFrame = GetParentFrame();
 	HTREEITEM hItem = m_wndTree.GetSelectedItem();
-	if(hItem){
+	if (hItem) {
 		CEMMADoc *pDoc = (CEMMADoc *)m_wndTree.GetItemData(hItem);
 		pFrame->SendMessage(WMR_EP_SELCHANGE, (WPARAM)m_wndTree.GetItemData(hItem));
 	}
 }
 
-void CExplorerPane::OnAdd(){
+void CExplorerPane::OnAdd() {
 	CEMMADoc *pCurDoc = GetCurDoc();
-	if(pCurDoc){
+	if (pCurDoc) {
 		CEMMADoc *pNewDoc = pCurDoc->Add();
-		if(pNewDoc){
+		if (pNewDoc) {
 			FillTree();
 			m_wndTree.Expand(pNewDoc->GetTreeItem(), TVE_EXPAND);	//"раскрытие" у нового эл-та
 			m_wndTree.UpdateWindow();
@@ -242,18 +256,19 @@ void CExplorerPane::OnAdd(){
 	}
 }
 
-void CExplorerPane::OnUpdateAdd(CCmdUI *pCmdUI){
-	
+void CExplorerPane::OnUpdateAdd(CCmdUI *pCmdUI) {
+
 	CEMMADoc *pCurDoc = GetCurDoc();
 	if (pCurDoc) {
 		pCmdUI->Enable(GetCurDoc()->CanAdd());
-	}else {
+	}
+	else {
 		pCmdUI->Enable(false);
 	}
 }
 
-void CExplorerPane::OnRemove(){
-	
+void CExplorerPane::OnRemove() {
+
 	CEMMADoc *pCurDoc = GetCurDoc();
 	if (pCurDoc) {
 		pCurDoc->Remove();
@@ -268,46 +283,48 @@ void CExplorerPane::OnRemoveAllSubDoc() {
 	if (pCurDoc) {
 		size_t nSub = pCurDoc->GetSubDocNum();
 
-		while(pCurDoc->GetSubDocNum() > 0) {
+		while (pCurDoc->GetSubDocNum() > 0) {
 			pCurDoc->SubDoc(0)->Remove();
 		}
-		
+
 		FillTree();
 		//m_wndTree.UpdateWindow();
 	}
 }
 
-void CExplorerPane::OnUpdateRemove(CCmdUI *pCmdUI){
+void CExplorerPane::OnUpdateRemove(CCmdUI *pCmdUI) {
 	if (GetCurDoc()) {
 		pCmdUI->Enable(GetCurDoc()->IsRemovable());
-	}else {
+	}
+	else {
 		pCmdUI->Enable(false);
 	}
 }
 
 
-void CExplorerPane::OnLoadResults(){
-	
-	if(GetCurDoc()){
-		
+void CExplorerPane::OnLoadResults() {
+
+	if (GetCurDoc()) {
+
 		CEMMADoc *pResDoc = GetCurDoc();
 		C2DResults *pRes = dynamic_cast<C2DResults*>(GetCurDoc());
 		CEMMADoc *pOperDoc = GetCurDoc()->GetParent();
 		CGen2DOperation *pOper = dynamic_cast<CGen2DOperation*>(GetCurDoc()->GetParent());
 		/*//Call MainFrame, Destroy all ChildFrames of Results
 		if(pRes->GetChildViewDescriptor()){
-			CWnd *pView = pRes->GetChildViewDescriptor()->GetView();
-			if(pView){
-				pView->GetTopLevelParent()->SendMessage(WMR_REOPEN_SAVES, (WPARAM)pRes);
-			}
+		CWnd *pView = pRes->GetChildViewDescriptor()->GetView();
+		if(pView){
+		pView->GetTopLevelParent()->SendMessage(WMR_REOPEN_SAVES, (WPARAM)pRes);
+		}
 		}*/
 
-		if (GetCurDoc()->GetSubDocNum() > 0){
+		if (GetCurDoc()->GetSubDocNum() > 0) {
 			pOperDoc->Remove();
-		}else{
+		}
+		else {
 
 			size_t nNum = pRes->LoadResults();		//nNum for debug
-		
+
 		}
 		/*C2DResults *pResults = new C2DResults;
 		pResults->SetName(IDS_RESULTS);
@@ -319,51 +336,51 @@ void CExplorerPane::OnLoadResults(){
 		FillTree();
 	}
 
-	
+
 
 	/*
 	C2DResults *pRes = dynamic_cast<C2DResults*>(GetCurDoc());
 	CEMMADoc *pResDoc = GetCurDoc();
 	CGen2Operation *pOper = dynamic_cast<CGen2Operation*>(GetCurDoc()->GetParent());
-	
+
 	if(pRes && pResDoc){
 
-		//Call MainFrame, Destroy all ChildFrames of Results
-		if(pRes->GetChildViewDescriptor()){
-			CWnd *pView = pRes->GetChildViewDescriptor()->GetView();
-			if(pView){
-				pView->GetTopLevelParent()->SendMessage(WMR_REOPEN_SAVES, (WPARAM)pRes);
-			}
-		}
+	//Call MainFrame, Destroy all ChildFrames of Results
+	if(pRes->GetChildViewDescriptor()){
+	CWnd *pView = pRes->GetChildViewDescriptor()->GetView();
+	if(pView){
+	pView->GetTopLevelParent()->SendMessage(WMR_REOPEN_SAVES, (WPARAM)pRes);
+	}
+	}
 
-		//TODO: Разобраться с Result, C2DResult, CalcStage, C2DCalcStage
-		// & Deactivate();
+	//TODO: Разобраться с Result, C2DResult, CalcStage, C2DCalcStage
+	// & Deactivate();
 
-		C2DResults *pResults = new C2DResults;
+	C2DResults *pResults = new C2DResults;
 
-		int nNum = pResults->LoadResults();		//nNum for debug
-		if (nNum > 0){
-			
-			//pRes->Deactivate();	//если не удалять старое, то просто добавится новый раздел снизу
-			//pRes->Remove();	// краш (выясняю)
-			pResDoc->Remove();
-			
-			pResults->SetName(IDS_RESULTS);
-			pOper->InsertSubDoc(pResults);
-			m_wndTree.SelectItem(pResults->GetTreeItem());	//фокус на эл-нт
-			
-		}else{
-			delete pResults;
-		}
+	int nNum = pResults->LoadResults();		//nNum for debug
+	if (nNum > 0){
 
-		FillTree();
+	//pRes->Deactivate();	//если не удалять старое, то просто добавится новый раздел снизу
+	//pRes->Remove();	// краш (выясняю)
+	pResDoc->Remove();
+
+	pResults->SetName(IDS_RESULTS);
+	pOper->InsertSubDoc(pResults);
+	m_wndTree.SelectItem(pResults->GetTreeItem());	//фокус на эл-нт
+
+	}else{
+	delete pResults;
+	}
+
+	FillTree();
 	}
 	*/
 }
 
-void CExplorerPane::OnUpdateResults(CCmdUI *pCmdUI){
+void CExplorerPane::OnUpdateResults(CCmdUI *pCmdUI) {
 	C2DResults* pRes = dynamic_cast<C2DResults*>(GetCurDoc());
-	if(pRes) {
+	if (pRes) {
 		pCmdUI->Enable(true); //Включение или отключение элемента интерфейса для данной команды.
 	}
 	else {
@@ -372,7 +389,7 @@ void CExplorerPane::OnUpdateResults(CCmdUI *pCmdUI){
 }
 
 
-void CExplorerPane::OnPressCloseButton(){
+void CExplorerPane::OnPressCloseButton() {
 	CWnd* pFrame = GetParentFrame();
 
 	//GetSafeHwnd() Returns the window handle for a window.
@@ -383,18 +400,18 @@ void CExplorerPane::OnPressCloseButton(){
 	pFrame->SendMessage(WMR_EP_CLOSE);
 }
 
-void CExplorerPane::UpdatePane(){
+void CExplorerPane::UpdatePane() {
 
 }
 
 //! Раскрываем все подэлементы в Обозревателе проекта
-void CExplorerPane::ExpandAll(){
+void CExplorerPane::ExpandAll() {
 
 	HTREEITEM hItem = m_wndTree.GetFirstVisibleItem();
 
 	while (hItem != nullptr)
 	{
-		m_wndTree.Expand(hItem,TVE_EXPAND);
+		m_wndTree.Expand(hItem, TVE_EXPAND);
 		hItem = m_wndTree.GetNextItem(hItem, TVGN_NEXTVISIBLE);
-	} 
+	}
 }

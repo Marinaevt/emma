@@ -147,8 +147,8 @@ CMFCPropertyGridProperty* C2DMesher::AddProp(CStringW name, double eval, size_t 
 
 	CMFCPropertyGridProperty *pProp = new CMFCPropertyGridProperty(name, eval, name);	//The group name, DATA, Description
 	pProp->SetData(pos);	//устанавливает свойство в нужную позицию
-	if (pos == 3) pProp->AllowEdit(0);	//кол-во эл-ов
-	if (pos == 4) pProp->AllowEdit(0);	//кол-во узлов
+	if (pos == 3) pProp->Enable(0);	//кол-во эл-ов
+	if (pos == 4) pProp->Enable(0);	//кол-во узлов
 	return pProp;
 }
 
@@ -171,70 +171,64 @@ void C2DMesher::FillPropList(CMFCPropertyGridCtrl *pGrid)
 
 }
 
-
-void C2DMesher::UpdateProp(double *pEval, UNLONG *pId)
+//! Обновляем все поля таблицы свойств
+void C2DMesher::UpdatePropList(CMFCPropertyGridCtrl * pGrid)
 {
-	if( (pEval == 0) || (pId == 0)) return;
+	if (pGrid == nullptr) {
+		CDlgShowError err(_T("CMFCPropertyGridCtrl is null"));
+		return;
+	}
+	
+	//кол-во строк в таблице свойств (для проверки)
+	int nCount = pGrid->GetPropertyCount();
+	if (nCount == 0) {
+		CDlgShowError err(_T("CMFCPropertyGridCtrl is empty"));
+		return;
+	}
+	
+	CMesh *pMesh = GetMesh();
+	if (!pMesh) {
+		return;
+	}
 
-	switch(*pId){
-		
-		//case 1: Кол-во элементов (не редактируется)
-		
-		//case 2: Кол-во точек (не редактируется)
+	CMFCPropertyGridProperty* pProperty1 = pGrid->FindItemByData(1);	//m_dRibLen
+	if (pProperty1) {
+		pMesh->m_dRibLen = pProperty1->GetValue().dblVal;
+		if (pMesh->m_dRibLen <= 0.0) {
+			pMesh->m_dRibLen = 1.0;
+		}
+	}
 
-		case 1:
-			
-			GetMesh()->m_dRibLen = *pEval;
-			if (GetMesh()->m_dRibLen <= 0.0) {
-				GetMesh()->m_dRibLen = 1.0;
-			}
-			if (GetOutline()->GetCurveCount() > 1 && GetOutline()->GetContourCount() > 0){
-				GetMesh()->DeleteMesh();
-				bool bGen = GetMesh()->GenerateMesh(m_Mesh.m_dRibLen, &m_Outline);
-				GetMesh()->ConstructMap();
-			}
-			break;
+	CMFCPropertyGridProperty* pProperty2 = pGrid->FindItemByData(2);	//m_dMeshRad
+	if (pProperty2) {
+		pMesh->m_dMeshRad = pProperty2->GetValue().dblVal;
+		if (pMesh->m_dMeshRad <= 0.0) {
+			pMesh->m_dMeshRad = 1.0;
+		}
+	}
 
-		case 2:
-			GetMesh()->m_dMeshRad = *pEval;
-			if (GetMesh()->m_dMeshRad < 0.0) {
-				GetMesh()->m_dMeshRad = 1.0;
-			}
-			if(GetMesh()->m_IsSetPoint){
-				GetMesh()->DeleteMesh();
-				bool bGen = GetMesh()->GenerateMesh(m_Mesh.m_dRibLen, &m_Outline);
-				GetMesh()->ConstructMap();
-			}
-			break;
+	//перестраиваем сетку с новыми параметрами
+	pMesh->DeleteMesh();
+	bool bGen = pMesh->GenerateMesh(pMesh->m_dRibLen, &m_Outline);
+	pMesh->ConstructMap();
+
+
+	//устанавливаем новые значения в неизменяемые поля
+	CMFCPropertyGridProperty* pProperty3 = pGrid->FindItemByData(3);	//case 3: Кол-во элементов (не редактируется)
+	if (pProperty3) {
+		DBL nElNum = pMesh->GetElNum();
+		COleVariant varElements(nElNum);
+		pProperty3->SetValue(&varElements);
+	}
+
+	CMFCPropertyGridProperty* pProperty4 = pGrid->FindItemByData(4);	//case 4: Кол-во точек (не редактируется)
+	if (pProperty4) {
+		DBL nNodesNum = pMesh->GetNodesNum();
+		COleVariant varNodes(nNodesNum);
+		pProperty4->SetValue(&varNodes);
 	}
 
 	InitialUpdateView();
-	//InitialUpdatePane();
-}
-
-void C2DMesher::UpdatePropList(CMFCPropertyGridCtrl * pGrid)
-{
-	//кол-во строк в таблице свойств (для проверки)
-	int ncount = pGrid->GetPropertyCount();
-	
-	//конвертируем в MS дурацкий формат для таблицы
-	COleVariant varElements((ULONGLONG) GetMesh()->GetElNum());
-	COleVariant varNodes((ULONGLONG)GetMesh()->GetNodesNum());
-
-	//устанавливаем значения для кол-ва элементов и узлов
-	/*
-	CMFCPropertyGridProperty* pProperty = pGrid->GetProperty(0);
-	pProperty->SetValue(&varElements);
-	CMFCPropertyGridProperty* pProperty2 = pGrid->GetProperty(1);
-	pProperty2->SetValue(&varNodes);
-	//*/
-	CMFCPropertyGridProperty* pProperty1 = pGrid->FindItemByData(3);
-	pProperty1->AllowEdit(0);
-	CMFCPropertyGridProperty* pProperty2 = pGrid->FindItemByData(4);
-	pProperty2->AllowEdit(0);
-
-	pProperty1->SetValue(&varElements);
-	pProperty2->SetValue(&varNodes);
 
 }
 

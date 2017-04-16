@@ -27,8 +27,8 @@ public:
 ///////////////////// Roma
 	void SetActiveObject(Math::C2DPoint *ppoint){I2DSketch::SetActiveObject(ppoint);};
 	void FillPropList(CMFCPropertyGridCtrl *pGrid);
-	void UpdateProp(double *pEval, UNLONG *pId);
-	void UpdatePropList(CMFCPropertyGridCtrl *pGrid);	//обновляет все значения таблицы
+	//void UpdateProp(double *pEval, UNLONG *pId);
+	void UpdatePropList(CMFCPropertyGridCtrl *pGrid);	//обновляет данные документа (Doc) по новым значениям таблицы
 
 	CMFCPropertyGridProperty * AddProp(CStringW name, double eval, size_t pos);
 

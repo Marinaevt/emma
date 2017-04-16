@@ -15,8 +15,6 @@ public:
 	}
 	virtual ~C2DMeshPane(void);
 
-	CButton m_button_contour;
-
 public:
 
 	C2DMesher* GetMesher(){return m_pDoc ? dynamic_cast<C2DMesher*>(m_pDoc) : nullptr; }
@@ -36,11 +34,13 @@ public:
 	afx_msg void OnNewMeshPoint();
 	afx_msg void OnUpdateNewMeshPoint(CCmdUI *pCmdUI);
 
-	//afx_msg void OnImportSketch();
-	//afx_msg void OnUpdateImportSketch(CCmdUI *pCmdUI);
+	afx_msg void OnImportSketch();
+	afx_msg void OnUpdateImportSketch(CCmdUI *pCmdUI);
 
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 
-	afx_msg void ShowContours(); 
-	afx_msg void OnEnableButton(CCmdUI *pCmdUI);
+	//Button
+	//Применение изменений в таблице свойств
+	afx_msg void ButtonApply();
+
 };

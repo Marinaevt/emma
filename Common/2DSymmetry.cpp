@@ -35,6 +35,8 @@ bool C2DSymmetry::GetBC(const C2DMeshInterface *pMesh, size_t nBoundaryNode, C2D
 	case modeAny:
 		if (m_axle().IsLeft(node) && m_left())
 		{
+
+			//bc.setSymAny();
 			CDlgShowError cError(ID_ERROR_2DSYMMETRY_NO_ANGLE);		// НАДО УСТАНОВИТЬ УГОЛ!
 			return false;
 		}

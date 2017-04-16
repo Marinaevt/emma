@@ -35,7 +35,7 @@ void CSLAE::ZeroAll()
 		m_rp[i] = m_sol[i] = 0;
 	}
 }
-
+/*
 void CSLAE::RotateMatrixLCS(size_t k, DBL alpha)
 {
 	DBL sina = sin(alpha),
@@ -70,7 +70,82 @@ void CSLAE::RotateMatrixLCS(size_t k, DBL alpha)
 	m_matr.cell(k, k + 1) = akk1;
 	m_matr.cell(k + 1, k + 1) = ak1k1;
 }
+*/
 
+void CSLAE::RotateMatrixLCS(size_t k, DBL alpha) //k - номер узла
+{
+	DBL sina = sin(alpha), cosa = cos(alpha);
+	for (size_t r = max(0,k- m_matr.band()); r < k; r++) // перебор элементов столбца k
+	{
+		size_t c = k-r; // индекс столбца k
+		DBL ai1,ai2;
+		ai1 = m_matr.direct_cell(r, c) * cosa - m_matr.direct_cell(r, c + 1) * sina;
+		ai2 = m_matr.direct_cell(r, c) * sina + m_matr.direct_cell(r, c + 1) * cosa;
+		
+		m_matr.direct_cell(r, c) = ai1;
+		m_matr.direct_cell(r, c + 1) = ai2;
+	}
+	for (size_t c = 2; c < m_matr.band(); c++)
+	{
+		DBL a1j, a2j;
+		
+		a1j = m_matr.direct_cell(k, c) * cosa - m_matr.direct_cell(k + 1, c-1) * sina;
+		a2j = m_matr.direct_cell(k, c) * sina + m_matr.direct_cell(k + 1, c-1) * cosa;
+
+		m_matr.direct_cell(k, c) = a1j;
+		m_matr.direct_cell(k + 1, c-1) = a2j;
+	}
+	DBL akk = m_matr.cell(k, k) * cosa * cosa
+		+ 2 * m_matr.cell(k, k + 1) * sina * cosa + m_matr.cell(k + 1, k + 1)* sina * sina;
+	DBL akk1 = (m_matr.cell(k + 1, k + 1) - m_matr.cell(k, k))*sina * cosa
+		+ m_matr.cell(k, k + 1) * (cosa * cosa - sina * sina);
+	DBL ak1k1 = m_matr.cell(k + 1, k + 1) * cosa * cosa
+		+ 2 * m_matr.cell(k, k + 1) * sina * cosa + m_matr.cell(k, k)* sina * sina;
+	m_matr.cell(k, k) = akk;
+	m_matr.cell(k, k + 1) = akk1;
+	m_matr.cell(k + 1, k + 1) = ak1k1;
+}
+/*
+void CSLAE::RotateMatrixLCS(size_t k, DBL alpha) //k - номер узла
+{
+	DBL sina = sin(alpha),
+		cosa = cos(alpha);
+	for (size_t i = 0; i < m_matr.band(); i++)
+	{
+		DBL ai1, ai2;
+		if (i != k || i != k + 1)
+		{
+			continue;
+		}
+		ai1 = m_matr.cell(i, k) * cosa - m_matr.cell(i, k + 1) * sina;
+		m_matr.cell(i, k) = ai1;
+		ai2 = m_matr.cell(i, k) * sina + m_matr.cell(i, k + 1) * cosa;
+		m_matr.cell(i, k + 1) = ai2;
+
+	}
+	for (size_t c = 1; c < m_matr.band(); c++)
+	{
+		DBL a1j, a2j;
+		if (j != k || j != k + 1)
+		{
+			continue;
+		}
+		a1j = m_matr.cell(k, j) * cosa - m_matr.cell(k + 1, j) * sina;
+		m_matr.cell(k, j) = a1j;
+		a2j = m_matr.cell(k, j) * sina + m_matr.cell(k + 1, j) * cosa;
+		m_matr.cell(k + 1, j) = a2j;
+	}
+	DBL akk = m_matr.cell(k, k) * cosa * cosa
+		+ 2 * m_matr.cell(k, k + 1) * sina * cosa + m_matr.cell(k + 1, k + 1)* sina * sina;
+	DBL akk1 = (m_matr.cell(k + 1, k + 1) - m_matr.cell(k, k))*sina * cosa
+		+ m_matr.cell(k, k + 1) * (cosa * cosa - sina * sina);
+	DBL ak1k1 = m_matr.cell(k + 1, k + 1) * cosa * cosa
+		+ 2 * m_matr.cell(k, k + 1) * sina * cosa + m_matr.cell(k, k)* sina * sina;
+	m_matr.cell(k, k) = akk;
+	m_matr.cell(k, k + 1) = akk1;
+	m_matr.cell(k + 1, k + 1) = ak1k1;
+}
+*/
 void CSLAE::RotateRPLCS(size_t k, DBL alpha)
 {
 	DBL sina = sin(alpha),
@@ -96,7 +171,6 @@ void CSLAE::SetBC(size_t k, const C2DBCAtom& bc)
 		case C2DBCAtom::symX: //Симметрия относительно оси X (y=0)
 		{
 			m_rp[k] += bc.getQx(); 
-			m_rp[k + 1] = bc.getQy(); 
 
 			m_matr.cell(k + 1, k + 1) = 1;
 
@@ -111,6 +185,7 @@ void CSLAE::SetBC(size_t k, const C2DBCAtom& bc)
 				m_rp[i] -= m_matr.cell(i, k + 1) * m_rp[k + 1];
 				m_matr.cell(i, k + 1) = 0;
 			}
+			m_rp[k + 1] = bc.getQy();
 			break;
 		}
 

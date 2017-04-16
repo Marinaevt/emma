@@ -14,6 +14,7 @@ IInteractiveObject* СInteractiveObjectFactory::createObject(int type, int id, I
 СInteractiveObjectFactory ITask::IntObjFactory;
 */
 
+/*
 class CStepInfo{
 public:
 	CStepInfo(){
@@ -40,17 +41,29 @@ public:
 	}
 	~CStepInfo(){}
 
+	// необходимо также запретить копирование
+	CStepInfo(CStepInfo const&); // реализация не нужна
+	CStepInfo& operator= (CStepInfo const&);  // и тут
+
+	static CStepInfo& Instance()
+	{
+		// согласно стандарту, этот код ленивый и потокобезопасный
+		static CStepInfo s;
+		return s;
+	}
+
 	int N;//Количество шагов для набора давления;
 	double t0;//продолжительность набора давления;
 	double max_dt;//максимальный шаг;
 	double P;//давление;
 	double MinDt;
 	double MaxT;
+	double dt;
 
 };
 
 CStepInfo g_Step;
-
+*/
 IInteractiveObject* ITask::GetObj(size_t nIndex) const {
 
 	if (nIndex >= GetObjNum()) {
@@ -99,7 +112,7 @@ bool ITask::Init() {
 
 DBL ITask::CalcDt()
 {
-	
+	CStepInfo& g_Step = CStepInfo::Instance();
 	//if(m_tCurrent > g_Step.t0/g_Step.N*2) m_dt = m_DtRecommended;
 	//if(m_tCurrent > g_Step.t0) m_dt = m_DtRecommended;
 	//m_DtRecommended = m_dt;
@@ -111,7 +124,7 @@ DBL ITask::CalcDt()
 	}else{
 		m_dt = g_Step.t0/g_Step.N;
 	}//*/
-	
+	g_Step.dt = m_dt;
 	return m_dt;
 }
 
@@ -135,6 +148,7 @@ void ITask::AddObject(IInteractiveObject* obj)
 //! запуск вычислений
 void ITask::RunCalc()
 {
+	CStepInfo& g_Step = CStepInfo::Instance();
 	int step = 0;
 	int nLimiter = 5;
 	CString fname;
@@ -152,12 +166,14 @@ void ITask::RunCalc()
 #ifndef __LOCAL
 	ALOGGER.AddLog(m_filepath() + CString("Log_SA.txt"), CString(_T("SA")), false);
 	ALOGGER.AddLog(m_filepath() + CString("Log_YD.txt"), CString(_T("YD")), false);
+	ALOGGER.AddLog(m_filepath() + CString("Log_DD.txt"), CString(_T("DD")), false);
 
 	ALOGGER.AddLog(m_filepath() + CString("Log_Elements.txt"), CString(_T("Elements")), false);
 	ALOGGER.AddLog(m_filepath() + CString("Log_Nodes.txt"), CString(_T("Nodes")), false);
 #else
 	ALOGGER.AddLog(CString("Log_SA.txt"), CString(_T("SA")), false);
 	ALOGGER.AddLog(CString("Log_YD.txt"), CString(_T("YD")), false);
+	ALOGGER.AddLog(CString("Log_DD.txt"), CString(_T("DD")), false);
 
 	ALOGGER.AddLog(CString("Log_Elements.txt"), CString(_T("Elements")), false);
 	ALOGGER.AddLog(CString("Log_Nodes.txt"), CString(_T("Nodes")), false);
@@ -165,7 +181,9 @@ void ITask::RunCalc()
 
 	//ALOGI("SA", CString(_T("time, dt, H, s, e_min, e_max, ee_min, ee_max, s_min, s_max,   P=")) + AllToString(g_Step.P));
 	ALOGI("YD", CString(_T("time, dt, force, avg_sigma, sqr, press, max_y, max_x, err, nK, dV, Sqr")));
-	
+	ALOGI("DD", CString(_T("dt, x, y, V_x,V_y, V,Condition, alpha, beta, AngleS ")));  //V - скорость узла 
+																		   // Condition - состояние узла
+	                                                                       // alpha - угол поворота
 	ALOGI("Elements", CString(_T("dt, cm_x, cm_y, avg_d, avg_ds, mju, smo_d, smo_ds, int_d, int_ds, sf_a, sf_b, sf_c")));
 	ALOGI("Nodes", CString(_T("dt, x, y, avg_d, avg_ds, int_d, int_ds, sigma_x, sigma_y, int_s")));
 

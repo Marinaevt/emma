@@ -37,6 +37,7 @@ public:
 	afx_msg void OnNewScale();
 
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+
 	afx_msg void OnScaleCmbChanged();
 	afx_msg void OnParamCmbChanged();
 	afx_msg void OnDrawLinesChanged();

@@ -806,16 +806,16 @@ void C2DMesh3::DrawGL(GLParam &parameter)
 	}
 	glEnd();
 	glPointSize(1);
-	/*
-	else {
-		glColor3f(0.0, 0.0, 0.0);
-		glBegin(GL_LINE_LOOP);
-		for (size_t i = 0; i<m_bordernodes.GetSize(); i++) {
-			glVertex2d(m_nodes[m_bordernodes[i]].m_x, m_nodes[m_bordernodes[i]].m_y);
-		}
-		glEnd();
-	} 
-	//*/
+	
+	//else {
+		//glColor3f(0.0, 0.0, 0.0);
+		//glBegin(GL_LINE_LOOP);
+		//for (size_t i = 0; i<m_bordernodes.GetSize(); i++) {
+		//	glVertex2d(m_nodes[m_bordernodes[i]].m_x, m_nodes[m_bordernodes[i]].m_y);
+		//}
+		//glEnd();
+	//} 
+	
 }
 
 //------------------------------------------------------------------------------------------------------------

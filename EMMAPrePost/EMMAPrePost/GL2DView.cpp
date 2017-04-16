@@ -133,7 +133,9 @@ bool CGL2DView::GetScreenRect(CRect2D &rect){
 	CRect clientRect;
 	GetClientRect(&clientRect);
 
-	if(clientRect.Width()==0 || clientRect.Height()==0)return false;
+	if (clientRect.Width() == 0 || clientRect.Height() == 0) {
+		return false;
+	}
 	
 	double dWidth, dHeigth;
 	if(m_DraftRect.Width()/m_DraftRect.Heigth() > static_cast<double>(clientRect.Width())/static_cast<double>(clientRect.Height())){

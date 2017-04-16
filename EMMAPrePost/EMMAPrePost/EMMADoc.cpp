@@ -444,10 +444,11 @@ void CEMMADoc::SetView(CWnd *pView){
 }
 
 CWnd* CEMMADoc::GetView(){
-	if (!GetViewDescriptor()) {
+	CViewDescriptor *tViewDescriptor = GetViewDescriptor();
+	if (!tViewDescriptor) {
 		return nullptr;
 	}
-	CWnd* pView = GetViewDescriptor()->GetView();
+	CWnd* pView = tViewDescriptor->GetView();
 	return pView;
 }
 

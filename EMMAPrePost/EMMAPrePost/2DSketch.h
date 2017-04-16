@@ -32,8 +32,8 @@ public:
 	
 	CMFCPropertyGridProperty* AddProp(CStringW name, double eval, size_t pos);
 	void FillPropList(CMFCPropertyGridCtrl *pGrid);	// Заполняет таблицу свойств
-	void UpdateProp(double *pEval, UNLONG *pId);		//обновляет данные документа (Doc)
-	void UpdatePropList(CMFCPropertyGridCtrl *pGrid);	//обновляет все значения таблицы
+	//void UpdateProp(double *pEval, UNLONG *pId);		//
+	void UpdatePropList(CMFCPropertyGridCtrl *pGrid);	//обновляет данные документа (Doc) по новым значениям таблицы
 
 	virtual void DrawGL(GLParam &parameter){I2DSketch::DrawGL(parameter);};
 

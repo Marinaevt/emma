@@ -21,7 +21,7 @@ public:
 
 	//Время "входа", "выхода" и паузы в точке траектории
 	void SetEntrTime(DBL t) { m_time = t; }
-	void SetExitTime(DBL t) { if (t >= m_time) m_pause = t - m_time; }
+	void SetExitTime(DBL t) { if (t > m_time) m_pause = t - m_time; }
 	void SetPause(DBL t)    { m_pause = t; }
 
 	void SetAngle(DBL a)	{ m_angle = a; }

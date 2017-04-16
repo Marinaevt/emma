@@ -421,7 +421,7 @@ poly[5] = -b3*(b3*j1 + 2 * v1*n1);
 	bool CheckValidBasis(const Basis& b, const vector<LineSeg>& side_vector)
 	{
 		auto q = DBL_MAX;
-		for (auto i = 0; i < side_vector.size(); ++i) {
+		for (size_t i = 0; i < side_vector.size(); ++i) {
 			if (!b.Check(side_vector, i))
 				return false;
 			q = min(q, GeometryUtils::TriangleAlphaQuality(b.point, side_vector[i].S, side_vector[i].E));
@@ -471,7 +471,9 @@ poly[5] = -b3*(b3*j1 + 2 * v1*n1);
 		assert(res && !basis.IsEmpty());
 
 		vector<int> side_indexes(n);
-		for (auto i = 0; i < n; ++i) side_indexes[i] = i;
+		for (size_t i = 0; i < n; ++i) {
+			side_indexes[i] = i;
+		}
 
 		basis = MSW(sides, side_indexes, basis);
 		new_point = basis.point;

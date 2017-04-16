@@ -15,7 +15,7 @@ BEGIN_MESSAGE_MAP(CBasicView, CBasicView_Parent)
 	ON_WM_MOUSELEAVE()
 	ON_WM_MBUTTONDOWN()
 	ON_WM_MBUTTONUP()
-	ON_WM_ERASEBKGND()
+	//ON_WM_ERASEBKGND()
 	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 ////////////////////////////////////////////////////////////////////////////////

@@ -45,6 +45,7 @@ protected:
 	CEMMADoc *m_pDoc;
 
 	//! Список дочерних окон CChildFrame, содержащих различные представления документа
+	//std::list<CChildFrame *> m_CFList;
 	CList<CChildFrame *> m_CFList;
 
 	//! Все тулбары приложения лежат в этом массиве
@@ -90,6 +91,8 @@ protected:
 	CEMMADoc* GetCurDoc() {
 		return m_wndExplorerPane.GetCurDoc();
 	}
+	//! Скрываем все плавающие панели
+	void HideAllPanels();
 
 	DECLARE_MESSAGE_MAP()
 	// Generated message map functions
@@ -154,7 +157,7 @@ public:
 	afx_msg void OnUpdateSetCursorCheck(CCmdUI* pCmdUI, int nType);
 	afx_msg void OnUpdateSketchToolTrajectoryDoc(CCmdUI *pCmdUI);	// Метод для включения кнопок Чертежа, Инструмента, Траектории
 	afx_msg void OnSaveSketchToMeta();	//Сохранение всего чертежа в meta-файл
-	afx_msg void OnEnableButtonSave(CCmdUI *pCmdUI);
+	//afx_msg void OnEnableButtonSave(CCmdUI *pCmdUI);
 	afx_msg void OnSetContours();
 
 	// Категория КЭ сетка
@@ -169,7 +172,7 @@ public:
 	//afx_msg void OnUpdateNewMeshPoint(CCmdUI *pCmdUI);
 	afx_msg void OnImportSketch();
 	//afx_msg void OnUpdateImportSketch(CCmdUI *pCmdUI);
-	afx_msg void OnShowContours();
+	//afx_msg void OnShowContours();
 	//afx_msg void OnUpdateShowContours(CCmdUI *pCmdUI);
 	
 
@@ -196,6 +199,9 @@ public:
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
+
+	//afx_msg int OnEraseBkgnd(CDC* pDC);
+	//afx_msg void OnPaint();
 
 	afx_msg void OnClose();
 };

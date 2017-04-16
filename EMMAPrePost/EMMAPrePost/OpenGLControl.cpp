@@ -29,10 +29,12 @@ void COpenGLControl::SetScale(C2DScale *scale)
 
 
 BEGIN_MESSAGE_MAP(COpenGLControl, CWnd)
+	ON_WM_CREATE()
+
 	ON_WM_PAINT()
 	ON_WM_SIZE()
-	ON_WM_CREATE()
 	ON_WM_ERASEBKGND()
+
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////

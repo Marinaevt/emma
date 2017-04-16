@@ -4,6 +4,9 @@
 #include "2DBCAtom.h"
 #include "2DMesh.h"
 #include "2DRigid.h"
+
+//#include"2DOutline.h"
+
 #include "2DPoint.h"
 #include "I2DInteractiveobject.h"
 #include "ITask.h"

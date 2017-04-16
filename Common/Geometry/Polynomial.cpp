@@ -58,11 +58,13 @@ namespace FemLibrary {
 			if (extremums[i] < a) break;
 
 			auto new_value = EvaluatePolynomial(poly, extremums[i]);
+			
 			if (abs(x_value) < yeps && x_value*x_old_value >= 0 && new_value*x_value >= 0) { // abs(new_value) < yeps  // !!! явное сравнение
 				solutions.emplace_back(x);
 				solutions.emplace_back(x);
 				if (max_root_only) return solutions;
 			}
+			
 			if (x_value*new_value < 0)
 			{
 				double root;
@@ -78,8 +80,9 @@ namespace FemLibrary {
 			x_value = new_value;
 			x = extremums[i];
 		}
-		if (abs(x_value) < yeps && x_value*x_old_value > 0)
+		if (abs(x_value) < yeps && x_value*x_old_value > 0) {
 			solutions.emplace_back(x);
+		}
 
 		assert(solutions.size() <= 5);
 		return solutions;
@@ -106,7 +109,7 @@ namespace FemLibrary {
 		// 	throw exception("can't solve polynomial");
 
 		vector<double> res;
-		for (size_t i = 0; i < nroots; ++i)
+		for (int i = 0; i < nroots; ++i)
 			if (imag_roots[i] == 0.0)
 				res.emplace_back(real_roots[i]);
 		return res;

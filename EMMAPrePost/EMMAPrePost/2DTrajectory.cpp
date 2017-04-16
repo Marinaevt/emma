@@ -73,9 +73,10 @@ CMFCPropertyGridProperty* C2DTrajectory::AddProp(CStringW name, double eval, siz
 
 	CMFCPropertyGridProperty *pProp = new CMFCPropertyGridProperty(name, eval, name);
 	pProp->SetData(pos);
-	if (pos == 5) pProp->AllowEdit(0);	//длина дуги
+	if (pos == 5) pProp->AllowEdit(0);	//длина кривой
 	if (pos == 10) pProp->AllowEdit(0);	//время в
 	if (pos == 11) pProp->AllowEdit(0);	//время из
+	if (pos == 14) pProp->AllowEdit(0);	//W угловая скорость (TODO: не доделана)
 	return pProp;
 }
 
@@ -83,14 +84,14 @@ CMFCPropertyGridProperty* C2DTrajectory::AddProp(CStringW name, double eval, siz
 void C2DTrajectory::FillPropList(CMFCPropertyGridCtrl *pGrid){
 	
 	if(pGrid == nullptr) return;
+	pGrid->RemoveAll();
 
 	//! Если активная кривая
 	if ((m_CurvesActive.size() == 1) && (m_NodesActive.size() == 0)){
-		pGrid->RemoveAll();
+		
 		C2DCurve * t_curve;
 		t_curve = m_Motion.GetCurve(m_CurvesActive[0]);
 		
-
 		pGrid->AddProperty(AddProp(_T("X1"), t_curve->GetStartNode()->GetPoint().x,1));
 		pGrid->AddProperty(AddProp(_T("Y1"), t_curve->GetStartNode()->GetPoint().y,2));
 		pGrid->AddProperty(AddProp(_T("X2"), t_curve->GetEndNode()->GetPoint().x,3));
@@ -113,7 +114,7 @@ void C2DTrajectory::FillPropList(CMFCPropertyGridCtrl *pGrid){
 
 	//! Если активная точка
 	if ((m_NodesActive.size() == 1)){
-		pGrid->RemoveAll();
+		
 		C2DNode * t_node;
 		t_node = m_Motion.GetNode(m_NodesActive[0]);
 		C2DPieceLinearFunction* vel = dynamic_cast<C2DPieceLinearFunction *>(m_Motion.m_vels()[0]);
@@ -127,7 +128,7 @@ void C2DTrajectory::FillPropList(CMFCPropertyGridCtrl *pGrid){
 			mot_param = m_Motion.m_params()[m_NodesActive[0]];
 			pGrid->AddProperty(AddProp(_T("Время (в)"),mot_param.GetEntrTime(),10));
 			pGrid->AddProperty(AddProp(_T("Время (из)"),mot_param.GetExitTime(),11));
-			pGrid->AddProperty(AddProp(_T("Пауза"),mot_param.GetPause(),12));
+			pGrid->AddProperty(AddProp(_T("Пауза НЕдоделана"),mot_param.GetPause(),12));
 		}
 
 		//линейная скорость
@@ -142,11 +143,173 @@ void C2DTrajectory::FillPropList(CMFCPropertyGridCtrl *pGrid){
 
 	}
 		
-	pGrid->RemoveAll();
 	pGrid->Invalidate();
 
 }
 
+//! Обновляем все поля таблицы свойств
+void C2DTrajectory::UpdatePropList(CMFCPropertyGridCtrl * pGrid) {
+	
+	if (pGrid == nullptr) {
+		CDlgShowError err(_T("CMFCPropertyGridCtrl is null"));
+		return;
+	}
+
+	//кол-во строк в таблице свойств (для проверки)
+	int nCount = pGrid->GetPropertyCount();
+	if (nCount == 0) {
+		CDlgShowError err(_T("CMFCPropertyGridCtrl is empty"));
+		return;
+	}
+
+	Math::C2DPoint tPoint;
+	C2DCurve *pCur = nullptr;
+	C2DCircleArc *pArc = nullptr;
+	bool isCurveActive = false;
+
+	if (m_CurvesActive.size() > 0) {
+		pCur = m_Motion.GetCurve(m_CurvesActive[0]);	//берём только первую из выделенных
+		isCurveActive = true;
+	}
+
+	if (m_NodesActive.size() > 0) {	//захватили узел, но выделение кривой не снялось (близко)
+		isCurveActive = false;
+	}
+
+	if (isCurveActive) {
+		CMFCPropertyGridProperty* pProperty1 = pGrid->FindItemByData(1);	//X1
+		if (pProperty1) {
+			tPoint = pCur->GetStartNode()->GetPoint();
+			tPoint.x = pProperty1->GetValue().dblVal;
+			pCur->GetStartNode()->SetPoint(tPoint);
+		}
+
+		CMFCPropertyGridProperty* pProperty2 = pGrid->FindItemByData(2);	//Y1
+		if (pProperty2) {
+			tPoint = pCur->GetStartNode()->GetPoint();
+			tPoint.y = pProperty2->GetValue().dblVal;
+			pCur->GetStartNode()->SetPoint(tPoint);
+		}
+
+		CMFCPropertyGridProperty* pProperty3 = pGrid->FindItemByData(3);	//X2
+		if (pProperty3) {
+			tPoint = pCur->GetEndNode()->GetPoint();
+			tPoint.x = pProperty3->GetValue().dblVal;
+			pCur->GetEndNode()->SetPoint(tPoint);
+		}
+
+		CMFCPropertyGridProperty* pProperty4 = pGrid->FindItemByData(4);	//Y2
+		if (pProperty4) {
+			tPoint = pCur->GetEndNode()->GetPoint();
+			tPoint.y = pProperty4->GetValue().dblVal;
+			pCur->GetEndNode()->SetPoint(tPoint);
+		}
+
+		//5 - длина кривой
+		CMFCPropertyGridProperty* pProperty5 = pGrid->FindItemByData(5);	//Length
+		if (pProperty5) {
+			COleVariant varLength(pCur->CalcLength());
+			pProperty5->SetValue(&varLength);
+		}
+
+		//6 - радиус, если дуга
+		CMFCPropertyGridProperty* pProperty6 = pGrid->FindItemByData(6);	//Radius
+		if (pProperty6) {
+			pArc = dynamic_cast<C2DCircleArc*>(pCur);
+			pArc->SetRadius(pProperty6->GetValue().dblVal);
+		}
+	}
+	else {
+		C2DNode *t_node = m_Motion.GetNode(m_NodesActive[0]);
+		C2DPieceLinearFunction* vel = dynamic_cast<C2DPieceLinearFunction *>(m_Motion.m_vels()[0]);
+		C2DFunction* angVel = dynamic_cast<C2DFunction *>(m_Motion.m_vels()[1]);
+		C2DMotionParams mot_param;
+
+		
+		CMFCPropertyGridProperty* pProperty7 = pGrid->FindItemByData(7);	//X
+		if (pProperty7) {
+			tPoint = t_node->GetPoint();
+			tPoint.x = pProperty7->GetValue().dblVal;
+			t_node->SetPoint(tPoint);
+		}
+
+		CMFCPropertyGridProperty* pProperty8 = pGrid->FindItemByData(8);	//Y
+		if (pProperty8) {
+			tPoint = t_node->GetPoint();
+			tPoint.y = pProperty8->GetValue().dblVal;
+			t_node->SetPoint(tPoint);
+		}
+
+		//9 пропускаем везде
+		if (m_Motion.m_params().size() != 0) {
+			mot_param = m_Motion.m_params()[m_NodesActive[0]];
+			
+			//10 время в точку (не изменяется руками)
+			CMFCPropertyGridProperty* pProperty10 = pGrid->FindItemByData(10);	//Time in
+			if (pProperty10) {
+				COleVariant varTimeIn(mot_param.GetEntrTime());
+				pProperty10->SetValue(&varTimeIn);
+			}
+			
+			//11 - время из точки (не изменяется руками)
+			CMFCPropertyGridProperty* pProperty11 = pGrid->FindItemByData(11);	//Time out
+			if (pProperty11) {
+				COleVariant varTimeIn(mot_param.GetExitTime());
+				pProperty11->SetValue(&varTimeIn);
+			}
+
+			//12 пауза (ВСЕГДА не меньше 0)
+			CMFCPropertyGridProperty* pProperty12 = pGrid->FindItemByData(12);	//Pause
+			if (pProperty12) {
+				double dPause = pProperty12->GetValue().dblVal;
+				if (dPause < 0.0) {
+					dPause = 0.0;
+				}
+				COleVariant varPause(dPause);
+				pProperty12->SetValue(&varPause);
+				m_Motion.m_params()[m_NodesActive[0]].SetPause(dPause);
+				
+			}
+		}
+
+		//линейная скорость (ВСЕГДА не меньше 0)
+		CMFCPropertyGridProperty* pProperty13 = pGrid->FindItemByData(13);	//V
+		if (pProperty13) {
+			double dVel = pProperty13->GetValue().dblVal;
+			if (dVel < 0.0) {
+				dVel = 0.0;
+			}
+			//update value in property
+			COleVariant varVel(dVel);
+			pProperty13->SetValue(&varVel);
+			vel->m_values().at(m_NodesActive[0]) = dVel;
+		}
+
+		//угловая скорость (TODO: не задействована)
+		CMFCPropertyGridProperty* pProperty14 = pGrid->FindItemByData(14);	//W
+		if (pProperty14) {
+			COleVariant varW(angVel->GetValue(m_NodesActive[0]));
+			pProperty14->SetValue(&varW);
+		}
+	}
+
+	//скорость изменения времени (ВСЕГДА не меньше 0)
+	CMFCPropertyGridProperty* pProperty15 = pGrid->FindItemByData(15);	//Speed of time
+	if (pProperty15) {
+		double dTimeSpeed = pProperty15->GetValue().dblVal;
+		if (dTimeSpeed < 0.0) {
+			dTimeSpeed = 0.0;
+		}
+		COleVariant varW(dTimeSpeed);
+		pProperty15->SetValue(&varW);
+		m_dTimeSpeed = dTimeSpeed;
+	}
+
+	m_Motion.CalcTime();
+	InitialUpdateView();
+}
+
+/*
 //! Обновление параметров (правая панель)
 void C2DTrajectory::UpdateProp(double *pEval, UNLONG *pId){
 	
@@ -277,6 +440,8 @@ void C2DTrajectory::UpdateProp(double *pEval, UNLONG *pId){
 	InitialUpdatePane();
 }
 
+*/
+
 void C2DTrajectory::SetContours() {
 	C2DOutline *pOutline = GetOutline();
 
@@ -285,10 +450,14 @@ void C2DTrajectory::SetContours() {
 		return;
 	}
 
+	CDlgShowError Diag_err(_T("No closed contours in Trajectory")); //_T("Contours not found."));	//Показываем окно ошибки
+	return;
+	/*
 	if (pOutline->FindContours(1.0))// длина ребра сетки
 		GetView()->SendMessage(WMR_INITIALUPDATE); // обновляем представление
 	else
 		CDlgShowError Diag_err(ID_ERROR_2DMESHERPANE_NO_CONTOURS); //_T("Contours not found."));	//Показываем окно ошибки
+	*/
 }
 
 //! Отрисовка Траектории

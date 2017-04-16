@@ -18,6 +18,8 @@ public:
 	afx_msg void OnPaint();
 	// Обработка изменения размеров окна
 	afx_msg void OnSize(UNINT nType, int cx, int cy);
+	// Очищаем окно
+	afx_msg int OnEraseBkgnd(CDC* pDC);
 	////////////////////////////////
 	int GetCursorType() { return m_nCurType; };
 	void SetCursorType(int nType) { m_nCurType = nType; };

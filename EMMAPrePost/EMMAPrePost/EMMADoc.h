@@ -109,7 +109,9 @@ protected:
 	//Обновление всех панелей (с тулбарами, кнопками и прочими таблицами)
 	void InitialUpdatePane();
 
-	virtual CViewDescriptor *GetViewDescriptor(){return m_pViewDescriptor;}
+	virtual CViewDescriptor *GetViewDescriptor(){
+		return m_pViewDescriptor;
+	}
 
 private:
 	int m_icon; // переменная для распознавания иконки при создании дерева

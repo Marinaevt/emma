@@ -8,13 +8,13 @@
 class C2DBCAtom
 {
 public:
-	void setSymY(DBL dVelX = 0, DBL dForceY = 0);
+	void setSymY(DBL dVelX = 0, DBL dForceY = 0, DBL angle = 0);
 
-	void setSymX(DBL dVelY = 0, DBL dForceX = 0);
+	void setSymX(DBL dVelY = 0, DBL dForceX = 0, DBL angle = 0);
 
-	void setKinematic(DBL dVx, DBL dVy);
+	void setKinematic(DBL dVx, DBL dVy, DBL angle = 0);
 
-	void setLoad(DBL dPx, DBL dPy);
+	void setLoad(DBL dPx, DBL dPy, DBL angle = 0);
 
 	void freePoint();
 	

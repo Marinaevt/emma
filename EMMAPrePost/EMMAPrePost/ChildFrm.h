@@ -51,5 +51,7 @@ public:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
+	afx_msg void OnPaint();
 	afx_msg int OnEraseBkgnd(CDC* pDC);
+	afx_msg void OnSize(UNINT nType, int cx, int cy);
 };

@@ -15,7 +15,7 @@ public:
 	virtual ~CMaterialPane(void);
 
 protected:
-	CButton m_button_contour;
+	CButton m_button_refersh;
 	CButton m_button_save_inside;
 	CButton m_button_save_to_meta;
 	CStatic m_Label;

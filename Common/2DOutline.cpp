@@ -1672,6 +1672,8 @@ void C2DContour::FillCache()
 	m_bcache() = true;
 }
 
+
+
 //! Находим среднюю точку для всего контура
 Math::C2DPoint C2DContour::GetCenterPoint() {
 
@@ -2508,19 +2510,26 @@ Math::C2DRect C2DOutline::GetBoundingBox() {
 }
 
 bool C2DOutline::GetBoundingBox(CRect2D &rect) {
-	if (m_nodes().size() == 0 && m_curves().size() == 0) return false;
+	
+	if (m_nodes().size() == 0 && m_curves().size() == 0) {	//считаем, что Outline жив при наличии кривых
+		return false;
+	}
 
 	//Начальное состояние прямоугольника - вокруг первого узла
 	//Иначе сравниваем с прямоугольником (0,0,0,0).
 	rect = (dynamic_cast<C2DNode*>(m_nodes()[0]))->GetBoundingBox();
 
+	C2DRect tempRect;
 	//Добавляем оставшееся
 	for (size_t i = 0; i < m_nodes().size(); i++) {
-		rect.AddRect((dynamic_cast<C2DNode*>(m_nodes()[i]))->GetBoundingBox());
+		tempRect = (dynamic_cast<C2DNode*>(m_nodes()[i]))->GetBoundingBox();	//если dynamic_cast падает, то всё плохо
+		rect.AddRect(tempRect);
 	}
 
+	//Так как кривые могут выйти за рамки узлов (например дуги)
 	for (size_t i = 0; i < m_curves().size(); i++) {
-		rect.AddRect((dynamic_cast<C2DCurve*>(m_curves()[i]))->GetBoundingBox());
+		tempRect = (dynamic_cast<C2DCurve*>(m_curves()[i]))->GetBoundingBox();
+		rect.AddRect(tempRect);
 	}
 
 	return true;
@@ -2719,7 +2728,32 @@ bool C2DOutline::GetAllIntersections(size_t c, const Math::C2DLine& line, std::v
 
 	return (points.size() != 0);
 }
-
+template <typename T> int sgn(T val) {
+	return (T(0) < val) - (val < T(0));
+}
+int C2DOutline::IsIntersection(const Math::C2DPoint& a, const Math::C2DPoint& b, const Math::C2DPoint& middle) {
+	double ax = a.x - middle.x;
+	double ay = a.y - middle.y;
+	double bx = b.x - middle.x;
+	double by = b.y - middle.y;
+	//лежит ли отрезок по одну сторону от луча
+	if (ay * by > 0)
+		return 1;
+	int s = sgn(ax * by - ay * bx);
+	if (s == 0)
+	{
+		//совпадение с осью
+		if (ax * bx <= 0)
+			return 0;
+		return 1;
+	}
+	//пересечение отрезка лучом, знак зависит от того, с какой стороны точка
+	if (ay < 0)
+		return -s;
+	if (by < 0)
+		return s;
+	return 1;
+}
 // проверяет, находится ли точка p внутри контура c (если он замкнут)
 // возвращает -2 если ошибка, -1 если точка снаружи, 0 - если на контуре, 1 - если внутри
 int C2DOutline::IsInsideContour(const Math::C2DPoint& p, int c)
@@ -2744,10 +2778,24 @@ int C2DOutline::IsInsideContour(const Math::C2DPoint& p, int c)
 	bool bLeft = DP1.x < p.x ? true : false;
 	size_t r = pcontour->GetCache().size();
 
+	int intrsct = 1;
+	if (p == DP1) return 0;
+	while (r--)
+	{
+		Math::C2DPoint DP2 = DP1;
+		DP1 = pcontour->GetCache()[r];
+		intrsct *= IsIntersection(DP1, DP2, p);
+	}
+	return intrsct;
+
+
+
+
+
+	/*
 	while (r--)
 	{
 		if (p == DP1) return 0;
-
 		Math::C2DPoint DP2 = DP1;
 		DP1 = pcontour->GetCache()[r];
 
@@ -2769,6 +2817,11 @@ int C2DOutline::IsInsideContour(const Math::C2DPoint& p, int c)
 	}
 
 	return 2 * (nTop % 2) - 1;
+
+	*/
+
+
+
 
 
 
@@ -2872,8 +2925,8 @@ int C2DOutline::IsInside(const Math::C2DPoint& p)
 	for (size_t i = 0; i < nContours; i++)
 	{
 		int ret = IsInsideContour(p, i);
-		if ((ret != -1) && (ret != -2))
-			return ret;
+		if (ret != 1)
+			return i;
 	}
 
 	return -1;
@@ -3663,3 +3716,13 @@ void C2DFacet_2arcs::CorrectArcs(int nCurve1, int nCurve2, C2DOutline* out) {
 	}
 }
 //Конец кодоводства Юры
+
+C2DNode * GetStartNode()
+{
+	return nullptr;
+}
+
+C2DNode * GetEndNode()
+{
+	return nullptr;
+}

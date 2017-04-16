@@ -8,8 +8,7 @@ CMaterialPane::~CMaterialPane(void)
 
 BEGIN_MESSAGE_MAP(CMaterialPane, CEMMARightPane)
 	ON_WM_CREATE()
-	ON_WM_SIZE()
-	ON_WM_PAINT()
+	//SIZE, PAINT, ERASEBKGND are in EMMARightPane
 
 	//Buttons
 	ON_BN_CLICKED(ID_MATERIALPANE_BUTTON_REFRESH, CMaterialPane::RefreshText)
@@ -52,7 +51,7 @@ int CMaterialPane::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//потом создаём кнопки
 	CString str4ButtonRefreshText;
 	str4ButtonRefreshText.LoadStringW(ID_MATERIALPANE_BUTTON_REFRESH);
-	if (!m_button_contour.Create(str4ButtonRefreshText, WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, rectDummy, this, ID_MATERIALPANE_BUTTON_REFRESH)) {
+	if (!m_button_refersh.Create(str4ButtonRefreshText, WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, rectDummy, this, ID_MATERIALPANE_BUTTON_REFRESH)) {
 		CDlgShowError cError(ID_ERROR_MATERIALPANE_BUTTON_REFRESH_FAIL); //_T("Failed to create Button \n"));
 		return -1;      // fail to create
 	}
@@ -94,7 +93,7 @@ void CMaterialPane::AdjustLayout(void){
 	int cyPropList = rectClient.top + cyTlb;
 	int nFromLeft = rectClient.left + int(rectClient.Width() / 10.0);
 	int nFromRight = rectClient.Width() - int(rectClient.Width() / 10.0)*2;	//обязательное умножение, чтобы был отступ справа
-	m_button_contour.SetWindowPos(nullptr, nFromLeft, cyPropList, nFromRight, 20, SWP_NOOWNERZORDER | SWP_SHOWWINDOW);
+	m_button_refersh.SetWindowPos(nullptr, nFromLeft, cyPropList, nFromRight, 20, SWP_NOOWNERZORDER | SWP_SHOWWINDOW);
 	cyPropList += cyTlb;	//увеличиваем отступ
 	m_button_save_inside.SetWindowPos(nullptr, nFromLeft, cyPropList, nFromRight, 20, SWP_NOOWNERZORDER | SWP_SHOWWINDOW);
 	cyPropList += cyTlb;	//увеличиваем отступ

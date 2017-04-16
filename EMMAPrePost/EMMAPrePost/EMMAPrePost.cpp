@@ -55,6 +55,13 @@ void CEMMAPrePostApp::UpdateAllViews(){
 // CEMMAPrePostApp initialization
 int CEMMAPrePostApp::InitInstance(){
 	
+	/* for DEBUG and memory leaks
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	_CrtSetBreakAlloc(9554);
+	_CrtSetBreakAlloc(9553);
+	_CrtSetBreakAlloc(9552);
+	//*/
+
 	PrePostStartup();
 	//LOGGER.Init(CString(_T("..\\..\\Logs\\emmaprepost_initinstance.txt")));
 
@@ -106,7 +113,9 @@ int CEMMAPrePostApp::InitInstance(){
 
 	m_pMainWnd = pFrame;
 	// create main MDI frame window
-	if (!pFrame->LoadFrame(IDR_MAINFRAME)) return 0;
+	if (!pFrame->LoadFrame(IDR_MAINFRAME)) {
+		return 0;
+	}
 	
 	//! Загрузка таблицы быстрых клавиш
 	m_hAccelTable = LoadAccelerators(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDR_ACCELERATOR_EMMA));
