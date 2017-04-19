@@ -202,7 +202,7 @@ bool C2DRigid::GetBC(const C2DMeshInterface *pMesh, std::vector<C2DBCAtom> *bc) 
 			if (nNode == -1) return false;
 
 			DBL	closep = m_shape.GetNode(nNode)->GetPoint();
-			Math::C2DPoint minim;
+			Math::C2DPoint minim, clstnd;
 
 			//находим все кривые с этим узлом
 			for (size_t i = 0; i < m_shape.GetCurveCount(); i++) 
@@ -222,12 +222,18 @@ bool C2DRigid::GetBC(const C2DMeshInterface *pMesh, std::vector<C2DBCAtom> *bc) 
 					{
 						dist = pMesh->GetBorderNode(nBoundaryNode).Len(minim);// получаем расстояние от точки Заготовки до Инструмента
 						//	dist_1 = pMesh->GetBorderNode(nBoundaryNode2).Len(minim);
+						clstnd = minim;
 						closep = dist;
 					}
 				}
 			}
 
-			
+
+			DBL testangle = m_shape.GetNode(nNode)->GetPoint().x - clstnd.x ? (m_shape.GetNode(nNode)->GetPoint().y - clstnd.y) / (m_shape.GetNode(nNode)->GetPoint().x - clstnd.x) : 0;
+
+
+
+
 			
 			DBL node_2_x = pMesh->GetBorderNode(nBoundaryNode).x;
 			DBL node_2_y = pMesh->GetBorderNode(nBoundaryNode).y;
@@ -251,7 +257,7 @@ bool C2DRigid::GetBC(const C2DMeshInterface *pMesh, std::vector<C2DBCAtom> *bc) 
 
 				
 
-					//tmp.m_pos.m_x = node_2_x - dist;
+				//tmp.m_pos.m_x = node_2_x - dist;
 				//	tmp.m_pos.m_y = node_2_y - dist*sin_phy;
 				//tmp.m_pos.m_x = pMesh->m_nodes[nBoundaryNode].m_x - dist;
 				//tmp.m_pos.m_y = pMesh->m_nodes[nBoundaryNode].m_y + dist*sin_phy;
@@ -296,7 +302,10 @@ bool C2DRigid::GetBC(const C2DMeshInterface *pMesh, std::vector<C2DBCAtom> *bc) 
 					 //tmp.m_pos.m_y/tmp1
 					//+ tmp.m_pos.m_x / tmp1
 					
-					DBL velX = sqrt(tmp.m_vel.m_x*tmp.m_vel.m_x + tmp.m_vel.m_y*tmp.m_vel.m_y);
+					//DBL velX = sqrt(tmp.m_vel.m_x*tmp.m_vel.m_x + tmp.m_vel.m_y*tmp.m_vel.m_y);
+					
+					DBL velX = -tmp.m_vel.m_x*sin(testangle) + tmp.m_vel.m_y*cos(testangle);
+					
 					tmp.m_pos.m_x = node_2_x - dist;
 					tmp.m_pos.m_y = node_2_y;
 
@@ -325,8 +334,9 @@ bool C2DRigid::GetBC(const C2DMeshInterface *pMesh, std::vector<C2DBCAtom> *bc) 
 			
 
 					
-					bc->at(nBoundaryNode).setSymX(velX, dRes, angle_1); //dRes*sin_phy		
-					
+					//bc->at(nBoundaryNode).setSymX(velX, dRes, angle_1); //dRes*sin_phy		
+					///////////////////////////////////
+					bc->at(nBoundaryNode).setSymX(velX, dRes, atan(testangle));
 				}
 			//}
 		}

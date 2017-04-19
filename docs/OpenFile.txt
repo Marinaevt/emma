@@ -1,0 +1,27 @@
+MainFrm.cpp
+
+ON_COMMAND(ID_FILE_OPEN, &CMainFrame::OnFileOpen)
+void CMainFrame::OnFileOpen() {}
+	CloseDocument();
+	CreateExplorerPane();
+
+void CMainFrame::CloseDocument() {}
+	CloseAllChild();
+	m_wndExplorer.DestroyWindow();
+	DestroyDocument();
+	RecalcLayout();
+
+//! Список дочерних окон CChildFrame, содержащих различные представления документа
+CList<CChildFrame *> m_CFList;
+
+CloseAllChild(){
+	CChildFrame *pFrame...
+	pFrame->DestroyWindow();
+	m_CFList.RemoveAt(m_CFList.GetTailPosition());
+}
+
+void CMainFrame::DestroyDocument(){
+	if(m_pDoc==NULL) return;
+	delete m_pDoc;
+	m_pDoc = NULL;
+}
