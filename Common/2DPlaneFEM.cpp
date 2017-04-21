@@ -348,7 +348,7 @@ void C2DPlaneFEM::CalcFEM(DBL dt)
 		for (size_t i = 0; i < mesh3->m_bordernodes().size(); i++)
 		{
 			m_slae.RotateMatrixLCS((mesh3->m_bordernodes[i]) * 2, m_bc[i].getAngle());
-			m_slae.RotateRPLCS((mesh3->m_bordernodes[i]) * 2, m_bc[i].getAngle());
+			//m_slae.RotateRPLCS((mesh3->m_bordernodes[i]) * 2, m_bc[i].getAngle());
 
 		}
 
@@ -356,7 +356,7 @@ void C2DPlaneFEM::CalcFEM(DBL dt)
 		size_t bordernodes_size = mesh3->m_bordernodes().size();
 		for (size_t i = 0; i < bordernodes_size; i++)
 		{
-			m_slae.SetBC(mesh3->m_bordernodes[i] * 2, m_bc[i]); // не уверен насчет умножения на 2
+			m_slae.SetBC(mesh3->m_bordernodes[i] * 2, m_bc[i]); 
 		}
 		//задали правую часть, записываем в лог
 		//m_slae.WriteToLogRightPart();
@@ -370,6 +370,17 @@ void C2DPlaneFEM::CalcFEM(DBL dt)
 		//LOGGER.Init(CString("..\\..\\Logs\\C2DPlaneFEM.cpp_CalcFEM_Gauss.txt"));
 		m_slae.Gauss();
 		
+
+
+		//Восстановление ЛСК
+		for (size_t i = 0; i < mesh3->m_bordernodes().size(); i++)
+		{
+			//m_slae.RotateMatrixLCS((mesh3->m_bordernodes[i]) * 2, -m_bc[i].getAngle());
+			m_slae.RotateRPLCS((mesh3->m_bordernodes[i]) * 2, -m_bc[i].getAngle());
+		}
+		prevSol = m_slae.m_sol; // копируем предыдущее решение
+		
+
 		//m_slae.WriteToLog();
 		//m_slae.WriteToLogSolution();
 		//WriteToLogNewLines(2);
@@ -391,13 +402,7 @@ void C2DPlaneFEM::CalcFEM(DBL dt)
 			if (g_dError < g_ErrInf.m_dErr) break;
 		}
 
-		//Восстановление ЛСК
-		for (size_t i = 0; i < mesh3->m_bordernodes().size(); i++)
-		{
-			m_slae.RotateMatrixLCS((mesh3->m_bordernodes[i]) * 2, -m_bc[i].getAngle());
-			m_slae.RotateRPLCS((mesh3->m_bordernodes[i]) * 2, -m_bc[i].getAngle());
-		}
-		prevSol = m_slae.m_sol; // копируем предыдущее решение
+
 
 		
 		//OutputDebugString(_T("The above code block was executed in %.4f second(s)\n") + AllToString(((double)end - start) / ((double)CLOCKS_PER_SEC)));

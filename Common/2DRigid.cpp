@@ -336,6 +336,8 @@ bool C2DRigid::GetBC(const C2DMeshInterface *pMesh, std::vector<C2DBCAtom> *bc) 
 					
 					//bc->at(nBoundaryNode).setSymX(velX, dRes, angle_1); //dRes*sin_phy		
 					///////////////////////////////////
+
+					double ttt = atan(testangle);
 					bc->at(nBoundaryNode).setSymX(velX, dRes, atan(testangle));
 				}
 			//}

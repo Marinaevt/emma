@@ -75,12 +75,12 @@ void CSLAE::RotateMatrixLCS(size_t k, DBL alpha)
 void CSLAE::RotateMatrixLCS(size_t k, DBL alpha) //k - номер узла
 {
 	DBL sina = sin(alpha), cosa = cos(alpha);
-	for (size_t r = max(0,k- m_matr.band()); r < k; r++) // перебор элементов столбца k
+	for (size_t r = (k >= m_matr.band() ? k - m_matr.band() : 0); r < k; r++) // перебор элементов столбца k
 	{
 		size_t c = k-r; // индекс столбца k
 		DBL ai1,ai2;
-		ai1 = m_matr.direct_cell(r, c) * cosa - m_matr.direct_cell(r, c + 1) * sina;
-		ai2 = m_matr.direct_cell(r, c) * sina + m_matr.direct_cell(r, c + 1) * cosa;
+		ai1 = m_matr.direct_cell(r, c) * cosa + m_matr.direct_cell(r, c + 1) * sina;
+		ai2 = -m_matr.direct_cell(r, c) * sina + m_matr.direct_cell(r, c + 1) * cosa;
 		
 		m_matr.direct_cell(r, c) = ai1;
 		m_matr.direct_cell(r, c + 1) = ai2;
@@ -89,8 +89,8 @@ void CSLAE::RotateMatrixLCS(size_t k, DBL alpha) //k - номер узла
 	{
 		DBL a1j, a2j;
 		
-		a1j = m_matr.direct_cell(k, c) * cosa - m_matr.direct_cell(k + 1, c-1) * sina;
-		a2j = m_matr.direct_cell(k, c) * sina + m_matr.direct_cell(k + 1, c-1) * cosa;
+		a1j = m_matr.direct_cell(k, c) * cosa + m_matr.direct_cell(k + 1, c-1) * sina;
+		a2j = -m_matr.direct_cell(k, c) * sina + m_matr.direct_cell(k + 1, c-1) * cosa;
 
 		m_matr.direct_cell(k, c) = a1j;
 		m_matr.direct_cell(k + 1, c-1) = a2j;
@@ -100,7 +100,7 @@ void CSLAE::RotateMatrixLCS(size_t k, DBL alpha) //k - номер узла
 	DBL akk1 = (m_matr.cell(k + 1, k + 1) - m_matr.cell(k, k))*sina * cosa
 		+ m_matr.cell(k, k + 1) * (cosa * cosa - sina * sina);
 	DBL ak1k1 = m_matr.cell(k + 1, k + 1) * cosa * cosa
-		+ 2 * m_matr.cell(k, k + 1) * sina * cosa + m_matr.cell(k, k)* sina * sina;
+		- 2 * m_matr.cell(k, k + 1) * sina * cosa + m_matr.cell(k, k)* sina * sina;
 	m_matr.cell(k, k) = akk;
 	m_matr.cell(k, k + 1) = akk1;
 	m_matr.cell(k + 1, k + 1) = ak1k1;
@@ -151,7 +151,7 @@ void CSLAE::RotateRPLCS(size_t k, DBL alpha)
 	DBL sina = sin(alpha),
 		cosa = cos(alpha);
 
-	DBL rp1 = m_rp[k] * cosa + m_rp[k + 1] * sina,
+	DBL rp1 = m_rp[k] * cosa + m_rp[k + 1] * (sina),
 		rp2 = m_rp[k] * (-sina) + m_rp[k + 1] * cosa;
 
 	m_rp[k] = rp1;
