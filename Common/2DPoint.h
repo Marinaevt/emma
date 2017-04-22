@@ -94,6 +94,7 @@ namespace Math {
 
 		//расстояние до точки
 		double Len(const C2DPoint &p) const;
+		double LenX(const C2DPoint &p) const;
 		//Расстояние до отрезка [p1;p2] и ближайшая точка на нём
 		double GetDistance(const C2DPoint &DP1, const C2DPoint &DP2, C2DPoint *pDPRes) const;
 		//Расщепление

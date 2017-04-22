@@ -436,6 +436,10 @@ namespace Math {
 	{
 		return  sqrt((p.x - x)*(p.x - x) + (p.y - y)*(p.y - y));
 	}
+	double C2DPoint::LenX(const C2DPoint &p) const
+	{
+		return  abs(p.x - x);
+	}
 	//---------------------------------------------------------------------------
 
 	bool C2DPoint::Cross(const C2DPoint &pa1, const C2DPoint &pa2, const C2DPoint &pb1, const C2DPoint &pb2) {
