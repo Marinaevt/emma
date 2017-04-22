@@ -200,10 +200,10 @@ bool C2DRigid::GetBC(const C2DMeshInterface *pMesh, std::vector<C2DBCAtom> *bc) 
 			//DBL dist_1;
 			int nNode = m_shape.GetClosestNode(pMesh->GetBorderNode(nBoundaryNode), dist);	//получаем ближайший узел
 			if (nNode == -1) return false;
-
+			int flag = 0;
 			DBL	closep = m_shape.GetNode(nNode)->GetPoint();
-			Math::C2DPoint minim, clstnd;
-
+			Math::C2DPoint minim, clstnd, n1, n2;
+			DBL xx1, xx2;
 			//находим все кривые с этим узлом
 			for (size_t i = 0; i < m_shape.GetCurveCount(); i++) 
 			{
@@ -216,18 +216,40 @@ bool C2DRigid::GetBC(const C2DMeshInterface *pMesh, std::vector<C2DBCAtom> *bc) 
 					int p = pCur->GetClosestPoint(pMesh->GetBorderNode(nBoundaryNode), minim);
 					//int p_1 = pCur->GetClosestPoint(pMesh->GetBorderNode(nBoundaryNode2), minim);
 					if (p == -1) return false;
-
+					
 					//	DBL m = pMesh->GetBorderNode(nBoundaryNode).Len(minim);
-					if (dist > pMesh->GetBorderNode(nBoundaryNode).Len(minim))
+					if (dist > pMesh->GetBorderNode(nBoundaryNode).Len(minim) || minim.x <= clstnd.x)
 					{
 						dist = pMesh->GetBorderNode(nBoundaryNode).Len(minim);// получаем расстояние от точки Заготовки до Инструмента
 						//	dist_1 = pMesh->GetBorderNode(nBoundaryNode2).Len(minim);
+
 						clstnd = minim;
 						closep = dist;
 					}
 				}
+				/*
+				if (pCur->GetStart() == nNode) {
+					xx1 = m_shape.GetNode(pCur->GetEnd())->GetPoint().x;
+					n1 = m_shape.GetNode(pCur->GetEnd())->GetPoint();
+				}
+				if (pCur->GetEnd() == nNode) {
+					xx2 = m_shape.GetNode(pCur->GetStart())->GetPoint().x;
+					n2 = m_shape.GetNode(pCur->GetStart())->GetPoint();
+				}
+				*/
 			}
 
+			/*
+			if ((xx1 > xx2 ? xx2 : xx1) - m_shape.GetNode(nNode)->GetPoint().x != EPS)
+			for (size_t i = 0; i < m_shape.GetCurveCount(); i++)
+			{
+
+				C2DCurve *pCur = m_shape.GetCurve(i);
+				if ((xx1 > xx2 ? n2 : n1) == (xx1 > xx2 ? pCur->GetStart() : pCur->GetEnd())) {
+					int p = pCur->GetClosestPoint(pMesh->GetBorderNode(nBoundaryNode), clstnd);
+				}
+			}
+			*/
 
 			DBL testangle = m_shape.GetNode(nNode)->GetPoint().x - clstnd.x ? (m_shape.GetNode(nNode)->GetPoint().y - clstnd.y) / (m_shape.GetNode(nNode)->GetPoint().x - clstnd.x) : 0;
 
