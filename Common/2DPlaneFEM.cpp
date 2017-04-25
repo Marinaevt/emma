@@ -356,7 +356,7 @@ void C2DPlaneFEM::CalcFEM(DBL dt)
 		size_t bordernodes_size = mesh3->m_bordernodes().size();
 		for (size_t i = 0; i < bordernodes_size; i++)
 		{
-			m_slae.SetBC(mesh3->m_bordernodes[i] * 2, m_bc[i]); 
+			m_slae.SetBC((mesh3->m_bordernodes[i]) * 2, m_bc[i]); 
 		}
 		//задали правую часть, записываем в лог
 		//m_slae.WriteToLogRightPart();
