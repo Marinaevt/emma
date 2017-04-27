@@ -378,7 +378,7 @@ void C2DPlaneFEM::CalcFEM(DBL dt)
 			//m_slae.RotateMatrixLCS((mesh3->m_bordernodes[i]) * 2, -m_bc[i].getAngle());
 			m_slae.RotateRPLCS((mesh3->m_bordernodes[i]) * 2, -m_bc[i].getAngle());
 		}
-		prevSol = m_slae.m_sol; // копируем предыдущее решение
+
 		
 
 		//m_slae.WriteToLog();
@@ -403,7 +403,7 @@ void C2DPlaneFEM::CalcFEM(DBL dt)
 		}
 
 
-
+		prevSol = m_slae.m_sol; // копируем предыдущее решение
 		
 		//OutputDebugString(_T("The above code block was executed in %.4f second(s)\n") + AllToString(((double)end - start) / ((double)CLOCKS_PER_SEC)));
 	}

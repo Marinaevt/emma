@@ -503,14 +503,11 @@ void C2DMesh3::FillSTM(BANDMATRIX& m, std::vector<DBL>& rp, const CMaterial& mat
 				//Для плоских задач}}
 				/*/
 				//Для осесимметричных задач{{
-				DBL ttt = GetEField(i, eFields::smo_d);
-				DBL tt = b2 * x / 2;
-				DBL tt1 = sm / 3.0;
-				DBL tt2 = GetEField(i, eFields::smo_d) * dK * (b2 * x / 2 + sm / 3.0) / 3;
-				rp[2 * jj] -= GetEField(i, eFields::smo_d) * dK * (b2 * x / 2 + sm / 3.0) / 3;
-				rp[2 * jj + 1] -= x*GetEField(i, eFields::smo_d) * dK * c2 / 6;
+				//rp[2 * jj] -= GetEField(i, eFields::smo_d) * dK * (b2 * x / 2 + sm / 3.0) / 3;
+				//rp[2 * jj + 1] -= x*GetEField(i, eFields::smo_d) * dK * c2 / 6;
 				//Для осесимметричных задач}}//*/
-
+				rp[2 * jj] -= 2 * M_PI * x * sm * (GetEField(i, eFields::smo_d)*dK * (b2 / (2 * sm) + 1 / (3 * x)));
+				rp[2 * jj + 1] -= 2 * M_PI * x * sm * (GetEField(i, eFields::smo_d)*dK * c2 / (2 * sm));
 			}
 		}
 	}
