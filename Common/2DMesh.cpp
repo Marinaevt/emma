@@ -494,6 +494,9 @@ void C2DMesh3::FillSTM(BANDMATRIX& m, std::vector<DBL>& rp, const CMaterial& mat
 					if (ii>jj)
 						m.cell(jj * 2 + 1, ii * 2) += g21;
 					m.cell(jj * 2 + 1, ii * 2 + 1) += g22;
+					if (isnan(m.cell(jj * 2, ii * 2))) {
+						g11 = g11;
+					}
 				}
 
 
@@ -503,11 +506,11 @@ void C2DMesh3::FillSTM(BANDMATRIX& m, std::vector<DBL>& rp, const CMaterial& mat
 				//Для плоских задач}}
 				/*/
 				//Для осесимметричных задач{{
-				//rp[2 * jj] -= GetEField(i, eFields::smo_d) * dK * (b2 * x / 2 + sm / 3.0) / 3;
-				//rp[2 * jj + 1] -= x*GetEField(i, eFields::smo_d) * dK * c2 / 6;
+				rp[2 * jj] -= GetEField(i, eFields::smo_d) * dK * (b2 * x / 2 + sm / 3.0) / 3;
+				rp[2 * jj + 1] -= x*GetEField(i, eFields::smo_d) * dK * c2 / 6;
 				//Для осесимметричных задач}}//*/
-				rp[2 * jj] -= 2 * M_PI * x * sm * (GetEField(i, eFields::smo_d)*dK * (b2 / (2 * sm) + 1 / (3 * x)));
-				rp[2 * jj + 1] -= 2 * M_PI * x * sm * (GetEField(i, eFields::smo_d)*dK * c2 / (2 * sm));
+				//rp[2 * jj] -= 2 * M_PI * x * sm * (GetEField(i, eFields::smo_d)*dK * (b2 / (2 * sm) + 1 / (3 * x)));
+				//rp[2 * jj + 1] -= 2 * M_PI * x * sm * (GetEField(i, eFields::smo_d)*dK * c2 / (2 * sm));
 			}
 		}
 	}

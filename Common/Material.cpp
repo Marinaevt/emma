@@ -483,10 +483,11 @@ double CMaterial::GetK(double dt, double mju) const {
 
 double CMaterial::Mu(double e, double v, double T, double Xd, double X0) const
 {
+	if (v <= EPS) return m_dMaxMju;
+
 	double dMju = Si(e, v, T, Xd, X0) / (3.*v);
-	if (v <= 0 || dMju > m_dMaxMju) {
-		return m_dMaxMju;
-	}
+
+	if (dMju > m_dMaxMju) return m_dMaxMju;
 
 	return dMju;
 }

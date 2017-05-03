@@ -407,6 +407,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="ReadMe.txt" />
+    <None Include="..\..\Common\ImprovedSystem.dll">
+      <Filter>Source Files\Common</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="EMMASrv.rc">

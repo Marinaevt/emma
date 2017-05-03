@@ -30,7 +30,7 @@
     <ProjectGuid>{1C21B954-34AA-4778-85D0-B141173FB223}</ProjectGuid>
     <RootNamespace>EMMASrv</RootNamespace>
     <Keyword>MFCProj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -339,6 +339,7 @@
     <ClInclude Include="TaskManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Common\ImprovedSystem.dll" />
     <None Include="res\emma.ico" />
     <None Include="res\EMMASrv.ico" />
     <None Include="res\EMMASrv.rc2" />
