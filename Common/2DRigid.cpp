@@ -220,7 +220,7 @@ bool C2DRigid::GetBC(const C2DMeshInterface *pMesh, std::vector<C2DBCAtom> *bc) 
 					//	DBL m = pMesh->GetBorderNode(nBoundaryNode).Len(minim);
 					n1 = m_shape.GetNode((pCur->GetStart() == nNode ? pCur->GetEnd() : pCur->GetStart()))->GetPoint();
 
-					if (dist > pMesh->GetBorderNode(nBoundaryNode).Len(minim) && (atan((n2.y - n1.y)/(n2.x - n1.x))>0.60))
+					if (dist > pMesh->GetBorderNode(nBoundaryNode).Len(minim)) //&& (atan((n2.y - n1.y)/(n2.x - n1.x))>0.60))
 					{
 						dist = pMesh->GetBorderNode(nBoundaryNode).Len(minim);// получаем расстояние от точки Заготовки до Инструмента
 						//	dist_1 = pMesh->GetBorderNode(nBoundaryNode2).Len(minim);
@@ -241,19 +241,8 @@ bool C2DRigid::GetBC(const C2DMeshInterface *pMesh, std::vector<C2DBCAtom> *bc) 
 				*/
 			}
 
-			/*
-			if ((xx1 > xx2 ? xx2 : xx1) - m_shape.GetNode(nNode)->GetPoint().x != EPS)
-			for (size_t i = 0; i < m_shape.GetCurveCount(); i++)
-			{
 
-				C2DCurve *pCur = m_shape.GetCurve(i);
-				if ((xx1 > xx2 ? n2 : n1) == (xx1 > xx2 ? pCur->GetStart() : pCur->GetEnd())) {
-					int p = pCur->GetClosestPoint(pMesh->GetBorderNode(nBoundaryNode), clstnd);
-				}
-			}
-			*/
-
-			DBL testangle = m_shape.GetNode(nNode)->GetPoint().x - clstnd.x ? (m_shape.GetNode(nNode)->GetPoint().y - clstnd.y) / (m_shape.GetNode(nNode)->GetPoint().x - clstnd.x) : 0;
+			DBL testangle = m_shape.GetNode(nNode)->GetPoint().x - clstnd.x ? atan((m_shape.GetNode(nNode)->GetPoint().y - clstnd.y) / (m_shape.GetNode(nNode)->GetPoint().x - clstnd.x)) : 1.5708;
 
 
 
@@ -361,8 +350,8 @@ bool C2DRigid::GetBC(const C2DMeshInterface *pMesh, std::vector<C2DBCAtom> *bc) 
 					//bc->at(nBoundaryNode).setSymX(velX, dRes, angle_1); //dRes*sin_phy		
 					///////////////////////////////////
 
-					double ttt = atan(testangle);
-					bc->at(nBoundaryNode).setSymX(velX, dRes, atan(testangle));
+					//double ttt = atan(testangle);
+					bc->at(nBoundaryNode).setSymX(velX, dRes, testangle);
 				}
 			//}
 		}
