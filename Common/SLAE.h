@@ -35,8 +35,6 @@ public:
 	void Set3DBC(size_t k, const C3DBCAtom& bc);
 
 	void Gauss();
-	void Gauss2();
-	void Gauss3();
 	//запись всего (матрицы, правой части и решения)
 	void WriteToLog();
 	//записываем в лог саму матрицу

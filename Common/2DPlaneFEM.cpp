@@ -160,7 +160,7 @@ bool C2DPlaneFEM::Init()
 	//Сетка и СЛАУ
 	C2DMesh3* mesh3 = dynamic_cast<C2DMesh3 *>(m_mesh_adapt());
 	m_mesh_adapt.SetObject(mesh3);
-
+	/*
 	int esize = mesh3->m_elements.GetSize();
 
 	std::vector<double>  sr(esize);
@@ -168,6 +168,7 @@ bool C2DPlaneFEM::Init()
 		sr[i] = mesh3->GetEField(i, eFields::int_ds);
 	}
 
+	*/
 	m_slae.Init(mesh3->m_nodes().size() * 2, mesh3->m_nodes().size() * 2);
 
 	//Инициализация ГУ
@@ -352,6 +353,7 @@ void C2DPlaneFEM::CalcFEM(DBL dt)
 		//LOGGER.Init(CString("..\\..\\Logs\\C2DPlaneFEM.cpp_CalcFEM_FILLSTM.txt"));
 		mesh3->FillSTM(m_slae.m_matr, m_slae.m_rp, m_mat.Material(), dt, 0, mesh3->m_elements().size());
 		//m_slae.WriteToLog();
+		/*
 		std::ofstream fo("Ktest.txt", 'w');
 		for (int i = 0; i < m_slae.m_matr.rows(); i++) {
 			for (int j = 0; j < m_slae.m_matr.rows(); j++) {
@@ -360,6 +362,7 @@ void C2DPlaneFEM::CalcFEM(DBL dt)
 			fo << std::endl;
 		}
 		fo.close();
+		*/
 		//Поворачиваем ЛСК
 		for (size_t i = 0; i < mesh3->m_bordernodes().size(); i++)
 		{
@@ -390,12 +393,12 @@ void C2DPlaneFEM::CalcFEM(DBL dt)
 			}
 			fo << std::endl;
 		}
-		fo.close();*/
+		fo.close();
 		std::ofstream foc("Ftest.txt", 'w');
 		for (int i = 0; i < m_slae.m_matr.rows(); i++) {
 			foc << m_slae.m_rp[i] << std::endl;
 		}
-		foc.close();
+		foc.close();*/
 		//LOGGER.Init(CString("..\\..\\Logs\\C2DPlaneFEM.cpp_CalcFEM_Gauss.txt"));
 		m_slae.Gauss();
 		
