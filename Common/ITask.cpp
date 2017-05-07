@@ -231,7 +231,9 @@ bool ITask::Calculation(CStorage& file)
 	for (size_t i = 0; i < m_objects().size(); i++){
 		GetObj(i)->Move(dt);
 	}
-
+	std::ofstream foh("H_t.txt", 'w+');
+	foh << m_tCurrent() << std::endl;
+	foh.close();
 	return true;
 }
 

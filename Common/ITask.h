@@ -10,6 +10,7 @@
 #include "IOInterface.h"
 #include "GLParam.h"
 #include "DlgShowError.h"
+#include <fstream>
 
 //!  Класс Фабрика Взаимодействующих Объектов (СInteractiveObjectFactory).
 /*!

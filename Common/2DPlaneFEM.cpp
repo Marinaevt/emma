@@ -957,15 +957,29 @@ void C2DPlaneFEM::Move(DBL dt)
 	LOGGER.Init(CString("..\\..\\Logs\\C2DPlaneFEM.cpp_Move.txt"));
 	mesh3->WriteToLog();
 	WriteBCToLog();
+
 	
 	 C2DRigid *dist;
-	
+	 int flag = 0;
+	 double coory;
 	for (size_t i = 0; i < mesh3->m_nodes().size(); i++)
 	{ 
 		mesh3->m_nodes()[i].m_x  += m_slae.m_sol[2 * i] * dt;
 		mesh3->m_nodes()[i].m_y  += m_slae.m_sol[2 * i + 1] * dt;
-	}
+		if (fabs(mesh3->m_nodes()[i].m_x) < EPS) {
+			if (!flag) {
+				coory = mesh3->m_nodes()[i].m_y;
+				flag = 1;
+			}
+			else if (coory < mesh3->m_nodes()[i].m_y){
+				coory = mesh3->m_nodes()[i].m_y;
+			}
+		}
 
+	}
+	std::ofstream fo("H_t.txt", 'w+');
+	fo << coory << '\t';
+	fo.close();
 	for (size_t ei = 0; ei < mesh3->m_elements().size(); ei++)
 	{
 		//Вариант m->GetEField(ei, eFields::int_ds) -> g_MuInf.dee
