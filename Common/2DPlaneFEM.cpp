@@ -353,16 +353,7 @@ void C2DPlaneFEM::CalcFEM(DBL dt)
 		//LOGGER.Init(CString("..\\..\\Logs\\C2DPlaneFEM.cpp_CalcFEM_FILLSTM.txt"));
 		mesh3->FillSTM(m_slae.m_matr, m_slae.m_rp, m_mat.Material(), dt, 0, mesh3->m_elements().size());
 		//m_slae.WriteToLog();
-		/*
-		std::ofstream fo("Ktest.txt", 'w');
-		for (int i = 0; i < m_slae.m_matr.rows(); i++) {
-			for (int j = 0; j < m_slae.m_matr.rows(); j++) {
-				fo << m_slae.m_matr.cell(i, j) << '\t';
-			}
-			fo << std::endl;
-		}
-		fo.close();
-		*/
+
 		//Поворачиваем ЛСК
 		for (size_t i = 0; i < mesh3->m_bordernodes().size(); i++)
 		{
@@ -385,20 +376,6 @@ void C2DPlaneFEM::CalcFEM(DBL dt)
 
 		// решение
 		start = clock();
-		/*
-		std::ofstream fo("Ktest.txt", 'w');
-		for (int i = 0; i < m_slae.m_matr.rows(); i++) {
-			for (int j = 0; j < m_slae.m_matr.rows(); j++) {
-				fo << m_slae.m_matr.cell(i, j) << '\t';
-			}
-			fo << std::endl;
-		}
-		fo.close();
-		std::ofstream foc("Ftest.txt", 'w');
-		for (int i = 0; i < m_slae.m_matr.rows(); i++) {
-			foc << m_slae.m_rp[i] << std::endl;
-		}
-		foc.close();*/
 		//LOGGER.Init(CString("..\\..\\Logs\\C2DPlaneFEM.cpp_CalcFEM_Gauss.txt"));
 		m_slae.Gauss();
 		
@@ -954,14 +931,14 @@ void C2DPlaneFEM::Move(DBL dt)
 {
 	C2DMesh3* mesh3 = dynamic_cast<C2DMesh3*>(m_mesh_adapt());
 	
-	LOGGER.Init(CString("..\\..\\Logs\\C2DPlaneFEM.cpp_Move.txt"));
-	mesh3->WriteToLog();
-	WriteBCToLog();
+	//LOGGER.Init(CString("..\\..\\Logs\\C2DPlaneFEM.cpp_Move.txt"));
+	//mesh3->WriteToLog();
+	//WriteBCToLog();
 
 	
 	 C2DRigid *dist;
 	 int flag = 0;
-	 double coory;
+	 double coory, coorym;
 	for (size_t i = 0; i < mesh3->m_nodes().size(); i++)
 	{ 
 		mesh3->m_nodes()[i].m_x  += m_slae.m_sol[2 * i] * dt;
@@ -969,17 +946,27 @@ void C2DPlaneFEM::Move(DBL dt)
 		if (fabs(mesh3->m_nodes()[i].m_x) < EPS) {
 			if (!flag) {
 				coory = mesh3->m_nodes()[i].m_y;
+				coorym = mesh3->m_nodes()[i].m_y;
 				flag = 1;
 			}
 			else if (coory < mesh3->m_nodes()[i].m_y){
 				coory = mesh3->m_nodes()[i].m_y;
 			}
+			else if (coorym > mesh3->m_nodes()[i].m_y) {
+				coorym = mesh3->m_nodes()[i].m_y;
+			}
 		}
 
 	}
-	std::ofstream fo("H_t.txt", 'w+');
+	//LOGGER.Init(CString("..\\..\\Logs\\C2DPlaneFEM.cpp_Move.txt"));
+	std::ofstream fo("H_t.txt", std::ios::out | std::ios::app | std::ios::binary);
+	//LOGGER.WriteMessage(CString(coory), 5);
 	fo << coory << '\t';
 	fo.close();
+	std::ofstream sfo("S_t.txt", std::ios::out | std::ios::app | std::ios::binary);
+	//LOGGER.WriteMessage(CString(coory), 5);
+	sfo << coory << '\t' << coorym << '\t';
+	sfo.close();
 	for (size_t ei = 0; ei < mesh3->m_elements().size(); ei++)
 	{
 		//Вариант m->GetEField(ei, eFields::int_ds) -> g_MuInf.dee
@@ -1042,9 +1029,10 @@ void C2DPlaneFEM::Preparations(const ITask *pTask) {
 	//Проходим по границе и смотрим, как на неё влияют все объекты
 	size_t nObjNum = pTask->GetObjNum();
 	for (size_t j = 0; j<nObjNum; j++) {
+		//pTask->GetCurrentT();
 		I2DInteractiveObject *obj2D = dynamic_cast<I2DInteractiveObject *>(pTask->GetObj(j));
 		if (obj2D && obj2D != this) {
-
+			//if (pTask->GetCurrentT() > 1000 && j == 1) continue;
 			std::vector<C2DBCAtom> temp_bc(bc_size);
 			//Суммируем граничные условия со всех инструментов\объектов
 			if (obj2D->GetBC(mesh3, &temp_bc)) {

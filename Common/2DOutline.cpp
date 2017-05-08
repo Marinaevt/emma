@@ -1898,13 +1898,13 @@ ptrdiff_t C2DOutline::AddCurve(C2DCurve* pCurve)
 	size_t start = pCurve->GetStart(),
 		end = pCurve->GetEnd(),
 		count = GetNodeCount();
-
+	
 	if(start > count || count < end)
 	{
 		CDlgShowError cError(ID_ERROR_2DOUTLINE_NODES_INDEX_WRONG); //_T("Неверные номера узлов: start, end, count \n"));
 		return -1;
 	}
-
+	
 	if (start == end) {
 		CDlgShowError cError(ID_ERROR_2DOUTLINE_NODES_INDEX_WRONG); //_T("Неверные номера узлов: start, end, count \n"));
 		return -1;

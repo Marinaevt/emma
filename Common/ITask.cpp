@@ -231,9 +231,15 @@ bool ITask::Calculation(CStorage& file)
 	for (size_t i = 0; i < m_objects().size(); i++){
 		GetObj(i)->Move(dt);
 	}
-	std::ofstream foh("H_t.txt", 'w+');
+	//LOGGER.Init(CString("..\\..\\Logs\\C2DPlaneFEM.cpp_Move.txt"));
+	//std::ofstream fo("H_t.txt", 'w+');
+	//LOGGER.WriteMessage(m_tCurrent(), 5);
+	std::ofstream foh("H_t.txt", std::ios::out | std::ios::app | std::ios::binary);
+	std::ofstream sfos("S_t.txt", std::ios::out | std::ios::app | std::ios::binary);
 	foh << m_tCurrent() << std::endl;
+	sfos << m_tCurrent() << std::endl;
 	foh.close();
+	sfos.close();
 	return true;
 }
 
