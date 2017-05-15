@@ -200,14 +200,11 @@ bool C2DRigid::GetBC(const C2DMeshInterface *pMesh, std::vector<C2DBCAtom> *bc) 
 			//DBL dist_1;
 			int nNode = m_shape.GetClosestNode(pMesh->GetBorderNode(nBoundaryNode), dist);	//получаем ближайший узел
 			if (nNode == -1) return false;
-			int flag = 0;
 			DBL	closep = m_shape.GetNode(nNode)->GetPoint();
-			Math::C2DPoint minim, clstnd, n1, n2 = m_shape.GetNode(nNode)->GetPoint();
-			DBL xx1, xx2, yy1, yy2;
+			Math::C2DPoint minim, clstnd;
 			//находим все кривые с этим узлом
 			for (size_t i = 0; i < m_shape.GetCurveCount(); i++) 
 			{
-
 				C2DCurve *pCur = m_shape.GetCurve(i);
 				if (pCur->GetStart() == nNode || pCur->GetEnd() == nNode)
 				{
@@ -218,9 +215,9 @@ bool C2DRigid::GetBC(const C2DMeshInterface *pMesh, std::vector<C2DBCAtom> *bc) 
 					if (p == -1) return false;
 					
 					//	DBL m = pMesh->GetBorderNode(nBoundaryNode).Len(minim);
-					n1 = m_shape.GetNode((pCur->GetStart() == nNode ? pCur->GetEnd() : pCur->GetStart()))->GetPoint();
+					//n1 = m_shape.GetNode((pCur->GetStart() == nNode ? pCur->GetEnd() : pCur->GetStart()))->GetPoint();
 
-					if (dist > pMesh->GetBorderNode(nBoundaryNode).Len(minim)) //&& (atan((n2.y - n1.y)/(n2.x - n1.x))>0.60))
+					if (dist > pMesh->GetBorderNode(nBoundaryNode).Len(minim)) 
 					{
 						dist = pMesh->GetBorderNode(nBoundaryNode).Len(minim);// получаем расстояние от точки Заготовки до Инструмента
 						//	dist_1 = pMesh->GetBorderNode(nBoundaryNode2).Len(minim);
@@ -229,16 +226,6 @@ bool C2DRigid::GetBC(const C2DMeshInterface *pMesh, std::vector<C2DBCAtom> *bc) 
 						closep = dist;
 					}
 				}
-				/*
-				if (pCur->GetStart() == nNode) {
-					xx1 = m_shape.GetNode(pCur->GetEnd())->GetPoint().x;
-					n1 = m_shape.GetNode(pCur->GetEnd())->GetPoint();
-				}
-				if (pCur->GetEnd() == nNode) {
-					xx2 = m_shape.GetNode(pCur->GetStart())->GetPoint().x;
-					n2 = m_shape.GetNode(pCur->GetStart())->GetPoint();
-				}
-				*/
 			}
 
 
